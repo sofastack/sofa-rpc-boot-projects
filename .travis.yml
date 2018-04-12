@@ -1,0 +1,23 @@
+#.travis.yml
+language: java
+
+jdk:
+  - oraclejdk8
+  - openjdk7
+
+before_install:
+  - echo "Install Zookeeper 3.4.11"
+   && wget http://www-us.apache.org/dist/zookeeper/zookeeper-3.4.11/zookeeper-3.4.11.tar.gz
+   && tar -zxf zookeeper-3.4.11.tar.gz
+   && mv zookeeper-3.4.11/conf/zoo_sample.cfg zookeeper-3.4.11/conf/zoo.cfg
+   && /bin/bash zookeeper-3.4.11/bin/zkServer.sh start
+
+install:
+  - mvn clean install -DskipTests=true -B -U -e
+  - sh ./tools/check_format.sh
+
+script:
+  - mvn clean package -Plocal -Dmaven.javadoc.skip=true 
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
