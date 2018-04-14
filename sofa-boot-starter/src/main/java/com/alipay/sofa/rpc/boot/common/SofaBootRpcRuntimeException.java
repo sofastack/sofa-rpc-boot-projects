@@ -14,15 +14,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.alipay.sofa.rpc.bean;
-
-import com.alipay.sofa.rpc.bean.model.BookMarkModel;
-import com.alipay.sofa.rpc.bean.model.BookModel;
+package com.alipay.sofa.rpc.boot.common;
 
 /**
+ *
+ * SOFABoot RPC 运行时异常
+ *
  * @author <a href="mailto:lw111072@antfin.com">LiWei</a>
  */
-public interface BookService {
+public class SofaBootRpcRuntimeException extends RuntimeException {
 
-    BookModel getBook(BookMarkModel bookMark);
+    public SofaBootRpcRuntimeException(String s) {
+        super(s);
+    }
+
+    public SofaBootRpcRuntimeException(String s, Throwable throwable) {
+        super(s, throwable);
+    }
 }

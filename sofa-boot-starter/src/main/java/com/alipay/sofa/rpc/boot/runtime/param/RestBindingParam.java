@@ -14,15 +14,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.alipay.sofa.rpc.bean;
+package com.alipay.sofa.rpc.boot.runtime.param;
 
-import com.alipay.sofa.rpc.bean.model.BookMarkModel;
-import com.alipay.sofa.rpc.bean.model.BookModel;
+import com.alipay.sofa.rpc.boot.runtime.binding.RpcBindingType;
+import com.alipay.sofa.runtime.api.binding.BindingType;
 
 /**
+ *
  * @author <a href="mailto:lw111072@antfin.com">LiWei</a>
  */
-public interface BookService {
-
-    BookModel getBook(BookMarkModel bookMark);
+public class RestBindingParam extends RpcBindingParam {
+    @Override
+    public BindingType getBindingType() {
+        return RpcBindingType.REST_BINDING_TYPE;
+    }
 }

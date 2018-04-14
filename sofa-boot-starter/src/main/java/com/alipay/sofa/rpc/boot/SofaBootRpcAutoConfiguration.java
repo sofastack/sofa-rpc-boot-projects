@@ -14,15 +14,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.alipay.sofa.rpc.bean;
+package com.alipay.sofa.rpc.boot;
 
-import com.alipay.sofa.rpc.bean.model.BookMarkModel;
-import com.alipay.sofa.rpc.bean.model.BookModel;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
 
 /**
+ *
+ *
  * @author <a href="mailto:lw111072@antfin.com">LiWei</a>
  */
-public interface BookService {
+@Configuration
+@ComponentScan(value = { "com.alipay.sofa.rpc.boot" })
+public class SofaBootRpcAutoConfiguration {
 
-    BookModel getBook(BookMarkModel bookMark);
 }

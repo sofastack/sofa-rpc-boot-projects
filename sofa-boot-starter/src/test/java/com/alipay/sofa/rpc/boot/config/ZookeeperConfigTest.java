@@ -14,15 +14,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.alipay.sofa.rpc.bean;
+package com.alipay.sofa.rpc.boot.config;
 
-import com.alipay.sofa.rpc.bean.model.BookMarkModel;
-import com.alipay.sofa.rpc.bean.model.BookModel;
+import org.junit.Assert;
+import org.junit.Test;
 
 /**
+ *
  * @author <a href="mailto:lw111072@antfin.com">LiWei</a>
  */
-public interface BookService {
+public class ZookeeperConfigTest {
 
-    BookModel getBook(BookMarkModel bookMark);
+    @Test
+    public void test() {
+        String config = "zookeeper://127.0.0.1:2181?aaa=111&rrr=666&file=/host/zk";
+
+        ZookeeperConfigurator.parseConfig(config);
+
+        Assert.assertEquals("111", ZookeeperConfigurator.getParamValue("aaa"));
+        Assert.assertEquals("666", ZookeeperConfigurator.getParamValue("rrr"));
+        Assert.assertEquals("127.0.0.1:2181", ZookeeperConfigurator.getAddress());
+        Assert.assertEquals("/host/zk", ZookeeperConfigurator.getFile());
+    }
 }

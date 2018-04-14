@@ -14,15 +14,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.alipay.sofa.rpc.bean;
+package com.alipay.sofa.rpc.boot.context.event;
 
-import com.alipay.sofa.rpc.bean.model.BookMarkModel;
-import com.alipay.sofa.rpc.bean.model.BookModel;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.event.ApplicationContextEvent;
 
 /**
+ *
+ * SOFABoot启动服务器和发布服务之后的事件
+ *
  * @author <a href="mailto:lw111072@antfin.com">LiWei</a>
  */
-public interface BookService {
+public class SofaBootRpcStartEvent extends ApplicationContextEvent {
 
-    BookModel getBook(BookMarkModel bookMark);
+    public SofaBootRpcStartEvent(ApplicationContext applicationContext) {
+        super(applicationContext);
+    }
 }

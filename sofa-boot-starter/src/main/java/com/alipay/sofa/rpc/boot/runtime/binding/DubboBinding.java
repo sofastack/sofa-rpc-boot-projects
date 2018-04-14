@@ -14,15 +14,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.alipay.sofa.rpc.bean;
+package com.alipay.sofa.rpc.boot.runtime.binding;
 
-import com.alipay.sofa.rpc.bean.model.BookMarkModel;
-import com.alipay.sofa.rpc.bean.model.BookModel;
+import com.alipay.sofa.rpc.boot.runtime.param.RpcBindingParam;
+import com.alipay.sofa.runtime.api.binding.BindingType;
+import org.springframework.context.ApplicationContext;
 
 /**
+ *
  * @author <a href="mailto:lw111072@antfin.com">LiWei</a>
  */
-public interface BookService {
+public class DubboBinding extends RpcBinding {
 
-    BookModel getBook(BookMarkModel bookMark);
+    public DubboBinding(RpcBindingParam bindingParam,
+                        ApplicationContext applicationContext, boolean inBinding) {
+        super(bindingParam, applicationContext, inBinding);
+    }
+
+    @Override
+    public BindingType getBindingType() {
+        return RpcBindingType.DUBBO_BINDING_TYPE;
+    }
 }

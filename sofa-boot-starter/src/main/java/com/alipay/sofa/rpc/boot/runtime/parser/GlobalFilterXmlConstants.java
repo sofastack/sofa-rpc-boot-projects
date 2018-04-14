@@ -14,15 +14,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.alipay.sofa.rpc.bean;
-
-import com.alipay.sofa.rpc.bean.model.BookMarkModel;
-import com.alipay.sofa.rpc.bean.model.BookModel;
+package com.alipay.sofa.rpc.boot.runtime.parser;
 
 /**
+ * 全局 Filter 的元素和属性。
+ *
  * @author <a href="mailto:lw111072@antfin.com">LiWei</a>
  */
-public interface BookService {
+public class GlobalFilterXmlConstants {
 
-    BookModel getBook(BookMarkModel bookMark);
+    public static final String TAG_GLOBAL_FILTER = "rpc-global-filter";
+
+    public static final String TAG_REF           = "ref";
+
+    public static final String TAG_CLASS         = "class";
+
 }

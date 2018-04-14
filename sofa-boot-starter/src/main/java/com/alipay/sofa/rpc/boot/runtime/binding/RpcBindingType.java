@@ -14,15 +14,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.alipay.sofa.rpc.bean;
+package com.alipay.sofa.rpc.boot.runtime.binding;
 
-import com.alipay.sofa.rpc.bean.model.BookMarkModel;
-import com.alipay.sofa.rpc.bean.model.BookModel;
+import com.alipay.sofa.runtime.api.binding.BindingType;
 
 /**
+ *
  * @author <a href="mailto:lw111072@antfin.com">LiWei</a>
  */
-public interface BookService {
+public class RpcBindingType {
 
-    BookModel getBook(BookMarkModel bookMark);
+    public static final BindingType BOLT_BINDING_TYPE  = new BindingType("bolt");
+
+    public static final BindingType REST_BINDING_TYPE  = new BindingType("rest");
+
+    public static final BindingType DUBBO_BINDING_TYPE = new BindingType("dubbo");
 }

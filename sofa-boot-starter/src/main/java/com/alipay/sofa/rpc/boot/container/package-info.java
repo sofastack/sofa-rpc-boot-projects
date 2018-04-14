@@ -14,15 +14,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.alipay.sofa.rpc.bean;
-
-import com.alipay.sofa.rpc.bean.model.BookMarkModel;
-import com.alipay.sofa.rpc.bean.model.BookModel;
-
 /**
- * @author <a href="mailto:lw111072@antfin.com">LiWei</a>
+ * Created by liangen on 18/4/14.
  */
-public interface BookService {
+/**
+ * @author LiangEn
+ * @version $Id: PushChannelController.java,v 0.1 18/4/14 LiangEn Exp $
+ */
+package com.alipay.sofa.rpc.boot.container;
 
-    BookModel getBook(BookMarkModel bookMark);
-}
+/* 该包只放编程界面解析后的RPC上层组件配置 */

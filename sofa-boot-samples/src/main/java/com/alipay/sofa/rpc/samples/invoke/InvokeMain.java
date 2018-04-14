@@ -16,14 +16,13 @@
  */
 package com.alipay.sofa.rpc.samples.invoke;
 
+import com.alipay.sofa.rpc.api.future.SofaResponseFuture;
 import com.alipay.sofa.rpc.samples.invoke.bean.HelloCallbackService;
 import com.alipay.sofa.rpc.samples.invoke.bean.HelloFutureService;
 import com.alipay.sofa.rpc.samples.invoke.bean.HelloSyncService;
-import com.alipay.sofa.rpc.api.future.SofaResponseFuture;
 import org.springframework.context.ApplicationContext;
 
 /**
- *
  * @author <a href="mailto:lw111072@antfin.com">LiWei</a>
  */
 public class InvokeMain {

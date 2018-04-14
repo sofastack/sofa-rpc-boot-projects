@@ -1,1 +1,1 @@
-com.alipay.sofa.rpc.register.parser.GlobalFilterParser
+com.alipay.sofa.rpc.boot.runtime.parser.GlobalFilterParser
