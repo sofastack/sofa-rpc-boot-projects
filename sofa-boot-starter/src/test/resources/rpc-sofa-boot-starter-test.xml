@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:sofa="http://sofastack.io/schema/sofaboot"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://sofastack.io/schema/sofaboot http://sofastack.io/schema/sofaboot.xsd"
+       default-autowire="byName">
+
+    <!-- service -->
+    <bean id="sampleFacadeImpl" class="com.alipay.sofa.rpc.bean.impl.SampleFacadeImpl"/>
+    <sofa:service ref="sampleFacadeImpl" interface="com.alipay.sofa.rpc.bean.SampleFacade">
+        <sofa:binding.bolt/>
+        <sofa:binding.rest/>
+    </sofa:service>
+
+    <!-- reference -->
+    <sofa:reference id="sampleFacadeReferenceBolt" interface="com.alipay.sofa.rpc.bean.SampleFacade">
+        <sofa:binding.bolt/>
+    </sofa:reference>
+
+    <sofa:reference id="sampleFacadeReferenceRest" interface="com.alipay.sofa.rpc.bean.SampleFacade">
+        <sofa:binding.rest/>
+    </sofa:reference>
+
+    <!-- thread pool -->
+    <bean id="countServiceThreadPool" class="com.alipay.sofa.rpc.server.UserThreadPool" init-method="init">
+        <property name="corePoolSize" value="10"/>
+        <property name="maximumPoolSize" value="10"/>
+        <property name="queueSize" value="5"/>
+        <property name="threadPoolName" value="countServiceThreadPool_name"/>
+    </bean>
+
+    <bean id="countService" class="com.alipay.sofa.rpc.bean.impl.CountServiceImpl"/>
+    <sofa:service ref="countService" interface="com.alipay.sofa.rpc.bean.CountService">
+        <sofa:binding.bolt>
+            <sofa:global-attrs thread-pool-ref="countServiceThreadPool"/>
+        </sofa:binding.bolt>
+    </sofa:service>
+
+    <sofa:reference id="countServiceReference" interface="com.alipay.sofa.rpc.bean.CountService">
+        <sofa:binding.bolt/>
+    </sofa:reference>
+
+    <!-- generic -->
+    <bean id="bookServiceImpl" class="com.alipay.sofa.rpc.bean.impl.BookServiceImpl"/>
+    <sofa:service ref="bookServiceImpl" interface="com.alipay.sofa.rpc.bean.BookService">
+        <sofa:binding.bolt/>
+    </sofa:service>
+
+    <sofa:reference id="bookServiceGenericReference" interface="com.alipay.sofa.rpc.api.GenericService">
+        <sofa:binding.bolt>
+            <sofa:global-attrs generic-interface="com.alipay.sofa.rpc.bean.BookService"/>
+        </sofa:binding.bolt>
+    </sofa:reference>
+
+</beans>

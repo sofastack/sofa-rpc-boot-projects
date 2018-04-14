@@ -1,0 +1,3 @@
+com.alipay.sofa.rpc.register.adapter.BoltBindingAdapter
+com.alipay.sofa.rpc.register.adapter.RestBindingAdapter
+com.alipay.sofa.rpc.register.adapter.DubboBindingAdapter
