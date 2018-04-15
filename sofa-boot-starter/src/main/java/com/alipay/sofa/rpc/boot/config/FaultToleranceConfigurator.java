@@ -41,7 +41,7 @@ public class FaultToleranceConfigurator {
         String timeWindowStr = SofaBootRpcConfig
             .getPropertyAllCircumstances(SofaBootRpcConfigConstants.RPC_AFT_TIME_WINDOW);
         String leastWindowCountStr = SofaBootRpcConfig
-            .getPropertyAllCircumstances(SofaBootRpcConfigConstants.RPC_AFT_DEGRADE_LEAST_WEIGHT);
+            .getPropertyAllCircumstances(SofaBootRpcConfigConstants.RPC_AFT_LEAST_WINDOW_COUNT);
         String leastWindowExceptionRateMultipleStr = SofaBootRpcConfig
             .getPropertyAllCircumstances(SofaBootRpcConfigConstants.RPC_AFT_LEAST_WINDOW_EXCEPTION_RATE_MULTIPLE);
         String weightDegradeRateStr = SofaBootRpcConfig

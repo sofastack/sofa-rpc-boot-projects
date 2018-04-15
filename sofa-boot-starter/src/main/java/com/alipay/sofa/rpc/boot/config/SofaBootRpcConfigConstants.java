@@ -39,7 +39,7 @@ public class SofaBootRpcConfigConstants {
 
     public static final String  RPC_AFT_TIME_WINDOW                          = "rpc.aft.time.window";
 
-    public static final String  RPC_AFT_LEAST_CALL_COUNT                     = "rpc.aft.least.call.count";
+    public static final String  RPC_AFT_LEAST_WINDOW_COUNT                   = "rpc.aft.least.window.count";
 
     public static final String  RPC_AFT_LEAST_WINDOW_EXCEPTION_RATE_MULTIPLE = "rpc.aft.least.window.exception.rate.multiple";
 
