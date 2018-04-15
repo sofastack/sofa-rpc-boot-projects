@@ -102,14 +102,14 @@ public class SofaBootRpcConfigConstants {
     public static final boolean REST_DAEMON_DEFAULT                          = true;
 
     /** dubbo */
-    public static final int     DUBBO_PORT_DEFAULT                           = 20800;
+    public static final int     DUBBO_PORT_DEFAULT                           = 20880;
 
     /** registry */
     public static final String  REGISTRY_FILE_PATH_DEFAULT                   = System.getProperty("user.home")
                                                                                  +
                                                                                  System
                                                                                      .getProperty("file.separator") +
-                                                                                 "localFileRegisty"
+                                                                                 "localFileRegistry"
                                                                                  +
                                                                                  System
                                                                                      .getProperty("file.separator") +

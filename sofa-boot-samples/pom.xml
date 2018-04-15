@@ -10,14 +10,42 @@
         <version>5.3.0</version>
     </parent>
 
+    <properties>
+        <dubbo_version>2.4.10</dubbo_version>
+        <cxf.version>3.0.14</cxf.version>
+    </properties>
+
     <artifactId>rpc-sofa-boot-samples</artifactId>
 
     <dependencies>
+
         <dependency>
             <groupId>com.alipay.sofa</groupId>
             <artifactId>rpc-sofa-boot-starter</artifactId>
             <version>5.3.0</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.alipay.sofa</groupId>
+            <artifactId>test-sofa-boot-starter</artifactId>
+            <version>2.3.0</version>
+        </dependency>
+
+        <!--以下两个依赖用于测试ark插件 -->
+        <!--
+        <dependency>
+            <groupId>com.alipay.sofa</groupId>
+            <artifactId>rpc-sofa-boot-starter</artifactId>
+            <classifier>ark-plugin</classifier>
+            <version>5.3.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.alipay.sofa</groupId>
+            <artifactId>sofa-ark-springboot-starter</artifactId>
+            <version>0.2.0</version>
+        </dependency>
+        -->
 
         <dependency>
             <groupId>junit</groupId>
@@ -31,6 +59,7 @@
             <version>1.4.2.RELEASE</version>
             <scope>test</scope>
         </dependency>
+
     </dependencies>
 
     <build>
@@ -52,6 +81,18 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <skipTests>${skipTests}</skipTests>
+                    <includes>
+                        <!-- 这里需要根据自己的需要指定要跑的单元测试 -->
+                        <include>**/*Test.java</include>
+                    </includes>
+                    <testFailureIgnore>false</testFailureIgnore>
+                </configuration>
             </plugin>
         </plugins>
     </build>

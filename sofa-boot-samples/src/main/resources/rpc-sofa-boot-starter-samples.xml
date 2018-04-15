@@ -11,6 +11,7 @@
     <bean id="helloSyncServiceImpl" class="com.alipay.sofa.rpc.samples.invoke.HelloSyncServiceImpl"/>
     <sofa:service ref="helloSyncServiceImpl" interface="com.alipay.sofa.rpc.samples.invoke.HelloSyncService">
         <sofa:binding.bolt/>
+        <sofa:binding.rest/>
     </sofa:service>
     <sofa:reference id="helloSyncServiceReference" interface="com.alipay.sofa.rpc.samples.invoke.HelloSyncService">
         <sofa:binding.bolt/>
@@ -89,4 +90,26 @@
     <sofa:reference id="threadPoolServiceReference" interface="com.alipay.sofa.rpc.samples.threadpool.ThreadPoolService">
         <sofa:binding.bolt/>
     </sofa:reference>
+
+    <!-- rest -->
+    <bean id="restServiceImpl" class="com.alipay.sofa.rpc.samples.rest.RestServiceImpl"/>
+    <sofa:service ref="restServiceImpl" interface="com.alipay.sofa.rpc.samples.rest.RestService">
+        <sofa:binding.rest/>
+    </sofa:service>
+    <sofa:reference id="restServiceReference" interface="com.alipay.sofa.rpc.samples.rest.RestService">
+        <sofa:binding.rest/>
+    </sofa:reference>
+
+    <!-- dubbo -->
+    <bean id="dubboServiceImpl" class="com.alipay.sofa.rpc.samples.dubbo.DubboServiceImpl"/>
+    <sofa:service ref="dubboServiceImpl" interface="com.alipay.sofa.rpc.samples.dubbo.DubboService">
+        <sofa:binding.dubbo/>
+    </sofa:service>
+    <sofa:reference id="dubboServiceReference" interface="com.alipay.sofa.rpc.samples.dubbo.DubboService">
+        <sofa:binding.dubbo>
+            <sofa:route target-url="dubbo://127.0.0.1:20880"/>
+        </sofa:binding.dubbo>
+    </sofa:reference>
+
+
 </beans>

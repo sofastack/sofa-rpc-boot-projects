@@ -22,18 +22,18 @@ import com.alipay.sofa.rpc.api.future.SofaResponseFuture;
 import com.alipay.sofa.rpc.samples.invoke.HelloFutureService;
 import com.alipay.sofa.rpc.samples.invoke.HelloSyncService;
 import com.alipay.sofa.rpc.samples.threadpool.ThreadPoolService;
+import com.alipay.sofa.test.runner.SofaBootRunner;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
 /**
  *
  * @author <a href="mailto:lw111072@antfin.com">LiWei</a>
  */
-@RunWith(SpringRunner.class)
+@RunWith(SofaBootRunner.class)
 @SpringBootTest(classes = SofaBootRpcSamplesApplication.class)
 public class SofaBootRpcSamplesTest {
 
