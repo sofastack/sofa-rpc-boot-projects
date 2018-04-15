@@ -31,22 +31,6 @@
             <version>2.3.0</version>
         </dependency>
 
-        <!--以下两个依赖用于测试ark插件 -->
-        <!--
-        <dependency>
-            <groupId>com.alipay.sofa</groupId>
-            <artifactId>rpc-sofa-boot-starter</artifactId>
-            <classifier>ark-plugin</classifier>
-            <version>5.3.0</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.alipay.sofa</groupId>
-            <artifactId>sofa-ark-springboot-starter</artifactId>
-            <version>0.2.0</version>
-        </dependency>
-        -->
-
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -96,4 +80,25 @@
             </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>ark</id>
+            <dependencies>
+                <!--以下两个依赖用于测试ark插件 -->
+                <dependency>
+                    <groupId>com.alipay.sofa</groupId>
+                    <artifactId>rpc-sofa-boot-starter</artifactId>
+                    <classifier>ark-plugin</classifier>
+                    <version>5.3.0</version>
+                </dependency>
+
+                <dependency>
+                    <groupId>com.alipay.sofa</groupId>
+                    <artifactId>sofa-ark-springboot-starter</artifactId>
+                    <version>0.2.0</version>
+                </dependency>
+            </dependencies>
+        </profile>
+    </profiles>
 </project>

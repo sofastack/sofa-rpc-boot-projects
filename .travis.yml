@@ -17,7 +17,8 @@ install:
   - sh ./tools/check_format.sh
 
 script:
-  - mvn clean package -Plocal -Dmaven.javadoc.skip=true 
+  - mvn clean package -Dmaven.javadoc.skip=true
+  - mvn clean package -Park -Dmaven.javadoc.skip=true
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
