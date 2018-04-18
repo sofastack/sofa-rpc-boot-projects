@@ -24,14 +24,14 @@ import java.util.Map;
 /**
  * zookeeper 配置
  *
- * 配置格式: rpc.registry.protocol=zookeeper://xxx:2181?k1=v1
+ * 配置格式: com.alipay.sofa.rpc.registry.protocol=zookeeper://xxx:2181?k1=v1
  *
  * @author <a href="mailto:lw111072@antfin.com">LiWei</a>
  */
 public class ZookeeperConfigurator {
 
     /**
-     * 缓存文件地址
+     * 缓存文件地址key
      */
     private static final String              FILE         = "file";
 

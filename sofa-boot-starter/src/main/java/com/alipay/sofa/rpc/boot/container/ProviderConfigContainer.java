@@ -17,13 +17,13 @@
 package com.alipay.sofa.rpc.boot.container;
 
 import com.alipay.sofa.rpc.boot.config.SofaBootRpcConfigConstants;
+import com.alipay.sofa.rpc.boot.log.SofaBootRpcLoggerFactory;
 import com.alipay.sofa.rpc.boot.runtime.binding.RpcBinding;
 import com.alipay.sofa.rpc.config.ProviderConfig;
 import com.alipay.sofa.rpc.config.ServerConfig;
-import com.alipay.sofa.rpc.log.Logger;
-import com.alipay.sofa.rpc.log.LoggerFactory;
 import com.alipay.sofa.rpc.registry.Registry;
 import com.alipay.sofa.runtime.spi.binding.Contract;
+import org.slf4j.Logger;
 import org.springframework.util.StringUtils;
 
 import java.util.Collection;
@@ -36,7 +36,7 @@ import java.util.concurrent.ConcurrentMap;
  * @author <a href="mailto:lw111072@antfin.com">LiWei</a>
  */
 public class ProviderConfigContainer {
-    private static final Logger                                LOGGER                = LoggerFactory
+    private static final Logger                                LOGGER                = SofaBootRpcLoggerFactory
                                                                                          .getLogger(ProviderConfigContainer.class);
 
     /**
@@ -101,6 +101,9 @@ public class ProviderConfigContainer {
             if (!serverConfig.getProtocol().equalsIgnoreCase(SofaBootRpcConfigConstants.RPC_PROTOCOL_DUBBO)) {
                 providerConfig.setRegister(true);
                 registry.register(providerConfig);
+
+                LOGGER.info("service published.  interfaceid[" + providerConfig.getInterfaceId() + "]; protocl[" +
+                    serverConfig.getProtocol() + "]");
             }
         }
     }
@@ -115,6 +118,9 @@ public class ProviderConfigContainer {
             if (serverConfig.getProtocol().equalsIgnoreCase(SofaBootRpcConfigConstants.RPC_PROTOCOL_DUBBO)) {
                 providerConfig.setRegister(true);
                 providerConfig.export();
+
+                LOGGER.info("service published.  interfaceid[" + providerConfig.getInterfaceId() + "]; protocl[" +
+                    serverConfig.getProtocol() + "]");
             }
         }
     }

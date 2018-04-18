@@ -25,9 +25,12 @@ import org.springframework.context.ApplicationContext;
  */
 public class RestSample {
 
-    public void start(ApplicationContext applicationContext) {
+    public String start(ApplicationContext applicationContext) {
         RestService restService = (RestService) applicationContext.getBean("restServiceReference");
 
-        System.out.println(restService.sayRest("rest"));
+        String result = restService.sayRest("rest");
+        System.out.println(result);
+
+        return result;
     }
 }

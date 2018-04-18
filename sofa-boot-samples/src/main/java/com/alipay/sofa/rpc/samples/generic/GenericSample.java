@@ -27,7 +27,7 @@ import org.springframework.context.ApplicationContext;
  */
 public class GenericSample {
 
-    public void start(ApplicationContext applicationContext) {
+    public String start(ApplicationContext applicationContext) {
         GenericService sampleGenericServiceReference = (GenericService) applicationContext
             .getBean("sampleGenericServiceReference");
 
@@ -42,5 +42,7 @@ public class GenericSample {
         System.out.println(result.getType());
         System.out.println(result.getField("name"));
         System.out.println(result.getField("value"));
+
+        return (String) result.getField("value");
     }
 }

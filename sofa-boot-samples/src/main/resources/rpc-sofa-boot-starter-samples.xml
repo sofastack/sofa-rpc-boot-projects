@@ -11,7 +11,6 @@
     <bean id="helloSyncServiceImpl" class="com.alipay.sofa.rpc.samples.invoke.HelloSyncServiceImpl"/>
     <sofa:service ref="helloSyncServiceImpl" interface="com.alipay.sofa.rpc.samples.invoke.HelloSyncService">
         <sofa:binding.bolt/>
-        <sofa:binding.rest/>
     </sofa:service>
     <sofa:reference id="helloSyncServiceReference" interface="com.alipay.sofa.rpc.samples.invoke.HelloSyncService">
         <sofa:binding.bolt/>
@@ -106,10 +105,7 @@
         <sofa:binding.dubbo/>
     </sofa:service>
     <sofa:reference id="dubboServiceReference" interface="com.alipay.sofa.rpc.samples.dubbo.DubboService">
-        <sofa:binding.dubbo>
-            <sofa:route target-url="dubbo://127.0.0.1:20880"/>
-        </sofa:binding.dubbo>
+        <sofa:binding.dubbo/>
     </sofa:reference>
-
 
 </beans>

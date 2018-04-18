@@ -18,6 +18,7 @@ package com.alipay.sofa.rpc.boot.container;
 
 import com.alipay.sofa.rpc.boot.config.SofaBootRpcConfigConstants;
 import com.alipay.sofa.rpc.config.ServerConfig;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -73,7 +74,12 @@ public class ServerConfigContainerTest {
         Assert.assertEquals(7676, serverConfigDubbo.getMaxThreads());
         Assert.assertEquals(6666, serverConfigDubbo.getAccepts());
 
-        //clear
+    }
+
+    @After
+    public void after() {
+        ServerConfigContainer.closeAllServer();
+
         System.clearProperty(SofaBootRpcConfigConstants.BOLT_PORT);
         System.clearProperty(SofaBootRpcConfigConstants.BOLT_IO_THREAD_COUNT);
         System.clearProperty(SofaBootRpcConfigConstants.BOLT_EXECUTOR_THREAD_COUNT);
@@ -91,7 +97,5 @@ public class ServerConfigContainerTest {
         System.clearProperty(SofaBootRpcConfigConstants.DUBBO_IO_THREAD_COUNT);
         System.clearProperty(SofaBootRpcConfigConstants.DUBBO_EXECUTOR_THREAD_COUNT);
         System.clearProperty(SofaBootRpcConfigConstants.DUBBO_ACCEPTS_COUNT);
-
-        ServerConfigContainer.closeAllServer();
     }
 }

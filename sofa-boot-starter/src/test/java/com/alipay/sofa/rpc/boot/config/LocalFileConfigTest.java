@@ -14,25 +14,41 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.alipay.sofa.rpc.samples.dubbo;
+package com.alipay.sofa.rpc.boot.config;
 
-import org.springframework.context.ApplicationContext;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  *
  * @author liangen
- * @version $Id: DubboSample.java, v 0.1 2018年04月15日 下午6:29 liangen Exp $
+ * @version $Id: LocalFileConfigTest.java, v 0.1 2018年04月17日 下午2:51 liangen Exp $
  */
-public class DubboSample {
+public class LocalFileConfigTest {
 
-    public String start(ApplicationContext applicationContext) throws InterruptedException {
-        DubboService dubboService = (DubboService) applicationContext.getBean("dubboServiceReference");
+    @Test
+    public void test() {
+        String configA = "local";
 
-        Thread.sleep(5000);
+        LocalFileConfigurator.parseConfig(configA);
+        Assert.assertEquals(null, LocalFileConfigurator.getFile());
 
-        String result = dubboService.sayDubbo("dubbo");
-        System.out.println(result);
+        String config = "local:/home/admin/registry";
 
-        return result;
+        LocalFileConfigurator.parseConfig(config);
+        Assert.assertEquals("/home/admin/registry", LocalFileConfigurator.getFile());
     }
+
+    @Before
+    public void before() {
+        LocalFileConfigurator.setFile(null);
+    }
+
+    @After
+    public void after() {
+        LocalFileConfigurator.setFile(null);
+    }
+
 }

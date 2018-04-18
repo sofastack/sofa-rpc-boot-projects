@@ -24,12 +24,15 @@ import org.springframework.context.ApplicationContext;
  */
 public class DirectSample {
 
-    public void start(ApplicationContext applicationContext) throws InterruptedException {
+    public String start(ApplicationContext applicationContext) throws InterruptedException {
 
         DirectService directService = (DirectService) applicationContext.getBean("directServiceReference");
 
         Thread.sleep(5000);
 
-        System.out.println(directService.sayDirect("direct"));
+        String result = directService.sayDirect("direct");
+        System.out.println(result);
+
+        return result;
     }
 }

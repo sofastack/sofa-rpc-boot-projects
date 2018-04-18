@@ -26,11 +26,14 @@ import org.springframework.context.ApplicationContext;
  */
 public class ThreadPoolSample {
 
-    public void start(ApplicationContext applicationContext) {
+    public String start(ApplicationContext applicationContext) {
         ThreadPoolService threadPoolService = (ThreadPoolService) applicationContext
             .getBean("threadPoolServiceReference");
 
-        System.out.println(threadPoolService.sayThreadPool("threadPool"));
+        String result = threadPoolService.sayThreadPool("threadPool");
+        System.out.println(result);
+
+        return result;
 
     }
 }

@@ -16,7 +16,7 @@
  */
 package com.alipay.sofa.rpc.boot.common;
 
-import com.alipay.sofa.rpc.boot.log.RpcLoggerFactory;
+import com.alipay.sofa.rpc.boot.log.SofaBootRpcLoggerFactory;
 import org.slf4j.Logger;
 
 import java.util.concurrent.ThreadPoolExecutor;
@@ -31,7 +31,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class RpcThreadPoolMonitor {
 
-    private static final Logger LOGGER     = RpcLoggerFactory.getLogger("RPC-TR-THREADPOOL");
+    private static final Logger LOGGER     = SofaBootRpcLoggerFactory.getLogger("RPC-BOLT-THREADPOOL");
 
     /**
      * 线程池

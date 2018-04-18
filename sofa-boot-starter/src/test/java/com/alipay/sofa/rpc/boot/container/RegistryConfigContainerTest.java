@@ -19,7 +19,9 @@ package com.alipay.sofa.rpc.boot.container;
 import com.alipay.sofa.rpc.boot.common.SofaBootRpcRuntimeException;
 import com.alipay.sofa.rpc.boot.config.SofaBootRpcConfigConstants;
 import com.alipay.sofa.rpc.config.RegistryConfig;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -31,8 +33,7 @@ public class RegistryConfigContainerTest {
     public void testGetRegistryConfig() {
 
         System.setProperty(SofaBootRpcConfigConstants.REGISTRY_PROTOCOL,
-            SofaBootRpcConfigConstants.REGISTRY_PROTOCOL_LOCAL);
-        System.setProperty(SofaBootRpcConfigConstants.REGISTRY_FILE_PATH, "/home/admin/local");
+            "local:/home/admin/local");
 
         RegistryConfig registryConfigLocal = RegistryConfigContainer.createLocalRegistryConfig();
         Assert.assertEquals("local", registryConfigLocal.getProtocol());
@@ -54,10 +55,18 @@ public class RegistryConfigContainerTest {
             Assert.assertTrue(e instanceof SofaBootRpcRuntimeException);
             Assert.assertEquals("protocl[no] is not supported", e.getMessage());
         }
+    }
 
-        //clear
+    @Before
+    public void before() {
         System.clearProperty(SofaBootRpcConfigConstants.REGISTRY_PROTOCOL);
-        System.clearProperty(SofaBootRpcConfigConstants.REGISTRY_FILE_PATH);
+
+    }
+
+    @After
+    public void after() {
+        System.clearProperty(SofaBootRpcConfigConstants.REGISTRY_PROTOCOL);
+
     }
 
 }

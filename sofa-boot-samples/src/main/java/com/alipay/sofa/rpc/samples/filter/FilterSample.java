@@ -26,10 +26,13 @@ import org.springframework.context.ApplicationContext;
  */
 public class FilterSample {
 
-    public void start(ApplicationContext applicationContext) {
+    public String start(ApplicationContext applicationContext) {
         FilterService filterServiceReference = (FilterService) applicationContext.getBean("filterServiceReference");
 
-        System.out.println(filterServiceReference.sayFilter("filter"));
+        String result = filterServiceReference.sayFilter("filter");
+        System.out.println(result);
+
+        return result;
     }
 
 }

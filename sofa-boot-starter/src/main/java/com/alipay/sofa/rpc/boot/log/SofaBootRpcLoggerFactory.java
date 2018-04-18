@@ -23,12 +23,12 @@ import com.alipay.sofa.common.log.LoggerSpaceManager;
  * SOFABoot RPC日志工程
  * @author <a href="mailto:lw111072@antfin.com">LiWei</a>
  */
-public class RpcLoggerFactory {
+public class SofaBootRpcLoggerFactory {
 
     /**
      * 日志命名空间。对应的日志路径配置 com/alipay/sofa/rpc/boot/log
      */
-    public static final String REST_LOG_SPACE = "com.alipay.sofa.rpc.boot";
+    public static final String RPC_LOG_SPACE = "com.alipay.sofa.rpc.boot";
 
     /**
      * 获取Logger
@@ -51,6 +51,6 @@ public class RpcLoggerFactory {
         if (name == null || name.isEmpty()) {
             return null;
         }
-        return LoggerSpaceManager.getLoggerBySpace(name, REST_LOG_SPACE);
+        return LoggerSpaceManager.getLoggerBySpace(name, RPC_LOG_SPACE);
     }
 }

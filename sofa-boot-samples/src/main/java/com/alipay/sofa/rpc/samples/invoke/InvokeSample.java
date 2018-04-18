@@ -27,7 +27,7 @@ import org.springframework.context.ApplicationContext;
  */
 public class InvokeSample {
 
-    public void start(ApplicationContext applicationContext) throws InterruptedException {
+    public String start(ApplicationContext applicationContext) throws InterruptedException {
 
         HelloSyncService helloSyncServiceReference = (HelloSyncService) applicationContext
             .getBean("helloSyncServiceReference");
@@ -36,7 +36,8 @@ public class InvokeSample {
         HelloCallbackService helloCallbackServiceReference = (HelloCallbackService) applicationContext
             .getBean("helloCallbackServiceReference");
 
-        System.out.println(helloSyncServiceReference.saySync("sync"));
+        String result = helloSyncServiceReference.saySync("sync");
+        System.out.println(result);
 
         helloFutureServiceReference.sayFuture("future");
         System.out.println(SofaResponseFuture.getResponse(1000, true));
@@ -44,6 +45,8 @@ public class InvokeSample {
         helloCallbackServiceReference.sayCallback("callback");
 
         Thread.sleep(3000);
+
+        return result;
     }
 
 }

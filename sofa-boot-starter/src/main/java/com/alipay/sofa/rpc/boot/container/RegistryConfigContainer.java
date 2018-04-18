@@ -17,6 +17,7 @@
 package com.alipay.sofa.rpc.boot.container;
 
 import com.alipay.sofa.rpc.boot.common.SofaBootRpcRuntimeException;
+import com.alipay.sofa.rpc.boot.config.LocalFileConfigurator;
 import com.alipay.sofa.rpc.boot.config.SofaBootRpcConfig;
 import com.alipay.sofa.rpc.boot.config.SofaBootRpcConfigConstants;
 import com.alipay.sofa.rpc.boot.config.ZookeeperConfigurator;
@@ -97,8 +98,9 @@ public class RegistryConfigContainer {
      * @return local RegistryConfig
      */
     static RegistryConfig createLocalRegistryConfig() {
+        LocalFileConfigurator.parseConfig();
 
-        String filePath = SofaBootRpcConfig.getPropertyAllCircumstances(SofaBootRpcConfigConstants.REGISTRY_FILE_PATH);
+        String filePath = LocalFileConfigurator.getFile();
         if (StringUtils.isBlank(filePath)) {
             filePath = SofaBootRpcConfigConstants.REGISTRY_FILE_PATH_DEFAULT;
         }

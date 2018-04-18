@@ -33,61 +33,59 @@ public class SofaBootRpcConfigConstants {
     public static final String  LOG_PATH                                     = "logging.path";
 
     /** fault-tolerance */
-    public static final String  RPC_AFT_REGULATION_EFFECTIVE                 = "rpc.aft.regulation.effective";
+    public static final String  RPC_AFT_REGULATION_EFFECTIVE                 = "com.alipay.sofa.rpc.aft.regulation.effective";
 
-    public static final String  RPC_AFT_DEGRADE_EFFECTIVE                    = "rpc.aft.degrade.effective";
+    public static final String  RPC_AFT_DEGRADE_EFFECTIVE                    = "com.alipay.sofa.rpc.aft.degrade.effective";
 
-    public static final String  RPC_AFT_TIME_WINDOW                          = "rpc.aft.time.window";
+    public static final String  RPC_AFT_TIME_WINDOW                          = "com.alipay.sofa.rpc.aft.time.window";
 
-    public static final String  RPC_AFT_LEAST_WINDOW_COUNT                   = "rpc.aft.least.window.count";
+    public static final String  RPC_AFT_LEAST_WINDOW_COUNT                   = "com.alipay.sofa.rpc.aft.least.window.count";
 
-    public static final String  RPC_AFT_LEAST_WINDOW_EXCEPTION_RATE_MULTIPLE = "rpc.aft.least.window.exception.rate.multiple";
+    public static final String  RPC_AFT_LEAST_WINDOW_EXCEPTION_RATE_MULTIPLE = "com.alipay.sofa.rpc.aft.least.window.exception.rate.multiple";
 
-    public static final String  RPC_AFT_WEIGHT_DEGRADE_RATE                  = "rpc.aft.weight.degrade.rate";
+    public static final String  RPC_AFT_WEIGHT_DEGRADE_RATE                  = "com.alipay.sofa.rpc.aft.weight.degrade.rate";
 
-    public static final String  RPC_AFT_WEIGHT_RECOVER_RATE                  = "rpc.aft.weight.recover.rate";
+    public static final String  RPC_AFT_WEIGHT_RECOVER_RATE                  = "com.alipay.sofa.rpc.aft.weight.recover.rate";
 
-    public static final String  RPC_AFT_DEGRADE_LEAST_WEIGHT                 = "rpc.aft.degrade.least.weight";
+    public static final String  RPC_AFT_DEGRADE_LEAST_WEIGHT                 = "com.alipay.sofa.rpc.aft.degrade.least.weight";
 
-    public static final String  RPC_AFT_DEGRADE_MAX_IP_COUNT                 = "rpc.aft.degrade.max.ip.count";
+    public static final String  RPC_AFT_DEGRADE_MAX_IP_COUNT                 = "com.alipay.sofa.rpc.aft.degrade.max.ip.count";
 
     /** bolt */
-    public static final String  BOLT_PORT                                    = "bolt.port";
+    public static final String  BOLT_PORT                                    = "com.alipay.sofa.rpc.bolt.port";
 
-    public static final String  BOLT_IO_THREAD_COUNT                         = "bolt.io.thread.count";
+    public static final String  BOLT_IO_THREAD_COUNT                         = "com.alipay.sofa.rpc.bolt.io.thread.count";
 
-    public static final String  BOLT_EXECUTOR_THREAD_COUNT                   = "bolt.executor.thread.count";
+    public static final String  BOLT_EXECUTOR_THREAD_COUNT                   = "com.alipay.sofa.rpc.bolt.executor.thread.count";
 
-    public static final String  BOLT_ACCEPTS_COUNT                           = "bolt.accepts.count";
+    public static final String  BOLT_ACCEPTS_COUNT                           = "com.alipay.sofa.rpc.bolt.accepts.count";
 
     /** rest */
-    public static final String  REST_HOSTNAME                                = "rest.hostname";
+    public static final String  REST_HOSTNAME                                = "com.alipay.sofa.rpc.rest.hostname";
 
-    public static final String  REST_PORT                                    = "rest.port";
+    public static final String  REST_PORT                                    = "com.alipay.sofa.rpc.rest.port";
 
-    public static final String  REST_IO_THREAD_COUNT                         = "rest.io.thread.count";
+    public static final String  REST_IO_THREAD_COUNT                         = "com.alipay.sofa.rpc.rest.io.thread.count";
 
-    public static final String  REST_EXECUTOR_THREAD_COUNT                   = "rest.executor.thread.count";
+    public static final String  REST_EXECUTOR_THREAD_COUNT                   = "com.alipay.sofa.rpc.rest.executor.thread.count";
 
-    public static final String  REST_MAX_REQUEST_SIZE                        = "rest.max.request.size";
+    public static final String  REST_MAX_REQUEST_SIZE                        = "com.alipay.sofa.rpc.rest.max.request.size";
 
-    public static final String  REST_TELNET                                  = "rest.telnet";
+    public static final String  REST_TELNET                                  = "com.alipay.sofa.rpc.rest.telnet";
 
-    public static final String  REST_DAEMON                                  = "rest.daemon";
+    public static final String  REST_DAEMON                                  = "com.alipay.sofa.rpc.rest.daemon";
 
     /** dubbo */
-    public static final String  DUBBO_PORT                                   = "dubbo.port";
+    public static final String  DUBBO_PORT                                   = "com.alipay.sofa.rpc.dubbo.port";
 
-    public static final String  DUBBO_IO_THREAD_COUNT                        = "dubbo.io.thread.count";
+    public static final String  DUBBO_IO_THREAD_COUNT                        = "com.alipay.sofa.rpc.dubbo.io.thread.count";
 
-    public static final String  DUBBO_EXECUTOR_THREAD_COUNT                  = "dubbo.executor.thread.count";
+    public static final String  DUBBO_EXECUTOR_THREAD_COUNT                  = "com.alipay.sofa.rpc.dubbo.executor.thread.count";
 
-    public static final String  DUBBO_ACCEPTS_COUNT                          = "dubbo.accepts.count";
+    public static final String  DUBBO_ACCEPTS_COUNT                          = "com.alipay.sofa.rpc.dubbo.accepts.count";
 
     /** registry */
-    public static final String  REGISTRY_PROTOCOL                            = "rpc.registry.protocol";
-
-    public static final String  REGISTRY_FILE_PATH                           = "rpc.registry.file.path";
+    public static final String  REGISTRY_PROTOCOL                            = "com.alipay.sofa.rpc.registry.address";
 
     /** key end ********************************************************/
 
@@ -97,7 +95,7 @@ public class SofaBootRpcConfigConstants {
     public static final int     REST_PORT_DEFAULT                            = 8341;
     public static final int     REST_IO_THREAD_COUNT_DEFAULT                 = SystemInfo.getCpuCores() * 2;
     public static final int     REST_EXECUTOR_THREAD_COUNT_DEFAULT           = 200;
-    public static final int     REST_MAX_REQUEST_SIZE_DEFAULT                = 500;
+    public static final int     REST_MAX_REQUEST_SIZE_DEFAULT                = 1024 * 1024 * 10;
     public static final boolean REST_TELNET_DEFAULT                          = true;
     public static final boolean REST_DAEMON_DEFAULT                          = true;
 

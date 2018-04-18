@@ -20,12 +20,12 @@ import com.alipay.sofa.rpc.boot.common.RpcThreadPoolMonitor;
 import com.alipay.sofa.rpc.boot.common.SofaBootRpcRuntimeException;
 import com.alipay.sofa.rpc.boot.config.SofaBootRpcConfig;
 import com.alipay.sofa.rpc.boot.config.SofaBootRpcConfigConstants;
+import com.alipay.sofa.rpc.boot.log.SofaBootRpcLoggerFactory;
 import com.alipay.sofa.rpc.config.ServerConfig;
-import com.alipay.sofa.rpc.log.Logger;
-import com.alipay.sofa.rpc.log.LoggerFactory;
 import com.alipay.sofa.rpc.server.Server;
 import com.alipay.sofa.rpc.server.ServerFactory;
 import com.alipay.sofa.rpc.server.bolt.BoltServer;
+import org.slf4j.Logger;
 import org.springframework.util.StringUtils;
 
 import java.util.concurrent.ThreadPoolExecutor;
@@ -37,7 +37,7 @@ import java.util.concurrent.ThreadPoolExecutor;
  */
 public class ServerConfigContainer {
 
-    private static final Logger          LOGGER     = LoggerFactory.getLogger(ServerConfigContainer.class);
+    private static final Logger          LOGGER     = SofaBootRpcLoggerFactory.getLogger(ServerConfigContainer.class);
 
     /**
      * bolt ServerConfig
@@ -85,7 +85,6 @@ public class ServerConfigContainer {
         if (restServerConfig != null) {
             restServerConfig.buildIfAbsent().start();
         }
-
     }
 
     /**

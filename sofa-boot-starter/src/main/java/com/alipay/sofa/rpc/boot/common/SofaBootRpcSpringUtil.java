@@ -16,9 +16,9 @@
  */
 package com.alipay.sofa.rpc.boot.common;
 
+import com.alipay.sofa.rpc.boot.log.SofaBootRpcLoggerFactory;
 import com.alipay.sofa.rpc.log.LogCodes;
-import com.alipay.sofa.rpc.log.Logger;
-import com.alipay.sofa.rpc.log.LoggerFactory;
+import org.slf4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.util.StringUtils;
 
@@ -30,7 +30,7 @@ import org.springframework.util.StringUtils;
  */
 public class SofaBootRpcSpringUtil {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(SofaBootRpcSpringUtil.class);
+    private static final Logger LOGGER = SofaBootRpcLoggerFactory.getLogger(SofaBootRpcSpringUtil.class);
 
     /**
      * 根据配置的ref以及class字符串，获得真正的spring bean
@@ -49,7 +49,8 @@ public class SofaBootRpcSpringUtil {
 
         if (StringUtils.hasText(beanRef)) {
             if (applicationContext == null) {
-                LOGGER.errorWithApp(appName, LogCodes.ERROR_APPLICATION_CONTEXT_NULL, beanRef);
+                LOGGER.error("get bean from spring failed. beanRef[" + beanRef + "];classLoader[" + appClassLoader +
+                    "];appName[" + appName + "]");
             } else {
                 callbackHandler = applicationContext.getBean(beanRef);
             }
@@ -77,7 +78,8 @@ public class SofaBootRpcSpringUtil {
 
         if (StringUtils.hasText(beanRef)) {
             if (applicationContext == null) {
-                LOGGER.errorWithApp(appName, LogCodes.ERROR_APPLICATION_CONTEXT_NULL, beanRef);
+                LOGGER.error("get bean from spring failed. beanRef[" + beanRef + "];classLoader[" + appClassLoader +
+                    "];appName[" + appName + "]");
             } else {
                 object = applicationContext.getBean(beanRef);
             }
@@ -100,7 +102,8 @@ public class SofaBootRpcSpringUtil {
         try {
             return Class.forName(clazz, true, loader).newInstance();
         } catch (Exception e) {
-            LOGGER.errorWithApp(appName, LogCodes.ERROR_PROXY_BINDING_CLASS_CANNOT_FOUND, clazz, e);
+            LOGGER.error("new instance failed. clazz[" + clazz + "];classLoader[" + loader + "];appName[" + appName +
+                "]", e);
             throw new RuntimeException(LogCodes.getLog(
                 LogCodes.ERROR_PROXY_BINDING_CLASS_CANNOT_FOUND, clazz), e);
         }
