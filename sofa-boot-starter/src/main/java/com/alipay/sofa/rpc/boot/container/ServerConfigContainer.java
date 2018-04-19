@@ -78,7 +78,9 @@ public class ServerConfigContainer {
             if (threadPoolExecutor != null) {
                 new RpcThreadPoolMonitor(threadPoolExecutor).start();
             } else {
-                LOGGER.warn("the business threadpool can not be get");
+                if (LOGGER.isWarnEnabled()) {
+                    LOGGER.warn("the business threadpool can not be get");
+                }
             }
         }
 

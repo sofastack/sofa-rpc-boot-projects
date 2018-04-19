@@ -89,7 +89,7 @@ public class RegistryConfigContainer {
 
             return zookeeperRegistryConfig;
         } else {
-            throw new SofaBootRpcRuntimeException("protocl[" + registryConfig + "] is not supported");
+            throw new SofaBootRpcRuntimeException("protocol[" + registryConfig + "] is not supported");
         }
     }
 

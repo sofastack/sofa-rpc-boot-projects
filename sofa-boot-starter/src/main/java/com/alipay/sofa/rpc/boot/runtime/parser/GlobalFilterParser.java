@@ -49,16 +49,22 @@ public class GlobalFilterParser extends AbstractSimpleBeanDefinitionParser imple
 
         if (StringUtils.hasText(filterId)) {
             RpcFilterContainer.addFilterId(filterId);
-            LOGGER.info("global filter take effect[" + filterId + "]");
+            if (LOGGER.isInfoEnabled()) {
+                LOGGER.info("global filter take effect[" + filterId + "]");
+            }
             return;
         }
         if (StringUtils.hasText(filterClass)) {
             RpcFilterContainer.addFilterClass(filterClass);
-            LOGGER.info("global filter take effect[" + filterClass + "]");
+            if (LOGGER.isInfoEnabled()) {
+                LOGGER.info("global filter take effect[" + filterClass + "]");
+            }
             return;
         }
 
-        LOGGER.warn("both the ref attr and class attr is blank, this rpc global filter is invalid");
+        if (LOGGER.isWarnEnabled()) {
+            LOGGER.warn("both the ref attr and class attr is blank, this rpc global filter is invalid");
+        }
 
     }
 

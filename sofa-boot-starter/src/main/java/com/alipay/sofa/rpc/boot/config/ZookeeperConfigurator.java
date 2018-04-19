@@ -24,7 +24,7 @@ import java.util.Map;
 /**
  * zookeeper 配置
  *
- * 配置格式: com.alipay.sofa.rpc.registry.protocol=zookeeper://xxx:2181?k1=v1
+ * 配置格式: com.alipay.sofa.rpc.registry.address=zookeeper://xxx:2181?k1=v1
  *
  * @author <a href="mailto:lw111072@antfin.com">LiWei</a>
  */

@@ -84,9 +84,7 @@ public class RpcThreadPoolMonitor {
                                 try {
                                     sleep(30000);
                                 } catch (InterruptedException e) {
-                                    if (LOGGER.isInfoEnabled()) {
-                                        LOGGER.error("Error happen the thread pool watch sleep ");
-                                    }
+                                    LOGGER.error("Error happen the thread pool watch sleep ");
                                 }
                             }
                         }

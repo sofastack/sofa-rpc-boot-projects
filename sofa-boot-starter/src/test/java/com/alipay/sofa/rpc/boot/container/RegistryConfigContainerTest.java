@@ -53,7 +53,7 @@ public class RegistryConfigContainerTest {
             Assert.fail("No Exception thrown");
         } catch (Exception e) {
             Assert.assertTrue(e instanceof SofaBootRpcRuntimeException);
-            Assert.assertEquals("protocl[no] is not supported", e.getMessage());
+            Assert.assertEquals("protocol[no] is not supported", e.getMessage());
         }
     }
 
