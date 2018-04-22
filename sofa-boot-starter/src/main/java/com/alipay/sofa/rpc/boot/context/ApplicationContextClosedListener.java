@@ -18,6 +18,7 @@ package com.alipay.sofa.rpc.boot.context;
 
 import com.alipay.sofa.rpc.boot.container.ProviderConfigContainer;
 import com.alipay.sofa.rpc.boot.container.ServerConfigContainer;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextClosedEvent;
@@ -25,21 +26,27 @@ import org.springframework.context.event.ContextStoppedEvent;
 import org.springframework.stereotype.Component;
 
 /**
- *
  * Spring上下文监听器.负责关闭SOFABoot RPC 的资源。
  *
  * @author <a href="mailto:lw111072@antfin.com">LiWei</a>
  */
 @Component
 public class ApplicationContextClosedListener implements ApplicationListener {
+    private final ProviderConfigContainer providerConfigContainer;
+    private final ServerConfigContainer   serverConfigContainer;
+
+    @Autowired
+    public ApplicationContextClosedListener(ProviderConfigContainer providerConfigContainer,
+                                            ServerConfigContainer serverConfigContainer) {
+        this.providerConfigContainer = providerConfigContainer;
+        this.serverConfigContainer = serverConfigContainer;
+    }
 
     @Override
     public void onApplicationEvent(ApplicationEvent event) {
         if ((event instanceof ContextClosedEvent) || (event instanceof ContextStoppedEvent)) {
-
-            ProviderConfigContainer.unExportAllProviderConfig();
-
-            ServerConfigContainer.closeAllServer();
+            providerConfigContainer.unExportAllProviderConfig();
+            serverConfigContainer.closeAllServer();
         }
     }
 }

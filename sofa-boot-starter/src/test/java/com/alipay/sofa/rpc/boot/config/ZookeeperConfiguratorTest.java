@@ -14,19 +14,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.alipay.sofa.rpc.boot.runtime.parser;
+package com.alipay.sofa.rpc.boot.config;
+
+import org.junit.Assert;
+import org.junit.Test;
 
 /**
- * 全局 Filter 的元素和属性。
- *
  * @author <a href="mailto:lw111072@antfin.com">LiWei</a>
  */
-public class GlobalFilterXmlConstants {
+public class ZookeeperConfiguratorTest {
 
-    public static final String TAG_GLOBAL_FILTER = "rpc-global-filter";
+    @Test
+    public void test() {
+        ZookeeperConfigurator zookeeperConfigurator = new ZookeeperConfigurator(new SofaBootRpcProperties(null));
+        String config = "zookeeper://127.0.0.1:2181?aaa=111&rrr=666&file=/host/zk";
+        zookeeperConfigurator.parseConfig(config);
 
-    public static final String TAG_REF           = "ref";
-
-    public static final String TAG_CLASS         = "class";
-
+        Assert.assertEquals("111", zookeeperConfigurator.getParamValue("aaa"));
+        Assert.assertEquals("666", zookeeperConfigurator.getParamValue("rrr"));
+        Assert.assertEquals("127.0.0.1:2181", zookeeperConfigurator.getAddress());
+        Assert.assertEquals("/host/zk", zookeeperConfigurator.getFile());
+    }
 }

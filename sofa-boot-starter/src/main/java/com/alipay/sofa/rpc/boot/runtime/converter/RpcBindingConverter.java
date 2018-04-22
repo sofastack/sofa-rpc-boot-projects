@@ -19,7 +19,7 @@ package com.alipay.sofa.rpc.boot.runtime.converter;
 import com.alipay.sofa.rpc.boot.common.SofaBootRpcParserUtil;
 import com.alipay.sofa.rpc.boot.common.SofaBootRpcRuntimeException;
 import com.alipay.sofa.rpc.boot.common.SofaBootRpcSpringUtil;
-import com.alipay.sofa.rpc.boot.container.RpcFilterContainer;
+import com.alipay.sofa.rpc.boot.container.SpringBridge;
 import com.alipay.sofa.rpc.boot.runtime.binding.RpcBinding;
 import com.alipay.sofa.rpc.boot.runtime.binding.RpcBindingMethodInfo;
 import com.alipay.sofa.rpc.boot.runtime.binding.RpcBindingXmlConstants;
@@ -87,8 +87,8 @@ public abstract class RpcBindingConverter implements BindingConverter<RpcBinding
 
         parseGlobalAttrs(globalAttrsElement, param, bindingConverterContext);
         parseFilter(globalAttrsElement, param, bindingConverterContext);
-        parseMethod(methodElements, param, bindingConverterContext);
-        parseRoute(routeElement, param, bindingConverterContext);
+        parseMethod(methodElements, param);
+        parseRoute(routeElement, param);
 
         return convert(param, bindingConverterContext);
 
@@ -96,6 +96,7 @@ public abstract class RpcBindingConverter implements BindingConverter<RpcBinding
 
     /**
      * 创建 RpcBinding
+     *
      * @param bindingParam       the RpcBindingParam
      * @param applicationContext spring 上下文
      * @param inBinding          是否是服务引用
@@ -106,12 +107,12 @@ public abstract class RpcBindingConverter implements BindingConverter<RpcBinding
 
     /**
      * 创建 RpcBindingParam
+     *
      * @return the RpcBindingParam
      */
     protected abstract RpcBindingParam createRpcBindingParam();
 
-    private void parseMethod(List<Element> elements, RpcBindingParam param,
-                             BindingConverterContext bindingConverterContext) {
+    private void parseMethod(List<Element> elements, RpcBindingParam param) {
 
         if (CollectionUtils.isEmpty(elements)) {
             return;
@@ -225,16 +226,12 @@ public abstract class RpcBindingConverter implements BindingConverter<RpcBinding
     }
 
     private void parseFilter(Element element, RpcBindingParam param, BindingConverterContext bindingConverterContext) {
-        if (element == null) {
-            return;
-        }
-
-        List<Filter> filters = new ArrayList<Filter>();
-        List<String> filterNames = new ArrayList<String>();
-
-        filters.addAll(RpcFilterContainer.getFilters(bindingConverterContext.getApplicationContext()));
+        List<Filter> filters = new ArrayList<Filter>(SpringBridge.getRpcFilterContainer().getFilters(
+            bindingConverterContext.getApplicationContext()));
 
         if (element != null) {
+            List<String> filterNames = new ArrayList<String>();
+
             String filterStrs = element.getAttribute(RpcBindingXmlConstants.TAG_FILTER);
             if (StringUtils.hasText(filterStrs)) {
 
@@ -270,8 +267,7 @@ public abstract class RpcBindingConverter implements BindingConverter<RpcBinding
         param.setFilters(filters);
     }
 
-    private void parseRoute(Element routeElement, RpcBindingParam param,
-                            BindingConverterContext bindingConverterContext) {
+    private void parseRoute(Element routeElement, RpcBindingParam param) {
         if (routeElement == null) {
             return;
         }

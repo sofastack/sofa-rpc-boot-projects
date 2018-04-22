@@ -25,7 +25,6 @@ import com.alipay.sofa.rpc.samples.rest.RestSample;
 import com.alipay.sofa.rpc.samples.threadpool.ThreadPoolSample;
 import com.alipay.sofa.test.runner.SofaBootRunner;
 import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +32,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
 
 /**
- *
  * @author <a href="mailto:lw111072@antfin.com">LiWei</a>
  */
 @RunWith(SofaBootRunner.class)
@@ -45,44 +43,37 @@ public class SofaBootRpcSamplesTest {
 
     @Test
     public void testInvoke() throws InterruptedException {
-
         Assert.assertEquals("sync", new InvokeSample().start(applicationContext));
     }
 
     @Test
-    public void testGeneric() throws InterruptedException {
-
+    public void testGeneric() {
         Assert.assertEquals("sample generic value", new GenericSample().start(applicationContext));
     }
 
     @Test
-    public void testFilter() throws InterruptedException {
-
+    public void testFilter() {
         Assert.assertEquals("filter", new FilterSample().start(applicationContext));
     }
 
     @Test
     public void testDirect() throws InterruptedException {
-
         Assert.assertEquals("direct", new DirectSample().start(applicationContext));
     }
 
     @Test
-    public void testThreadPool() throws InterruptedException {
-
+    public void testThreadPool() {
         Assert.assertTrue(new ThreadPoolSample().start(applicationContext).startsWith(
             "threadPool[customerThreadPool_name"));
     }
 
     @Test
-    public void testRest() throws InterruptedException {
-
+    public void testRest() {
         Assert.assertEquals("rest", new RestSample().start(applicationContext));
     }
 
     @Test
     public void testDubbo() throws InterruptedException {
-
         Assert.assertEquals("dubbo", new DubboSample().start(applicationContext));
     }
 }

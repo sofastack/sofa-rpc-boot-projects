@@ -16,7 +16,7 @@
  */
 package com.alipay.sofa.rpc.boot.runtime.adapter;
 
-import com.alipay.sofa.rpc.boot.container.ProviderConfigContainer;
+import com.alipay.sofa.rpc.boot.container.SpringBridge;
 import com.alipay.sofa.rpc.boot.runtime.binding.RpcBinding;
 import com.alipay.sofa.rpc.boot.runtime.binding.RpcBindingType;
 import com.alipay.sofa.rpc.log.LogCodes;
@@ -29,6 +29,7 @@ import com.alipay.sofa.runtime.spi.component.SofaRuntimeContext;
  * @author <a href="mailto:lw111072@antfin.com">LiWei</a>
  */
 public class DubboBindingAdapter extends RpcBindingAdapter {
+
     @Override
     public BindingType getBindingType() {
         return RpcBindingType.DUBBO_BINDING_TYPE;
@@ -36,7 +37,6 @@ public class DubboBindingAdapter extends RpcBindingAdapter {
 
     @Override
     public Object outBinding(Object contract, RpcBinding binding, Object target, SofaRuntimeContext sofaRuntimeContext) {
-
         return Boolean.TRUE;
     }
 
@@ -44,8 +44,8 @@ public class DubboBindingAdapter extends RpcBindingAdapter {
     public void postUnoutBinding(Object contract, RpcBinding binding, Object target,
                                  SofaRuntimeContext sofaRuntimeContext) {
         try {
-            String key = ProviderConfigContainer.createUniqueName((Contract) contract, binding);
-            ProviderConfigContainer.removeProviderConfig(key);
+            String key = SpringBridge.getProviderConfigContainer().createUniqueName((Contract) contract, binding);
+            SpringBridge.getProviderConfigContainer().removeProviderConfig(key);
         } catch (Exception e) {
             throw new ServiceRuntimeException(
                 LogCodes.getLog(LogCodes.ERROR_PROXY_POST_UNPUBLISH_FAIL), e);

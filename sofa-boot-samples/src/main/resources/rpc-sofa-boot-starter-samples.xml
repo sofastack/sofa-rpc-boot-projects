@@ -2,11 +2,10 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:sofa="http://sofastack.io/schema/sofaboot"
-       xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
             http://sofastack.io/schema/sofaboot http://sofastack.io/schema/sofaboot.xsd"
        default-autowire="byName">
-    
+
     <!-- invoke sync-->
     <bean id="helloSyncServiceImpl" class="com.alipay.sofa.rpc.samples.invoke.HelloSyncServiceImpl"/>
     <sofa:service ref="helloSyncServiceImpl" interface="com.alipay.sofa.rpc.samples.invoke.HelloSyncService">
@@ -33,12 +32,13 @@
         <sofa:binding.bolt/>
     </sofa:service>
     <bean id="callbackImpl" class="com.alipay.sofa.rpc.samples.invoke.CallbackImpl"/>
-    <sofa:reference id="helloCallbackServiceReference" interface="com.alipay.sofa.rpc.samples.invoke.HelloCallbackService">
+    <sofa:reference id="helloCallbackServiceReference"
+                    interface="com.alipay.sofa.rpc.samples.invoke.HelloCallbackService">
         <sofa:binding.bolt>
             <sofa:global-attrs type="callback" callback-ref="callbackImpl"/>
         </sofa:binding.bolt>
     </sofa:reference>
-    
+
     <!-- direct -->
     <bean id="directServiceImpl" class="com.alipay.sofa.rpc.samples.direct.DirectServiceImpl"/>
     <sofa:service ref="directServiceImpl" interface="com.alipay.sofa.rpc.samples.direct.DirectService">
@@ -46,7 +46,7 @@
     </sofa:service>
     <sofa:reference id="directServiceReference" interface="com.alipay.sofa.rpc.samples.direct.DirectService">
         <sofa:binding.bolt>
-            <sofa:route target-url="bolt://127.0.0.1:22000"/>
+            <sofa:route target-url="bolt://127.0.0.1:12200"/>
         </sofa:binding.bolt>
     </sofa:reference>
 
@@ -72,7 +72,7 @@
     <sofa:reference id="filterServiceReference" interface="com.alipay.sofa.rpc.samples.filter.FilterService">
         <sofa:binding.bolt/>
     </sofa:reference>
-    
+
     <!-- thread pool -->
     <bean id="customerThreadPool" class="com.alipay.sofa.rpc.server.UserThreadPool" init-method="init">
         <property name="corePoolSize" value="10"/>
@@ -86,7 +86,8 @@
             <sofa:global-attrs thread-pool-ref="customerThreadPool"/>
         </sofa:binding.bolt>
     </sofa:service>
-    <sofa:reference id="threadPoolServiceReference" interface="com.alipay.sofa.rpc.samples.threadpool.ThreadPoolService">
+    <sofa:reference id="threadPoolServiceReference"
+                    interface="com.alipay.sofa.rpc.samples.threadpool.ThreadPoolService">
         <sofa:binding.bolt/>
     </sofa:reference>
 

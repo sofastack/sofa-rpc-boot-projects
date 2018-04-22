@@ -16,9 +16,7 @@
  */
 package com.alipay.sofa.rpc.boot.runtime.adapter.helper;
 
-import com.alipay.sofa.infra.constants.CommonMiddlewareConstants;
 import com.alipay.sofa.rpc.boot.common.SofaBootRpcRuntimeException;
-import com.alipay.sofa.rpc.boot.config.SofaBootRpcConfig;
 import com.alipay.sofa.rpc.boot.config.SofaBootRpcConfigConstants;
 import com.alipay.sofa.rpc.boot.container.RegistryConfigContainer;
 import com.alipay.sofa.rpc.boot.runtime.binding.RpcBinding;
@@ -43,17 +41,24 @@ import java.util.List;
  * @author <a href="mailto:lw111072@antfin.com">LiWei</a>
  */
 public class ConsumerConfigHelper {
+    private final RegistryConfigContainer registryConfigContainer;
+    private final String                  appName;
+
+    public ConsumerConfigHelper(RegistryConfigContainer registryConfigContainer, String appName) {
+        this.registryConfigContainer = registryConfigContainer;
+        this.appName = appName;
+    }
 
     /**
      * 获取 ConsumerConfig
+     *
      * @param contract the Contract
      * @param binding  the RpcBinding
      * @return the ConsumerConfig
      */
-    public static ConsumerConfig getConsumerConfig(Contract contract, RpcBinding binding) {
+    public ConsumerConfig getConsumerConfig(Contract contract, RpcBinding binding) {
         RpcBindingParam param = binding.getRpcBindingParam();
 
-        String appName = SofaBootRpcConfig.getProperty(CommonMiddlewareConstants.APP_NAME_KEY);
         String id = binding.getBeanId();
         String interfaceId = contract.getInterfaceType().getName();
         String uniqueId = contract.getUniqueId();
@@ -69,7 +74,7 @@ public class ConsumerConfigHelper {
         List<MethodConfig> methodConfigs = convertToMethodConfig(param.getMethodInfos());
         String targetUrl = param.getTargetUrl();
 
-        RegistryConfig registryConfig = RegistryConfigContainer.getRegistryConfig();
+        RegistryConfig registryConfig = registryConfigContainer.getRegistryConfig();
 
         ConsumerConfig consumerConfig = new ConsumerConfig();
         if (StringUtils.hasText(appName)) {
@@ -115,6 +120,7 @@ public class ConsumerConfigHelper {
         }
         if (StringUtils.hasText(targetUrl)) {
             consumerConfig.setDirectUrl(targetUrl);
+            consumerConfig.setLazy(true);
             consumerConfig.setSubscribe(false);
             consumerConfig.setRegister(false);
         }
@@ -130,7 +136,7 @@ public class ConsumerConfigHelper {
         return consumerConfig.setProtocol(protocol);
     }
 
-    private static List<MethodConfig> convertToMethodConfig(List<RpcBindingMethodInfo> methodInfos) {
+    private List<MethodConfig> convertToMethodConfig(List<RpcBindingMethodInfo> methodInfos) {
         List<MethodConfig> methodConfigs = new ArrayList<MethodConfig>();
 
         if (!CollectionUtils.isEmpty(methodInfos)) {

@@ -19,6 +19,8 @@ package com.alipay.sofa.rpc.boot.config;
 import com.alipay.sofa.rpc.boot.common.SofaBootRpcParserUtil;
 import com.alipay.sofa.rpc.client.aft.FaultToleranceConfig;
 import com.alipay.sofa.rpc.client.aft.FaultToleranceConfigManager;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 
 /**
  * 自动故障剔除初始化器
@@ -26,32 +28,24 @@ import com.alipay.sofa.rpc.client.aft.FaultToleranceConfigManager;
  * @author <a href="mailto:lw111072@antfin.com">LiWei</a>
  */
 public class FaultToleranceConfigurator {
+    @Autowired
+    private SofaBootRpcProperties sofaBootRpcProperties;
+    @Value("${" + SofaBootRpcConfigConstants.APP_NAME + "}")
+    private String                appName;
 
     /**
      * 解析并生效自动故障剔除配置参数
      */
     public void startFaultTolerance() {
-
-        String appName = SofaBootRpcConfig.getPropertyAllCircumstances(SofaBootRpcConfigConstants.APP_NAME);
-
-        String regulationEffectiveStr = SofaBootRpcConfig
-            .getPropertyAllCircumstances(SofaBootRpcConfigConstants.RPC_AFT_REGULATION_EFFECTIVE);
-        String degradeEffectiveStr = SofaBootRpcConfig
-            .getPropertyAllCircumstances(SofaBootRpcConfigConstants.RPC_AFT_DEGRADE_EFFECTIVE);
-        String timeWindowStr = SofaBootRpcConfig
-            .getPropertyAllCircumstances(SofaBootRpcConfigConstants.RPC_AFT_TIME_WINDOW);
-        String leastWindowCountStr = SofaBootRpcConfig
-            .getPropertyAllCircumstances(SofaBootRpcConfigConstants.RPC_AFT_LEAST_WINDOW_COUNT);
-        String leastWindowExceptionRateMultipleStr = SofaBootRpcConfig
-            .getPropertyAllCircumstances(SofaBootRpcConfigConstants.RPC_AFT_LEAST_WINDOW_EXCEPTION_RATE_MULTIPLE);
-        String weightDegradeRateStr = SofaBootRpcConfig
-            .getPropertyAllCircumstances(SofaBootRpcConfigConstants.RPC_AFT_WEIGHT_DEGRADE_RATE);
-        String weightRecoverRateStr = SofaBootRpcConfig
-            .getPropertyAllCircumstances(SofaBootRpcConfigConstants.RPC_AFT_WEIGHT_RECOVER_RATE);
-        String degradeLeastWeightStr = SofaBootRpcConfig
-            .getPropertyAllCircumstances(SofaBootRpcConfigConstants.RPC_AFT_DEGRADE_LEAST_WEIGHT);
-        String degradeMaxIpCountStr = SofaBootRpcConfig
-            .getPropertyAllCircumstances(SofaBootRpcConfigConstants.RPC_AFT_DEGRADE_MAX_IP_COUNT);
+        String regulationEffectiveStr = sofaBootRpcProperties.getAftRegulationEffective();
+        String degradeEffectiveStr = sofaBootRpcProperties.getAftDegradeEffective();
+        String timeWindowStr = sofaBootRpcProperties.getAftTimeWindow();
+        String leastWindowCountStr = sofaBootRpcProperties.getAftLeastWindowCount();
+        String leastWindowExceptionRateMultipleStr = sofaBootRpcProperties.getAftLeastWindowExceptionRateMultiple();
+        String weightDegradeRateStr = sofaBootRpcProperties.getAftWeightDegradeRate();
+        String weightRecoverRateStr = sofaBootRpcProperties.getAftWeightRecoverRate();
+        String degradeLeastWeightStr = sofaBootRpcProperties.getAftDegradeLeastWeight();
+        String degradeMaxIpCountStr = sofaBootRpcProperties.getAftDegradeMaxIpCount();
 
         Boolean regulationEffective = SofaBootRpcParserUtil.parseBoolean(regulationEffectiveStr);
         Boolean degradeEffective = SofaBootRpcParserUtil.parseBoolean(degradeEffectiveStr);

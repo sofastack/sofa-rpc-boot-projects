@@ -39,13 +39,14 @@ public class RpcAfterHealthCheckCallback implements SofaBootMiddlewareAfterReadi
 
     /**
      * 健康检查
+     *
      * @param applicationContext Spring 上下文
      * @return 健康检查结果
      */
     @Override
     public Health onHealthy(ApplicationContext applicationContext) {
-
         Health.Builder builder = new Health.Builder();
+
         try {
             //rpc 开始启动事件监听器
             applicationContext.publishEvent(new SofaBootRpcStartEvent(applicationContext));
@@ -53,12 +54,8 @@ public class RpcAfterHealthCheckCallback implements SofaBootMiddlewareAfterReadi
             //rpc 启动完毕事件监听器
             applicationContext.publishEvent(new SofaBootRpcStartAfterEvent(applicationContext));
 
-            builder.status(Status.UP);
-
-            return builder.build();
-
+            return builder.status(Status.UP).build();
         } catch (Exception e) {
-
             LOGGER.error("Health check callback error", e);
             builder.status(Status.DOWN).withDetail("Exception", e.getMessage());
 

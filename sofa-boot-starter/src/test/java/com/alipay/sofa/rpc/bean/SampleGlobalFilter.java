@@ -14,26 +14,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.alipay.sofa.rpc.boot.config;
+package com.alipay.sofa.rpc.bean;
 
-import org.junit.Assert;
-import org.junit.Test;
+import com.alipay.sofa.rpc.core.exception.SofaRpcException;
+import com.alipay.sofa.rpc.core.request.SofaRequest;
+import com.alipay.sofa.rpc.core.response.SofaResponse;
+import com.alipay.sofa.rpc.filter.Filter;
+import com.alipay.sofa.rpc.filter.FilterInvoker;
 
 /**
- *
  * @author <a href="mailto:lw111072@antfin.com">LiWei</a>
  */
-public class ZookeeperConfigTest {
-
-    @Test
-    public void test() {
-        String config = "zookeeper://127.0.0.1:2181?aaa=111&rrr=666&file=/host/zk";
-
-        ZookeeperConfigurator.parseConfig(config);
-
-        Assert.assertEquals("111", ZookeeperConfigurator.getParamValue("aaa"));
-        Assert.assertEquals("666", ZookeeperConfigurator.getParamValue("rrr"));
-        Assert.assertEquals("127.0.0.1:2181", ZookeeperConfigurator.getAddress());
-        Assert.assertEquals("/host/zk", ZookeeperConfigurator.getFile());
+public class SampleGlobalFilter extends Filter {
+    @Override
+    public SofaResponse invoke(FilterInvoker invoker, SofaRequest request) throws SofaRpcException {
+        if (request.getInterfaceName() != null &&
+            request.getInterfaceName().equals("com.alipay.sofa.rpc.bean.SampleFacade")) {
+            if (request.getMethodArgs()[0].equals("FilterTest")) {
+                request.getMethodArgs()[0] = "GlobalFilter";
+            }
+        }
+        return invoker.invoke(request);
     }
 }

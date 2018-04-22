@@ -16,46 +16,52 @@
  */
 package com.alipay.sofa.rpc.boot.context;
 
-import com.alipay.sofa.rpc.boot.context.event.SofaBootRpcStartEvent;
+import com.alipay.sofa.rpc.boot.config.FaultToleranceConfigurator;
 import com.alipay.sofa.rpc.boot.container.ProviderConfigContainer;
 import com.alipay.sofa.rpc.boot.container.RegistryConfigContainer;
 import com.alipay.sofa.rpc.boot.container.ServerConfigContainer;
-import com.alipay.sofa.rpc.boot.config.FaultToleranceConfigurator;
+import com.alipay.sofa.rpc.boot.context.event.SofaBootRpcStartEvent;
 import com.alipay.sofa.rpc.registry.Registry;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 
 /**
- *
  * {@link SofaBootRpcStartEvent) 事件监听器.
  * 加载并初始化 SOFABoot RPC 需要的配置。
  * 开启服务器并发布服务元数据信息。
- * 
+ *
  * @author <a href="mailto:lw111072@antfin.com">LiWei</a>
  */
 @Component
 public class SofaBootRpcStartListener implements ApplicationListener<SofaBootRpcStartEvent> {
+    @Autowired
+    private ProviderConfigContainer    providerConfigContainer;
+    @Autowired
+    private FaultToleranceConfigurator faultToleranceConfigurator;
+    @Autowired
+    private ServerConfigContainer      serverConfigContainer;
+    @Autowired
+    private RegistryConfigContainer    registryConfigContainer;
 
     @Override
     public void onApplicationEvent(SofaBootRpcStartEvent event) {
-
         //start fault tolerance
-        new FaultToleranceConfigurator().startFaultTolerance();
+        faultToleranceConfigurator.startFaultTolerance();
 
         //start server
-        ServerConfigContainer.startServers();
+        serverConfigContainer.startServers();
 
         //init registry
-        Registry registry = RegistryConfigContainer.getRegistry();
+        Registry registry = registryConfigContainer.getRegistry();
 
         //set allow all publish
-        ProviderConfigContainer.setAllowPublish(true);
+        providerConfigContainer.setAllowPublish(true);
 
         //register registry
-        ProviderConfigContainer.publishAllProviderConfig(registry);
+        providerConfigContainer.publishAllProviderConfig(registry);
 
         //export dubbo
-        ProviderConfigContainer.exportAllDubboProvideConfig();
-
+        providerConfigContainer.exportAllDubboProvideConfig();
     }
 }

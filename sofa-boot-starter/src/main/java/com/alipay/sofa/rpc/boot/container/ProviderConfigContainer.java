@@ -36,26 +36,27 @@ import java.util.concurrent.ConcurrentMap;
  * @author <a href="mailto:lw111072@antfin.com">LiWei</a>
  */
 public class ProviderConfigContainer {
-    private static final Logger                                LOGGER                = SofaBootRpcLoggerFactory
-                                                                                         .getLogger(ProviderConfigContainer.class);
+    private static final Logger                         LOGGER                = SofaBootRpcLoggerFactory
+                                                                                  .getLogger(ProviderConfigContainer.class);
 
     /**
      * 是否允许发布ProviderConfig
      */
-    private static boolean                                     allowPublish          = false;
+    private boolean                                     allowPublish          = false;
 
     /**
      * ProviderConfig 缓存
      */
-    private static final ConcurrentMap<String, ProviderConfig> RPC_SERVICE_CONTAINER = new ConcurrentHashMap<String, ProviderConfig>(
-                                                                                         256);
+    private final ConcurrentMap<String, ProviderConfig> RPC_SERVICE_CONTAINER = new ConcurrentHashMap<String, ProviderConfig>(
+                                                                                  256);
 
     /**
      * 增加 ProviderConfig
-     * @param key 唯一id
+     *
+     * @param key            唯一id
      * @param providerConfig the ProviderConfig
      */
-    public static void addProviderConfig(String key, ProviderConfig providerConfig) {
+    public void addProviderConfig(String key, ProviderConfig providerConfig) {
         if (providerConfig != null) {
             if (RPC_SERVICE_CONTAINER.containsKey(key)) {
                 if (LOGGER.isWarnEnabled()) {
@@ -70,35 +71,39 @@ public class ProviderConfigContainer {
 
     /**
      * 获取 ProviderConfig
+     *
      * @param key 唯一id
      * @return the ProviderConfig
      */
-    public static ProviderConfig getProviderConfig(String key) {
+    public ProviderConfig getProviderConfig(String key) {
         return RPC_SERVICE_CONTAINER.get(key);
     }
 
     /**
      * 移除 ProviderConfig
+     *
      * @param key 唯一id
      */
-    public static void removeProviderConfig(String key) {
+    public void removeProviderConfig(String key) {
         RPC_SERVICE_CONTAINER.remove(key);
     }
 
     /**
      * 获取缓存的所有 ProviderConfig
+     *
      * @return 所有 ProviderConfig
      */
-    public static Collection<ProviderConfig> getAllProviderConfig() {
+    public Collection<ProviderConfig> getAllProviderConfig() {
         return RPC_SERVICE_CONTAINER.values();
     }
 
     /**
      * 发布所有 ProviderConfig 元数据信息到注册中心
+     *
      * @param registry 注册中心
      */
-    public static void publishAllProviderConfig(Registry registry) {
-        for (ProviderConfig providerConfig : ProviderConfigContainer.getAllProviderConfig()) {
+    public void publishAllProviderConfig(Registry registry) {
+        for (ProviderConfig providerConfig : getAllProviderConfig()) {
 
             ServerConfig serverConfig = (ServerConfig) providerConfig.getServer().get(0);
             if (!serverConfig.getProtocol().equalsIgnoreCase(SofaBootRpcConfigConstants.RPC_PROTOCOL_DUBBO)) {
@@ -116,8 +121,8 @@ public class ProviderConfigContainer {
     /**
      * export所有 Dubbo 类型的 ProviderConfig
      */
-    public static void exportAllDubboProvideConfig() {
-        for (ProviderConfig providerConfig : ProviderConfigContainer.getAllProviderConfig()) {
+    public void exportAllDubboProvideConfig() {
+        for (ProviderConfig providerConfig : getAllProviderConfig()) {
 
             ServerConfig serverConfig = (ServerConfig) providerConfig.getServer().get(0);
             if (serverConfig.getProtocol().equalsIgnoreCase(SofaBootRpcConfigConstants.RPC_PROTOCOL_DUBBO)) {
@@ -135,8 +140,8 @@ public class ProviderConfigContainer {
     /**
      * unExport所有的 ProviderConfig
      */
-    public static void unExportAllProviderConfig() {
-        for (ProviderConfig providerConfig : ProviderConfigContainer.getAllProviderConfig()) {
+    public void unExportAllProviderConfig() {
+        for (ProviderConfig providerConfig : getAllProviderConfig()) {
             providerConfig.unExport();
         }
 
@@ -144,27 +149,30 @@ public class ProviderConfigContainer {
 
     /**
      * 是否允许发布 ProviderConfig 元数据信息
+     *
      * @return
      */
-    public static boolean isAllowPublish() {
+    public boolean isAllowPublish() {
         return allowPublish;
     }
 
     /**
      * 设置是否允许发布 ProviderConfig 元数据信息
+     *
      * @param allowPublish 是否允许发布 ProviderConfig 元数据信息
      */
-    public static void setAllowPublish(boolean allowPublish) {
-        ProviderConfigContainer.allowPublish = allowPublish;
+    public void setAllowPublish(boolean allowPublish) {
+        this.allowPublish = allowPublish;
     }
 
     /**
      * 创建唯一Id
+     *
      * @param contract the Contract
-     * @param binding the RpcBinding
+     * @param binding  the RpcBinding
      * @return 唯一id
      */
-    public static String createUniqueName(Contract contract, RpcBinding binding) {
+    public String createUniqueName(Contract contract, RpcBinding binding) {
         String uniqueId = "";
         String version = ":1.0";
         String protocol = "";

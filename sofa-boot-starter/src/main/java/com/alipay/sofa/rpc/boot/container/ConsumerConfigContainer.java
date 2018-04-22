@@ -23,7 +23,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 /**
- *
  * ConsumerConfig 持有者.维护编程界面级别的RPC组件。
  *
  * @author <a href="mailto:lw111072@antfin.com">LiWei</a>
@@ -33,26 +32,28 @@ public class ConsumerConfigContainer {
     /**
      * ConsumerConfig 缓存
      */
-    private static final ConcurrentMap<Binding, ConsumerConfig> CONSUMER_CONFIG_MAP = new ConcurrentHashMap<Binding, ConsumerConfig>();
+    private final ConcurrentMap<Binding, ConsumerConfig> consumerConfigMap = new ConcurrentHashMap<Binding, ConsumerConfig>();
 
     /**
      * 增加 ConsumerConfig
-     * @param binding the {@link Binding}
+     *
+     * @param binding        the {@link Binding}
      * @param consumerConfig
      */
-    public static void addConsumerConfig(Binding binding, ConsumerConfig consumerConfig) {
+    public void addConsumerConfig(Binding binding, ConsumerConfig consumerConfig) {
         if (binding != null) {
-            CONSUMER_CONFIG_MAP.put(binding, consumerConfig);
+            consumerConfigMap.put(binding, consumerConfig);
         }
     }
 
     /**
      * 移除对应的 ConsumerConfig，并进行unRefer。
+     *
      * @param binding the {@link Binding}
      */
-    public static void removeAndUnReferConsumerConfig(Binding binding) {
+    public void removeAndUnReferConsumerConfig(Binding binding) {
         if (binding != null) {
-            ConsumerConfig consumerConfig = CONSUMER_CONFIG_MAP.remove(binding);
+            ConsumerConfig consumerConfig = consumerConfigMap.remove(binding);
             if (consumerConfig != null) {
                 consumerConfig.unRefer();
             }
@@ -61,20 +62,22 @@ public class ConsumerConfigContainer {
 
     /**
      * 是否包含 binding
+     *
      * @param binding the {@link Binding}
      * @return 是否存在
      */
-    public static boolean contains(Binding binding) {
-        return CONSUMER_CONFIG_MAP.containsKey(binding);
+    public boolean contains(Binding binding) {
+        return consumerConfigMap.containsKey(binding);
     }
 
     /**
      * 获取 ConsumerConfig
+     *
      * @param binding the {@link Binding}
      * @return the ConsumerConfig
      */
-    public static ConsumerConfig getConsumerConfig(Binding binding) {
-        return CONSUMER_CONFIG_MAP.get(binding);
+    public ConsumerConfig getConsumerConfig(Binding binding) {
+        return consumerConfigMap.get(binding);
     }
 
 }

@@ -19,8 +19,8 @@ package com.alipay.sofa.rpc.boot;
 import com.alipay.sofa.common.log.Constants;
 import com.alipay.sofa.infra.log.space.SofaBootLogSpaceIsolationInit;
 import com.alipay.sofa.rpc.boot.common.SofaBootRpcRuntimeException;
-import com.alipay.sofa.rpc.boot.config.SofaBootRpcConfig;
 import com.alipay.sofa.rpc.boot.config.SofaBootRpcConfigConstants;
+import com.alipay.sofa.rpc.boot.container.SpringBridge;
 import com.alipay.sofa.rpc.boot.log.SofaBootRpcLoggerFactory;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -29,24 +29,22 @@ import org.springframework.util.StringUtils;
 
 /**
  * SOFABoot RPC 初始化
+ *
  * @author <a href="mailto:lw111072@antfin.com">LiWei</a>
  */
 public class SofaBootRpcInitializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
 
     @Override
     public void initialize(ConfigurableApplicationContext applicationContext) {
-        if (SofaBootRpcConfig.getEnvironment() == null) {
-            SofaBootRpcConfig.setEnvironment(applicationContext.getEnvironment());
-        }
+        SpringBridge.setApplicationContext(applicationContext);
 
-        checkAppName();
+        checkAppName(applicationContext.getEnvironment().getProperty(SofaBootRpcConfigConstants.APP_NAME));
 
         initLog(applicationContext.getEnvironment());
 
     }
 
-    private void checkAppName() {
-        String appName = SofaBootRpcConfig.getPropertyAllCircumstances(SofaBootRpcConfigConstants.APP_NAME);
+    private void checkAppName(String appName) {
         if (!StringUtils.hasText(appName)) {
             throw new SofaBootRpcRuntimeException("Please add '" + SofaBootRpcConfigConstants.APP_NAME +
                 "' in application.properties");

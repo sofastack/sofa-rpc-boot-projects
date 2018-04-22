@@ -17,7 +17,7 @@
 package com.alipay.sofa.rpc.boot.runtime.parser;
 
 import com.alipay.sofa.infra.config.spring.namespace.spi.SofaBootTagNameSupport;
-import com.alipay.sofa.rpc.boot.container.RpcFilterContainer;
+import com.alipay.sofa.rpc.boot.container.SpringBridge;
 import com.alipay.sofa.rpc.boot.log.SofaBootRpcLoggerFactory;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
@@ -27,16 +27,20 @@ import org.springframework.util.StringUtils;
 import org.w3c.dom.Element;
 
 /**
- * 解析全局 Filter 。 Filter的 XML 元素见 {@link GlobalFilterXmlConstants}.
+ * 解析全局 Filter
  *
  * @author <a href="mailto:lw111072@antfin.com">LiWei</a>
  */
 public class GlobalFilterParser extends AbstractSimpleBeanDefinitionParser implements SofaBootTagNameSupport {
 
-    private static final Logger LOGGER = SofaBootRpcLoggerFactory.getLogger(GlobalFilterParser.class);
+    private static final Logger LOGGER            = SofaBootRpcLoggerFactory.getLogger(GlobalFilterParser.class);
+    private static final String TAG_GLOBAL_FILTER = "rpc-global-filter";
+    private static final String TAG_REF           = "ref";
+    private static final String TAG_CLASS         = "class";
 
     /**
      * 从 XML 解析全局 Filter。
+     *
      * @param element
      * @param parserContext
      * @param builder
@@ -44,18 +48,18 @@ public class GlobalFilterParser extends AbstractSimpleBeanDefinitionParser imple
     @Override
     protected void doParse(Element element, ParserContext parserContext, BeanDefinitionBuilder builder) {
 
-        String filterId = element.getAttribute(GlobalFilterXmlConstants.TAG_REF);
-        String filterClass = element.getAttribute(GlobalFilterXmlConstants.TAG_CLASS);
+        String filterId = element.getAttribute(TAG_REF);
+        String filterClass = element.getAttribute(TAG_CLASS);
 
         if (StringUtils.hasText(filterId)) {
-            RpcFilterContainer.addFilterId(filterId);
+            SpringBridge.getRpcFilterContainer().addFilterId(filterId);
             if (LOGGER.isInfoEnabled()) {
                 LOGGER.info("global filter take effect[" + filterId + "]");
             }
             return;
         }
         if (StringUtils.hasText(filterClass)) {
-            RpcFilterContainer.addFilterClass(filterClass);
+            SpringBridge.getRpcFilterContainer().addFilterClass(filterClass);
             if (LOGGER.isInfoEnabled()) {
                 LOGGER.info("global filter take effect[" + filterClass + "]");
             }
@@ -70,11 +74,12 @@ public class GlobalFilterParser extends AbstractSimpleBeanDefinitionParser imple
 
     /**
      * 支持的 tag 名字
-     * @return
+     *
+     * @return 支持的 tag 名字
      */
     @Override
     public String supportTagName() {
-        return GlobalFilterXmlConstants.TAG_GLOBAL_FILTER;
+        return TAG_GLOBAL_FILTER;
     }
 
     @Override

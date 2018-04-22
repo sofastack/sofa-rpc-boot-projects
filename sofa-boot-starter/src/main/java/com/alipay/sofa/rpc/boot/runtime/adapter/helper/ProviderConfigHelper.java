@@ -16,25 +16,20 @@
  */
 package com.alipay.sofa.rpc.boot.runtime.adapter.helper;
 
-import com.alipay.sofa.infra.constants.CommonMiddlewareConstants;
 import com.alipay.sofa.rpc.boot.common.SofaBootRpcRuntimeException;
-import com.alipay.sofa.rpc.boot.config.SofaBootRpcConfig;
+import com.alipay.sofa.rpc.boot.config.SofaBootRpcConfigConstants;
 import com.alipay.sofa.rpc.boot.container.RegistryConfigContainer;
 import com.alipay.sofa.rpc.boot.container.ServerConfigContainer;
 import com.alipay.sofa.rpc.boot.runtime.binding.RpcBinding;
 import com.alipay.sofa.rpc.boot.runtime.binding.RpcBindingMethodInfo;
 import com.alipay.sofa.rpc.boot.runtime.param.RpcBindingParam;
 import com.alipay.sofa.rpc.client.ProviderInfoAttrs;
-import com.alipay.sofa.rpc.config.ApplicationConfig;
-import com.alipay.sofa.rpc.config.ConfigUniqueNameGenerator;
-import com.alipay.sofa.rpc.config.MethodConfig;
-import com.alipay.sofa.rpc.config.ProviderConfig;
-import com.alipay.sofa.rpc.config.RegistryConfig;
-import com.alipay.sofa.rpc.config.ServerConfig;
-import com.alipay.sofa.rpc.config.UserThreadPoolManager;
+import com.alipay.sofa.rpc.config.*;
 import com.alipay.sofa.rpc.filter.Filter;
 import com.alipay.sofa.rpc.server.UserThreadPool;
 import com.alipay.sofa.runtime.spi.binding.Contract;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
@@ -47,20 +42,26 @@ import java.util.List;
  * @author <a href="mailto:lw111072@antfin.com">LiWei</a>
  */
 public class ProviderConfigHelper {
+    @Autowired
+    private ServerConfigContainer   serverConfigContainer;
+    @Autowired
+    private RegistryConfigContainer registryConfigContainer;
+    @Value("${" + SofaBootRpcConfigConstants.APP_NAME + "}")
+    private String                  appName;
 
     /**
      * 获取 ProviderConfig
+     *
      * @param contract the Contract
      * @param binding  the RpcBinding
      * @param target   服务实例
      * @return the ProviderConfig
      * @throws SofaBootRpcRuntimeException
      */
-    public static ProviderConfig getProviderConfig(Contract contract, RpcBinding binding, Object target)
+    public ProviderConfig getProviderConfig(Contract contract, RpcBinding binding, Object target)
         throws SofaBootRpcRuntimeException {
         RpcBindingParam param = binding.getRpcBindingParam();
 
-        String appName = SofaBootRpcConfig.getProperty(CommonMiddlewareConstants.APP_NAME_KEY);
         String id = binding.getBeanId();
         String interfaceId = contract.getInterfaceType().getName();
         Object ref = target;
@@ -74,8 +75,8 @@ public class ProviderConfigHelper {
         List<Filter> filters = param.getFilters();
         List<MethodConfig> methodConfigs = convertToMethodConfig(param.getMethodInfos());
 
-        ServerConfig serverConfig = ServerConfigContainer.getServerConfig(binding.getBindingType().getType());
-        RegistryConfig registryConfig = RegistryConfigContainer.getRegistryConfig();
+        ServerConfig serverConfig = serverConfigContainer.getServerConfig(binding.getBindingType().getType());
+        RegistryConfig registryConfig = registryConfigContainer.getRegistryConfig();
 
         ProviderConfig providerConfig = new ProviderConfig();
         if (StringUtils.hasText(appName)) {
@@ -127,7 +128,7 @@ public class ProviderConfigHelper {
         return providerConfig;
     }
 
-    private static List<MethodConfig> convertToMethodConfig(List<RpcBindingMethodInfo> methodInfos) {
+    private List<MethodConfig> convertToMethodConfig(List<RpcBindingMethodInfo> methodInfos) {
         List<MethodConfig> methodConfigs = new ArrayList<MethodConfig>();
 
         if (!CollectionUtils.isEmpty(methodInfos)) {

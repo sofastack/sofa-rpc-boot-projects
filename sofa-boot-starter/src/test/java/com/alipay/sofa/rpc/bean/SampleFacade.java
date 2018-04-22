@@ -16,16 +16,12 @@
  */
 package com.alipay.sofa.rpc.bean;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 
 /**
  * rest service interface<br>
  * the get, post, delete, put method each deal with the function of query info, add info, delete info and update info
- * 
+ *
  * @author <a href="mailto:lw111072@antfin.com">LiWei</a>
  */
 @Path(URLConstants.REST_API_PEFFIX + "/users")
@@ -35,6 +31,5 @@ public interface SampleFacade {
 
     @GET
     @Path("/sayHi/{string}")
-    public String sayHi(@PathParam("string") String string);
-
+    String sayHi(@PathParam("string") String string);
 }

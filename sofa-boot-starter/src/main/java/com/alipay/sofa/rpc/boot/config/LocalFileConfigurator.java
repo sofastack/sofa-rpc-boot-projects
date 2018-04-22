@@ -19,7 +19,6 @@ package com.alipay.sofa.rpc.boot.config;
 import org.springframework.util.StringUtils;
 
 /**
- *
  * 本地注册中心配置
  * 配置格式：com.alipay.sofa.rpc.registry.protocol=local:/home/registry
  *
@@ -27,52 +26,56 @@ import org.springframework.util.StringUtils;
  * @version $Id: LocalFileConfigurator.java, v 0.1 2018年04月17日 下午2:44 liangen Exp $
  */
 public class LocalFileConfigurator {
+    private SofaBootRpcProperties sofaBootRpcProperties;
+
+    public LocalFileConfigurator(SofaBootRpcProperties sofaBootRpcProperties) {
+        this.sofaBootRpcProperties = sofaBootRpcProperties;
+    }
 
     /**
      * 缓存文件地址
      */
-    private static String  FILE;
+    private String  file;
 
     /**
      * 是否已经解析配置
      */
-    private static boolean alreadyParse = false;
+    private boolean alreadyParse = false;
 
     /**
      * 获取缓存文件地址
+     *
      * @return 缓存文件地址
      */
-    public static String getFile() {
+    public String getFile() {
 
-        return FILE;
+        return file;
 
     }
 
     /**
      * 解析配置 value
+     *
      * @param config 配置 value
      */
-    public static void parseConfig(String config) {
+    void parseConfig(String config) {
         if (StringUtils.hasText(config) && config.startsWith("local") && config.length() > 5) {
-
-            FILE = config.substring(6);
+            file = config.substring(6);
         }
     }
 
     /**
      * 读取配置 key ,获取其 value 进行解析。
      */
-    public static void parseConfig() {
+    public void parseConfig() {
         if (!alreadyParse) {
-            String config = SofaBootRpcConfig.getPropertyAllCircumstances(SofaBootRpcConfigConstants.REGISTRY_PROTOCOL);
-            parseConfig(config);
-
+            parseConfig(sofaBootRpcProperties.getRegistryAddress());
             alreadyParse = true;
         }
     }
 
-    public static void setFile(String file) {
-        LocalFileConfigurator.FILE = file;
+    public void setFile(String file) {
+        this.file = file;
     }
 
 }

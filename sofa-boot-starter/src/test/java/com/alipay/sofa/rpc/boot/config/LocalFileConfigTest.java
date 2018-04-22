@@ -16,13 +16,10 @@
  */
 package com.alipay.sofa.rpc.boot.config;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
- *
  * @author liangen
  * @version $Id: LocalFileConfigTest.java, v 0.1 2018年04月17日 下午2:51 liangen Exp $
  */
@@ -30,25 +27,15 @@ public class LocalFileConfigTest {
 
     @Test
     public void test() {
+        LocalFileConfigurator localFileConfigurator = new LocalFileConfigurator(new SofaBootRpcProperties(null));
         String configA = "local";
 
-        LocalFileConfigurator.parseConfig(configA);
-        Assert.assertEquals(null, LocalFileConfigurator.getFile());
+        localFileConfigurator.parseConfig(configA);
+        Assert.assertNull(localFileConfigurator.getFile());
 
         String config = "local:/home/admin/registry";
 
-        LocalFileConfigurator.parseConfig(config);
-        Assert.assertEquals("/home/admin/registry", LocalFileConfigurator.getFile());
+        localFileConfigurator.parseConfig(config);
+        Assert.assertEquals("/home/admin/registry", localFileConfigurator.getFile());
     }
-
-    @Before
-    public void before() {
-        LocalFileConfigurator.setFile(null);
-    }
-
-    @After
-    public void after() {
-        LocalFileConfigurator.setFile(null);
-    }
-
 }
