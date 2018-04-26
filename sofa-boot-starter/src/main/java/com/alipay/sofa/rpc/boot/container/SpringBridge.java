@@ -27,27 +27,23 @@ public class SpringBridge {
     private static ApplicationContext applicationContext;
 
     public static ConsumerConfigHelper getConsumerConfigHelper() {
-        return applicationContext.getBean(ConsumerConfigHelper.class);
+        return applicationContext.getBean("consumerConfigHelper", ConsumerConfigHelper.class);
     }
 
     public static ProviderConfigHelper getProviderConfigHelper() {
-        return applicationContext.getBean(ProviderConfigHelper.class);
+        return applicationContext.getBean("providerConfigHelper", ProviderConfigHelper.class);
     }
 
     public static ProviderConfigContainer getProviderConfigContainer() {
-        return applicationContext.getBean(ProviderConfigContainer.class);
+        return applicationContext.getBean("providerConfigContainer", ProviderConfigContainer.class);
     }
 
     public static RegistryConfigContainer getRegistryConfigContainer() {
-        return applicationContext.getBean(RegistryConfigContainer.class);
+        return applicationContext.getBean("registryConfigContainer", RegistryConfigContainer.class);
     }
 
     public static ConsumerConfigContainer getConsumerConfigContainer() {
-        return applicationContext.getBean(ConsumerConfigContainer.class);
-    }
-
-    public static RpcFilterContainer getRpcFilterContainer() {
-        return applicationContext.getBean(RpcFilterContainer.class);
+        return applicationContext.getBean("consumerConfigContainer", ConsumerConfigContainer.class);
     }
 
     public static void setApplicationContext(ApplicationContext applicationContext) {

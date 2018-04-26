@@ -17,7 +17,7 @@
 package com.alipay.sofa.rpc.boot.runtime.parser;
 
 import com.alipay.sofa.infra.config.spring.namespace.spi.SofaBootTagNameSupport;
-import com.alipay.sofa.rpc.boot.container.SpringBridge;
+import com.alipay.sofa.rpc.boot.container.RpcFilterContainer;
 import com.alipay.sofa.rpc.boot.log.SofaBootRpcLoggerFactory;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
@@ -52,14 +52,14 @@ public class GlobalFilterParser extends AbstractSimpleBeanDefinitionParser imple
         String filterClass = element.getAttribute(TAG_CLASS);
 
         if (StringUtils.hasText(filterId)) {
-            SpringBridge.getRpcFilterContainer().addFilterId(filterId);
+            RpcFilterContainer.getInstance().addFilterId(filterId);
             if (LOGGER.isInfoEnabled()) {
                 LOGGER.info("global filter take effect[" + filterId + "]");
             }
             return;
         }
         if (StringUtils.hasText(filterClass)) {
-            SpringBridge.getRpcFilterContainer().addFilterClass(filterClass);
+            RpcFilterContainer.getInstance().addFilterClass(filterClass);
             if (LOGGER.isInfoEnabled()) {
                 LOGGER.info("global filter take effect[" + filterClass + "]");
             }

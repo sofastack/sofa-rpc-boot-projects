@@ -22,9 +22,7 @@ import com.alipay.sofa.rpc.boot.container.RegistryConfigContainer;
 import com.alipay.sofa.rpc.boot.container.ServerConfigContainer;
 import com.alipay.sofa.rpc.boot.context.event.SofaBootRpcStartEvent;
 import com.alipay.sofa.rpc.registry.Registry;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
-import org.springframework.stereotype.Component;
 
 /**
  * {@link SofaBootRpcStartEvent) 事件监听器.
@@ -33,16 +31,22 @@ import org.springframework.stereotype.Component;
  *
  * @author <a href="mailto:lw111072@antfin.com">LiWei</a>
  */
-@Component
 public class SofaBootRpcStartListener implements ApplicationListener<SofaBootRpcStartEvent> {
-    @Autowired
-    private ProviderConfigContainer    providerConfigContainer;
-    @Autowired
-    private FaultToleranceConfigurator faultToleranceConfigurator;
-    @Autowired
-    private ServerConfigContainer      serverConfigContainer;
-    @Autowired
-    private RegistryConfigContainer    registryConfigContainer;
+    private final ProviderConfigContainer    providerConfigContainer;
+    private final FaultToleranceConfigurator faultToleranceConfigurator;
+    private final ServerConfigContainer      serverConfigContainer;
+    private final RegistryConfigContainer    registryConfigContainer;
+
+    public SofaBootRpcStartListener(
+                                    ProviderConfigContainer providerConfigContainer,
+                                    FaultToleranceConfigurator faultToleranceConfigurator,
+                                    ServerConfigContainer serverConfigContainer,
+                                    RegistryConfigContainer registryConfigContainer) {
+        this.providerConfigContainer = providerConfigContainer;
+        this.faultToleranceConfigurator = faultToleranceConfigurator;
+        this.serverConfigContainer = serverConfigContainer;
+        this.registryConfigContainer = registryConfigContainer;
+    }
 
     @Override
     public void onApplicationEvent(SofaBootRpcStartEvent event) {

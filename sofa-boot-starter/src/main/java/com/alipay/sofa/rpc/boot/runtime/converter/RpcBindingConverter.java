@@ -19,7 +19,7 @@ package com.alipay.sofa.rpc.boot.runtime.converter;
 import com.alipay.sofa.rpc.boot.common.SofaBootRpcParserUtil;
 import com.alipay.sofa.rpc.boot.common.SofaBootRpcRuntimeException;
 import com.alipay.sofa.rpc.boot.common.SofaBootRpcSpringUtil;
-import com.alipay.sofa.rpc.boot.container.SpringBridge;
+import com.alipay.sofa.rpc.boot.container.RpcFilterContainer;
 import com.alipay.sofa.rpc.boot.runtime.binding.RpcBinding;
 import com.alipay.sofa.rpc.boot.runtime.binding.RpcBindingMethodInfo;
 import com.alipay.sofa.rpc.boot.runtime.binding.RpcBindingXmlConstants;
@@ -226,7 +226,7 @@ public abstract class RpcBindingConverter implements BindingConverter<RpcBinding
     }
 
     private void parseFilter(Element element, RpcBindingParam param, BindingConverterContext bindingConverterContext) {
-        List<Filter> filters = new ArrayList<Filter>(SpringBridge.getRpcFilterContainer().getFilters(
+        List<Filter> filters = new ArrayList<Filter>(RpcFilterContainer.getInstance().getFilters(
             bindingConverterContext.getApplicationContext()));
 
         if (element != null) {

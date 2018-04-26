@@ -38,7 +38,7 @@ public class ConsumerConfigContainer {
      * 增加 ConsumerConfig
      *
      * @param binding        the {@link Binding}
-     * @param consumerConfig
+     * @param consumerConfig consumerConfigs
      */
     public void addConsumerConfig(Binding binding, ConsumerConfig consumerConfig) {
         if (binding != null) {
@@ -59,25 +59,4 @@ public class ConsumerConfigContainer {
             }
         }
     }
-
-    /**
-     * 是否包含 binding
-     *
-     * @param binding the {@link Binding}
-     * @return 是否存在
-     */
-    public boolean contains(Binding binding) {
-        return consumerConfigMap.containsKey(binding);
-    }
-
-    /**
-     * 获取 ConsumerConfig
-     *
-     * @param binding the {@link Binding}
-     * @return the ConsumerConfig
-     */
-    public ConsumerConfig getConsumerConfig(Binding binding) {
-        return consumerConfigMap.get(binding);
-    }
-
 }

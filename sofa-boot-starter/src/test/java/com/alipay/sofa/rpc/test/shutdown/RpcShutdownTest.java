@@ -14,33 +14,43 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.alipay.sofa.rpc.boot;
+package com.alipay.sofa.rpc.test.shutdown;
 
-import com.alipay.sofa.rpc.bean.SampleFacade;
+import com.alipay.sofa.rpc.boot.config.SofaBootRpcConfigConstants;
+import com.alipay.sofa.rpc.test.util.TestUtils;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.BeansException;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.ImportResource;
 import org.springframework.test.context.junit4.SpringRunner;
 
 @SpringBootApplication
-@SpringBootTest(properties = "com.alipay.sofa.rpc.bolt.port=12201")
+@SpringBootTest(classes = RpcShutdownTest.class)
 @RunWith(SpringRunner.class)
-@ImportResource("classpath*:spring/*.xml")
-public class SimpleInvokeTest {
-    @Autowired
-    private SampleFacade sampleFacade;
+@ImportResource("classpath:spring/readiness.xml")
+public class RpcShutdownTest implements ApplicationContextAware {
+    private static ApplicationContext applicationContext;
 
     @Test
-    public void testSimpleInvocation() {
-        Assert.assertEquals("hi World!", sampleFacade.sayHi("World"));
+    public void test() {
+        Assert.assertFalse(TestUtils.available(SofaBootRpcConfigConstants.BOLT_PORT_DEFAULT));
     }
 
-    @Test
-    public void testGlobalFilter() {
-        Assert.assertEquals("hi GlobalFilter!", sampleFacade.sayHi("FilterTest"));
+    @AfterClass
+    public static void testRpcGracefulShutdown() {
+        ((ConfigurableApplicationContext) applicationContext).close();
+        Assert.assertTrue(TestUtils.available(SofaBootRpcConfigConstants.BOLT_PORT_DEFAULT));
+    }
+
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        RpcShutdownTest.applicationContext = applicationContext;
     }
 }

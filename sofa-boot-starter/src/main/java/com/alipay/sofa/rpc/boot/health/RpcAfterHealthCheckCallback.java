@@ -24,14 +24,12 @@ import org.slf4j.Logger;
 import org.springframework.boot.actuate.health.Health;
 import org.springframework.boot.actuate.health.Status;
 import org.springframework.context.ApplicationContext;
-import org.springframework.stereotype.Component;
 
 /**
  * SOFABoot RPC 健康检查回调.会启动服务器并发布服务
  *
  * @author <a href="mailto:lw111072@antfin.com">LiWei</a>
  */
-@Component
 public class RpcAfterHealthCheckCallback implements SofaBootMiddlewareAfterReadinessCheckCallback {
 
     private static final Logger LOGGER = SofaBootRpcLoggerFactory
@@ -57,9 +55,7 @@ public class RpcAfterHealthCheckCallback implements SofaBootMiddlewareAfterReadi
             return builder.status(Status.UP).build();
         } catch (Exception e) {
             LOGGER.error("Health check callback error", e);
-            builder.status(Status.DOWN).withDetail("Exception", e.getMessage());
-
-            return builder.build();
+            return builder.status(Status.DOWN).withDetail("Exception", e.getMessage()).build();
         }
     }
 }

@@ -17,20 +17,25 @@
 package com.alipay.sofa.rpc.boot;
 
 import com.alipay.sofa.rpc.boot.config.*;
-import com.alipay.sofa.rpc.boot.container.*;
+import com.alipay.sofa.rpc.boot.container.ConsumerConfigContainer;
+import com.alipay.sofa.rpc.boot.container.ProviderConfigContainer;
+import com.alipay.sofa.rpc.boot.container.RegistryConfigContainer;
+import com.alipay.sofa.rpc.boot.container.ServerConfigContainer;
+import com.alipay.sofa.rpc.boot.context.ApplicationContextClosedListener;
+import com.alipay.sofa.rpc.boot.context.SofaBootRpcStartListener;
+import com.alipay.sofa.rpc.boot.health.RpcAfterHealthCheckCallback;
 import com.alipay.sofa.rpc.boot.runtime.adapter.helper.ConsumerConfigHelper;
 import com.alipay.sofa.rpc.boot.runtime.adapter.helper.ProviderConfigHelper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.core.env.Environment;
 
 /**
  * @author <a href="mailto:lw111072@antfin.com">LiWei</a>
  */
 @Configuration
-@ComponentScan(value = { "com.alipay.sofa.rpc.boot" })
 public class SofaBootRpcAutoConfiguration {
     @Bean
     public SofaBootRpcProperties sofaBootRpcProperties(Environment environment) {
@@ -48,19 +53,22 @@ public class SofaBootRpcAutoConfiguration {
     }
 
     @Bean
-    public ServerConfigContainer serverConfigContainer(SofaBootRpcProperties sofaBootRpcProperties) {
+    public ServerConfigContainer serverConfigContainer(
+                                                       SofaBootRpcProperties sofaBootRpcProperties) {
         return new ServerConfigContainer(sofaBootRpcProperties);
     }
 
     @Bean
-    public RegistryConfigContainer registryConfigContainer(SofaBootRpcProperties sofaBootRpcProperties,
+    public RegistryConfigContainer registryConfigContainer(
+                                                           SofaBootRpcProperties sofaBootRpcProperties,
                                                            ZookeeperConfigurator zookeeperConfigurator,
                                                            LocalFileConfigurator localFileConfigurator) {
         return new RegistryConfigContainer(sofaBootRpcProperties, zookeeperConfigurator, localFileConfigurator);
     }
 
     @Bean
-    public ConsumerConfigHelper consumerConfigHelper(RegistryConfigContainer registryConfigContainer,
+    public ConsumerConfigHelper consumerConfigHelper(
+                                                     @Lazy RegistryConfigContainer registryConfigContainer,
                                                      @Value("${" + SofaBootRpcConfigConstants.APP_NAME + "}") String appName) {
         return new ConsumerConfigHelper(registryConfigContainer, appName);
     }
@@ -71,12 +79,14 @@ public class SofaBootRpcAutoConfiguration {
     }
 
     @Bean
-    public ZookeeperConfigurator zookeeperConfigurator(SofaBootRpcProperties sofaBootRpcProperties) {
+    public ZookeeperConfigurator zookeeperConfigurator(
+                                                       SofaBootRpcProperties sofaBootRpcProperties) {
         return new ZookeeperConfigurator(sofaBootRpcProperties);
     }
 
     @Bean
-    public LocalFileConfigurator localFileConfigurator(SofaBootRpcProperties sofaBootRpcProperties) {
+    public LocalFileConfigurator localFileConfigurator(
+                                                       SofaBootRpcProperties sofaBootRpcProperties) {
         return new LocalFileConfigurator(sofaBootRpcProperties);
     }
 
@@ -86,7 +96,24 @@ public class SofaBootRpcAutoConfiguration {
     }
 
     @Bean
-    public RpcFilterContainer rpcFilterContainer() {
-        return new RpcFilterContainer();
+    public ApplicationContextClosedListener applicationContextClosedListener(ProviderConfigContainer providerConfigContainer,
+                                                                             ServerConfigContainer serverConfigContainer) {
+        return new ApplicationContextClosedListener(providerConfigContainer, serverConfigContainer);
+    }
+
+    @Bean
+    public SofaBootRpcStartListener sofaBootRpcStartListener(
+                                                             ProviderConfigContainer providerConfigContainer,
+                                                             FaultToleranceConfigurator faultToleranceConfigurator,
+                                                             ServerConfigContainer serverConfigContainer,
+                                                             RegistryConfigContainer registryConfigContainer
+            ) {
+        return new SofaBootRpcStartListener(providerConfigContainer, faultToleranceConfigurator, serverConfigContainer,
+            registryConfigContainer);
+    }
+
+    @Bean
+    public RpcAfterHealthCheckCallback rpcAfterHealthCheckCallback() {
+        return new RpcAfterHealthCheckCallback();
     }
 }

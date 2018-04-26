@@ -31,14 +31,20 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 public class RpcFilterContainer {
 
-    private List<String> filterIds     = new CopyOnWriteArrayList<String>();
+    private List<String>                    filterIds     = new CopyOnWriteArrayList<String>();
 
-    private List<String> filterClasses = new CopyOnWriteArrayList<String>();
+    private List<String>                    filterClasses = new CopyOnWriteArrayList<String>();
 
-    private boolean      alreadyLoad   = false;
-    private final Object LOAD_LOCK     = new Object();
+    private boolean                         alreadyLoad   = false;
+    private final Object                    LOAD_LOCK     = new Object();
 
-    private List<Filter> filters       = new CopyOnWriteArrayList<Filter>();
+    private List<Filter>                    filters       = new CopyOnWriteArrayList<Filter>();
+
+    private static final RpcFilterContainer INSTANCE      = new RpcFilterContainer();
+
+    public static RpcFilterContainer getInstance() {
+        return INSTANCE;
+    }
 
     /**
      * 增加 Filter id
