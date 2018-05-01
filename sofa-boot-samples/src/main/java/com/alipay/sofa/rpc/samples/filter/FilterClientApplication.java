@@ -16,23 +16,41 @@
  */
 package com.alipay.sofa.rpc.samples.filter;
 
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.ImportResource;
 
 /**
- *
- * 在服务端的处理链中加入自定义 Filter
- *
- * @author <a href="mailto:lw111072@antfin.com">LiWei</a>
+ * @author <a href="mailto:leizhiyuan@gmail.com">leizhiyuan</a>
  */
-public class FilterSample {
+@ImportResource({ "classpath:filter-client-example.xml" })
+@SpringBootApplication()
+public class FilterClientApplication {
 
-    public String start(ApplicationContext applicationContext) {
+    public static void main(String[] args) {
+
+        //change port to run in local machine
+        System.setProperty("server.port", "8081");
+
+        SpringApplication springApplication = new SpringApplication(FilterClientApplication.class);
+        ApplicationContext applicationContext = springApplication.run(args);
+
         FilterService filterServiceReference = (FilterService) applicationContext.getBean("filterServiceReference");
 
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         String result = filterServiceReference.sayFilter("filter");
-        System.out.println(result);
+        System.out.println("invoke result:" + result);
 
-        return result;
+        if ("filter".equalsIgnoreCase(result)) {
+            System.out.println("filter invoke success");
+        } else {
+            System.out.println("filter invoke fail");
+        }
     }
-
 }

@@ -14,28 +14,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.alipay.sofa.rpc.samples.filter;
+package com.alipay.sofa.rpc.samples.generic;
 
-import com.alipay.sofa.rpc.core.exception.SofaRpcException;
-import com.alipay.sofa.rpc.core.request.SofaRequest;
-import com.alipay.sofa.rpc.core.response.SofaResponse;
-import com.alipay.sofa.rpc.filter.Filter;
-import com.alipay.sofa.rpc.filter.FilterInvoker;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.ImportResource;
 
 /**
- *
- * @author <a href="mailto:lw111072@antfin.com">LiWei</a>
+ * @author <a href="mailto:leizhiyuan@gmail.com">leizhiyuan</a>
  */
-public class SampleFilter extends Filter {
-    @Override
-    public SofaResponse invoke(FilterInvoker invoker, SofaRequest request) throws SofaRpcException {
+@ImportResource({ "classpath:generic-server-example.xml" })
+@SpringBootApplication
+public class GenericServerApplication {
 
-        System.out.println("SampleFilter before");
+    public static void main(String[] args) {
 
-        try {
-            return invoker.invoke(request);
-        } finally {
-            System.out.println("SampleFilter after");
-        }
+        SpringApplication springApplication = new SpringApplication(GenericServerApplication.class);
+        ApplicationContext applicationContext = springApplication.run(args);
     }
 }

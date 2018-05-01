@@ -18,16 +18,26 @@ package com.alipay.sofa.rpc.samples.generic;
 
 import com.alipay.hessian.generic.model.GenericObject;
 import com.alipay.sofa.rpc.api.GenericService;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.ImportResource;
 
 /**
- * 泛化调用
- *
- * @author <a href="mailto:lw111072@antfin.com">LiWei</a>
+ * @author <a href="mailto:leizhiyuan@gmail.com">leizhiyuan</a>
  */
-public class GenericSample {
+@ImportResource({ "classpath:generic-client-example.xml" })
+@SpringBootApplication
+public class GenericClientApplication {
 
-    public String start(ApplicationContext applicationContext) {
+    public static void main(String[] args) {
+
+        //change port to run in local machine
+        System.setProperty("server.port", "8081");
+
+        SpringApplication springApplication = new SpringApplication(GenericClientApplication.class);
+        ApplicationContext applicationContext = springApplication.run(args);
+
         GenericService sampleGenericServiceReference = (GenericService) applicationContext
             .getBean("sampleGenericServiceReference");
 
@@ -35,14 +45,23 @@ public class GenericSample {
             "com.alipay.sofa.rpc.samples.generic.SampleGenericParamModel");
         genericObject.putField("name", "Bible");
 
-        GenericObject result = (GenericObject) sampleGenericServiceReference.$genericInvoke("sayGeneric",
+        GenericObject genericResult = (GenericObject) sampleGenericServiceReference.$genericInvoke("sayGeneric",
             new String[] { "com.alipay.sofa.rpc.samples.generic.SampleGenericParamModel" },
             new Object[] { genericObject });
 
-        System.out.println(result.getType());
-        System.out.println(result.getField("name"));
-        System.out.println(result.getField("value"));
+        System.out.println(genericResult.getType());
+        System.out.println(genericResult.getField("name"));
+        System.out.println(genericResult.getField("value"));
 
-        return (String) result.getField("value");
+        String result = (String) genericResult.getField("value");
+
+        System.out.println("invoke result:" + result);
+
+        if ("filter".equalsIgnoreCase(result)) {
+            System.out.println("filter invoke success");
+        } else {
+            System.out.println("filter invoke fail");
+        }
+
     }
 }

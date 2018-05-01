@@ -14,26 +14,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.alipay.sofa.rpc.samples.threadpool;
+package com.alipay.sofa.rpc.samples.filter;
 
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.ImportResource;
 
 /**
- *
- * 自定义线程池
- *
- * @author <a href="mailto:lw111072@antfin.com">LiWei</a>
+ * @author <a href="mailto:leizhiyuan@gmail.com">leizhiyuan</a>
  */
-public class ThreadPoolSample {
+@ImportResource({ "classpath:filter-server-example.xml" })
+@SpringBootApplication
+public class FilterServerApplication {
 
-    public String start(ApplicationContext applicationContext) {
-        ThreadPoolService threadPoolService = (ThreadPoolService) applicationContext
-            .getBean("threadPoolServiceReference");
+    public static void main(String[] args) {
 
-        String result = threadPoolService.sayThreadPool("threadPool");
-        System.out.println(result);
-
-        return result;
-
+        SpringApplication springApplication = new SpringApplication(FilterServerApplication.class);
+        ApplicationContext applicationContext = springApplication.run(args);
     }
 }

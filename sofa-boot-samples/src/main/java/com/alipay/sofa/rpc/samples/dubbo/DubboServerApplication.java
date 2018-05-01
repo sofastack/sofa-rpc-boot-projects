@@ -16,23 +16,22 @@
  */
 package com.alipay.sofa.rpc.samples.dubbo;
 
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.ImportResource;
 
 /**
- *
- * @author liangen
- * @version $Id: DubboSample.java, v 0.1 2018年04月15日 下午6:29 liangen Exp $
+ * you should set a valid zk address first
+ * @author <a href="mailto:leizhiyuan@gmail.com">leizhiyuan</a>
  */
-public class DubboSample {
+@ImportResource({ "classpath:dubbo-server-example.xml" })
+@SpringBootApplication
+public class DubboServerApplication {
 
-    public String start(ApplicationContext applicationContext) throws InterruptedException {
-        DubboService dubboService = (DubboService) applicationContext.getBean("dubboServiceReference");
+    public static void main(String[] args) {
 
-        Thread.sleep(5000);
-
-        String result = dubboService.sayDubbo("dubbo");
-        System.out.println(result);
-
-        return result;
+        SpringApplication springApplication = new SpringApplication(DubboServerApplication.class);
+        ApplicationContext applicationContext = springApplication.run(args);
     }
 }

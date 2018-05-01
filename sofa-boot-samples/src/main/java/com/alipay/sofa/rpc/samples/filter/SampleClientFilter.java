@@ -14,25 +14,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.alipay.sofa.rpc.samples.direct;
+package com.alipay.sofa.rpc.samples.filter;
 
-import org.springframework.context.ApplicationContext;
+import com.alipay.sofa.rpc.core.exception.SofaRpcException;
+import com.alipay.sofa.rpc.core.request.SofaRequest;
+import com.alipay.sofa.rpc.core.response.SofaResponse;
+import com.alipay.sofa.rpc.filter.Filter;
+import com.alipay.sofa.rpc.filter.FilterInvoker;
 
 /**
- * 直连方式调用
- * @author <a href="mailto:lw111072@antfin.com">LiWei</a>
+ *
+ * @author <a href="mailto:leizhiyuan@gmail.com">leizhiyuan</a>
  */
-public class DirectSample {
+public class SampleClientFilter extends Filter {
+    @Override
+    public SofaResponse invoke(FilterInvoker invoker, SofaRequest request) throws SofaRpcException {
 
-    public String start(ApplicationContext applicationContext) throws InterruptedException {
+        System.out.println("SampleFilter before client invoke");
 
-        DirectService directService = (DirectService) applicationContext.getBean("directServiceReference");
-
-        Thread.sleep(5000);
-
-        String result = directService.sayDirect("direct");
-        System.out.println(result);
-
-        return result;
+        try {
+            return invoker.invoke(request);
+        } finally {
+            System.out.println("SampleFilter after client invoke");
+        }
     }
 }

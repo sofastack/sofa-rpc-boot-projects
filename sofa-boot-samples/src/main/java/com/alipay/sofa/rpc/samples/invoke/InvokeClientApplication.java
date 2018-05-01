@@ -17,17 +17,25 @@
 package com.alipay.sofa.rpc.samples.invoke;
 
 import com.alipay.sofa.rpc.api.future.SofaResponseFuture;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.ImportResource;
 
 /**
- *
- * 同步，future，回调调用方式
- *
- * @author <a href="mailto:lw111072@antfin.com">LiWei</a>
+ * @author <a href="mailto:leizhiyuan@gmail.com">leizhiyuan</a>
  */
-public class InvokeSample {
+@ImportResource({ "classpath:invoke-client-example.xml" })
+@SpringBootApplication
+public class InvokeClientApplication {
 
-    public String start(ApplicationContext applicationContext) throws InterruptedException {
+    public static void main(String[] args) {
+
+        //change port to run in local machine
+        System.setProperty("server.port", "8081");
+
+        SpringApplication springApplication = new SpringApplication(InvokeClientApplication.class);
+        ApplicationContext applicationContext = springApplication.run(args);
 
         HelloSyncService helloSyncServiceReference = (HelloSyncService) applicationContext
             .getBean("helloSyncServiceReference");
@@ -40,13 +48,19 @@ public class InvokeSample {
         System.out.println(result);
 
         helloFutureServiceReference.sayFuture("future");
-        System.out.println(SofaResponseFuture.getResponse(1000, true));
+        try {
+            System.out.println(SofaResponseFuture.getResponse(1000, true));
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         helloCallbackServiceReference.sayCallback("callback");
 
-        Thread.sleep(3000);
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
-        return result;
     }
-
 }

@@ -14,28 +14,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.alipay.sofa.rpc.samples.invoke;
+package com.alipay.sofa.rpc.samples.rest;
 
-import com.alipay.sofa.rpc.core.exception.SofaRpcException;
-import com.alipay.sofa.rpc.core.invoke.SofaResponseCallback;
-import com.alipay.sofa.rpc.core.request.RequestBase;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.ImportResource;
 
 /**
- * @author <a href="mailto:lw111072@antfin.com">LiWei</a>
+ * @author <a href="mailto:leizhiyuan@gmail.com">leizhiyuan</a>
  */
-public class CallbackImpl implements SofaResponseCallback {
-    @Override
-    public void onAppResponse(Object appResponse, String methodName, RequestBase request) {
-        System.out.println("callback client process:" + appResponse);
-    }
+@ImportResource({ "classpath:rest-server-example.xml" })
+@SpringBootApplication
+public class RestServerApplication {
 
-    @Override
-    public void onAppException(Throwable throwable, String methodName, RequestBase request) {
+    public static void main(String[] args) {
 
-    }
-
-    @Override
-    public void onSofaException(SofaRpcException sofaException, String methodName, RequestBase request) {
-
+        SpringApplication springApplication = new SpringApplication(RestServerApplication.class);
+        ApplicationContext applicationContext = springApplication.run(args);
     }
 }

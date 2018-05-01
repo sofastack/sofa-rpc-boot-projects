@@ -14,28 +14,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.alipay.sofa.rpc.samples.invoke;
+package com.alipay.sofa.rpc.samples.filter;
 
 import com.alipay.sofa.rpc.core.exception.SofaRpcException;
-import com.alipay.sofa.rpc.core.invoke.SofaResponseCallback;
-import com.alipay.sofa.rpc.core.request.RequestBase;
+import com.alipay.sofa.rpc.core.request.SofaRequest;
+import com.alipay.sofa.rpc.core.response.SofaResponse;
+import com.alipay.sofa.rpc.filter.Filter;
+import com.alipay.sofa.rpc.filter.FilterInvoker;
 
 /**
  * @author <a href="mailto:lw111072@antfin.com">LiWei</a>
  */
-public class CallbackImpl implements SofaResponseCallback {
+public class SampleServerFilter extends Filter {
     @Override
-    public void onAppResponse(Object appResponse, String methodName, RequestBase request) {
-        System.out.println("callback client process:" + appResponse);
-    }
+    public SofaResponse invoke(FilterInvoker invoker, SofaRequest request) throws SofaRpcException {
 
-    @Override
-    public void onAppException(Throwable throwable, String methodName, RequestBase request) {
+        System.out.println("SampleFilter before server process");
 
-    }
-
-    @Override
-    public void onSofaException(SofaRpcException sofaException, String methodName, RequestBase request) {
-
+        try {
+            return invoker.invoke(request);
+        } finally {
+            System.out.println("SampleFilter after server process");
+        }
     }
 }
