@@ -4,11 +4,11 @@
        xmlns:sofa="http://sofastack.io/schema/sofaboot"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
             http://sofastack.io/schema/sofaboot http://sofastack.io/schema/sofaboot.xsd">
-    <bean class="com.alipay.sofa.rpc.bean.impl.SampleFacadeImpl" id="sampleFacadeBean"/>
-    <sofa:service ref="sampleFacadeBean" interface="com.alipay.sofa.rpc.bean.SampleFacade">
+    <bean class="com.alipay.sofa.rpc.test.bean.SampleFacadeImpl" id="sampleFacadeBean"/>
+    <sofa:service ref="sampleFacadeBean" interface="com.alipay.sofa.rpc.test.bean.SampleFacade">
         <sofa:binding.bolt/>
     </sofa:service>
-    <sofa:reference interface="com.alipay.sofa.rpc.bean.SampleFacade" id="sampleFacade">
+    <sofa:reference interface="com.alipay.sofa.rpc.test.bean.SampleFacade" id="sampleFacade">
         <sofa:binding.bolt/>
     </sofa:reference>
 </beans>

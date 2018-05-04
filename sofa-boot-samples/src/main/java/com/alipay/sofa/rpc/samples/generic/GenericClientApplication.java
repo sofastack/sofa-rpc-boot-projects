@@ -57,10 +57,10 @@ public class GenericClientApplication {
 
         System.out.println("invoke result:" + result);
 
-        if ("filter".equalsIgnoreCase(result)) {
-            System.out.println("filter invoke success");
+        if ("sample generic value".equalsIgnoreCase(result)) {
+            System.out.println("generic invoke success");
         } else {
-            System.out.println("filter invoke fail");
+            System.out.println("generic invoke fail");
         }
 
     }

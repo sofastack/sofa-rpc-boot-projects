@@ -17,6 +17,7 @@
 package com.alipay.sofa.rpc.samples.rest;
 
 /**
+ * rest invoke
  *
  * @author liangen
  * @version $Id: RestServiceImpl.java, v 0.1 2018年04月15日 下午5:38 liangen Exp $

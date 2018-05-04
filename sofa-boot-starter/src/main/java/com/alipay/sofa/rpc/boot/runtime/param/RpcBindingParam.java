@@ -57,6 +57,12 @@ public abstract class RpcBindingParam implements BindingParam {
 
     protected String                     genericInterface;
 
+    protected String                     loadBalancer;
+
+    protected Boolean                    lazy;
+
+    protected Boolean                    check;
+
     /** other */
     protected List<Filter>               filters;
 
@@ -352,16 +358,70 @@ public abstract class RpcBindingParam implements BindingParam {
         this.genericInterface = genericInterface;
     }
 
+    /**
+     * Getter method for property <tt>loadBalancer</tt>.
+     *
+     * @return property value of loadBalancer
+     */
+    public String getLoadBalancer() {
+        return loadBalancer;
+    }
+
+    /**
+     * Setter method for property <tt>loadBalancer</tt>.
+     *
+     * @param loadBalancer  value to be assigned to property loadBalancer
+     */
+    public void setLoadBalancer(String loadBalancer) {
+        this.loadBalancer = loadBalancer;
+    }
+
+    /**
+     * Getter method for property <tt>lazy</tt>.
+     *
+     * @return property value of lazy
+     */
+    public Boolean getLazy() {
+        return lazy;
+    }
+
+    /**
+     * Setter method for property <tt>lazy</tt>.
+     *
+     * @param lazy  value to be assigned to property lazy
+     */
+    public void setLazy(Boolean lazy) {
+        this.lazy = lazy;
+    }
+
+    /**
+     * Getter method for property <tt>check</tt>.
+     *
+     * @return property value of check
+     */
+    public Boolean getCheck() {
+        return check;
+    }
+
+    /**
+     * Setter method for property <tt>check</tt>.
+     *
+     * @param check  value to be assigned to property check
+     */
+    public void setCheck(Boolean check) {
+        this.check = check;
+    }
+
     @Override
-    public boolean equals(Object o) {
-        if (this == o) {
+    public boolean equals(Object object) {
+        if (this == object) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (object == null || getClass() != object.getClass()) {
             return false;
         }
 
-        RpcBindingParam that = (RpcBindingParam) o;
+        RpcBindingParam that = (RpcBindingParam) object;
 
         if (timeout != null ? !timeout.equals(that.timeout) : that.timeout != null) {
             return false;
@@ -402,6 +462,15 @@ public abstract class RpcBindingParam implements BindingParam {
         if (genericInterface != null ? !genericInterface.equals(that.genericInterface) : that.genericInterface != null) {
             return false;
         }
+        if (loadBalancer != null ? !loadBalancer.equals(that.loadBalancer) : that.loadBalancer != null) {
+            return false;
+        }
+        if (lazy != null ? !lazy.equals(that.lazy) : that.lazy != null) {
+            return false;
+        }
+        if (check != null ? !check.equals(that.check) : that.check != null) {
+            return false;
+        }
         if (filters != null ? !filters.equals(that.filters) : that.filters != null) {
             return false;
         }
@@ -426,6 +495,9 @@ public abstract class RpcBindingParam implements BindingParam {
         result = 31 * result + (warmUpWeight != null ? warmUpWeight.hashCode() : 0);
         result = 31 * result + (userThreadPool != null ? userThreadPool.hashCode() : 0);
         result = 31 * result + (genericInterface != null ? genericInterface.hashCode() : 0);
+        result = 31 * result + (loadBalancer != null ? loadBalancer.hashCode() : 0);
+        result = 31 * result + (lazy != null ? lazy.hashCode() : 0);
+        result = 31 * result + (check != null ? check.hashCode() : 0);
         result = 31 * result + (filters != null ? filters.hashCode() : 0);
         result = 31 * result + (methodInfos != null ? methodInfos.hashCode() : 0);
         result = 31 * result + (targetUrl != null ? targetUrl.hashCode() : 0);

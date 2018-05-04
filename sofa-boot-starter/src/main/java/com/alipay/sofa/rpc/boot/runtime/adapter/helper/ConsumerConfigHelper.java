@@ -69,6 +69,9 @@ public class ConsumerConfigHelper {
         Integer addressWaitTime = param.getAddressWaitTime();
         Object callbackHandler = param.getCallbackHandler();
         String genericInterface = param.getGenericInterface();
+        String loadBalancer = param.getLoadBalancer();
+        Boolean lazy = param.getLazy();
+        Boolean check = param.getCheck();
 
         List<Filter> filters = param.getFilters();
         List<MethodConfig> methodConfigs = convertToMethodConfig(param.getMethodInfos());
@@ -103,6 +106,15 @@ public class ConsumerConfigHelper {
         }
         if (addressWaitTime != null) {
             consumerConfig.setAddressWait(addressWaitTime);
+        }
+        if (StringUtils.hasText(loadBalancer)) {
+            consumerConfig.setLoadBalancer(loadBalancer);
+        }
+        if (lazy != null) {
+            consumerConfig.setLazy(lazy);
+        }
+        if (check != null) {
+            consumerConfig.setCheck(check);
         }
         if (callbackHandler != null) {
             if (callbackHandler instanceof SofaResponseCallback) {

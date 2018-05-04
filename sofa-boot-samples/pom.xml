@@ -7,7 +7,7 @@
     <parent>
         <groupId>com.alipay.sofa</groupId>
         <artifactId>sofa-rpc-boot-projects</artifactId>
-        <version>5.3.1</version>
+        <version>5.3.2</version>
     </parent>
 
     <properties>
@@ -22,13 +22,13 @@
         <dependency>
             <groupId>com.alipay.sofa</groupId>
             <artifactId>rpc-sofa-boot-starter</artifactId>
-            <version>5.3.1</version>
+            <version>5.3.2</version>
         </dependency>
 
         <dependency>
             <groupId>com.alipay.sofa</groupId>
             <artifactId>test-sofa-boot-starter</artifactId>
-            <version>2.3.0</version>
+            <version>2.3.2</version>
         </dependency>
 
         <dependency>
@@ -112,7 +112,7 @@
                     <groupId>com.alipay.sofa</groupId>
                     <artifactId>rpc-sofa-boot-starter</artifactId>
                     <classifier>ark-plugin</classifier>
-                    <version>5.3.1</version>
+                    <version>5.3.2</version>
                 </dependency>
 
                 <dependency>

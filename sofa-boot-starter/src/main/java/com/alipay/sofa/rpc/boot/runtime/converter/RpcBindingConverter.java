@@ -186,6 +186,9 @@ public abstract class RpcBindingConverter implements BindingConverter<RpcBinding
             bindingConverterContext.getApplicationContext(), bindingConverterContext.getAppClassLoader(),
             bindingConverterContext.getAppName());
         String genericInterface = element.getAttribute(RpcBindingXmlConstants.TAG_GENERIC_INTERFACE);
+        String loadBalancer = element.getAttribute(RpcBindingXmlConstants.TAG_LOAD_BALANCER);
+        Boolean lazy = SofaBootRpcParserUtil.parseBoolean(element.getAttribute(RpcBindingXmlConstants.TAG_LAZY));
+        Boolean check = SofaBootRpcParserUtil.parseBoolean(element.getAttribute(RpcBindingXmlConstants.TAG_CHECK));
 
         if (timeout != null) {
             param.setTimeout(timeout);
@@ -222,6 +225,15 @@ public abstract class RpcBindingConverter implements BindingConverter<RpcBinding
         }
         if (StringUtils.hasText(genericInterface)) {
             param.setGenericInterface(genericInterface);
+        }
+        if (StringUtils.hasText(loadBalancer)) {
+            param.setLoadBalancer(loadBalancer);
+        }
+        if (lazy != null) {
+            param.setLazy(lazy);
+        }
+        if (check != null) {
+            param.setCheck(check);
         }
     }
 

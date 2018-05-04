@@ -34,6 +34,11 @@ SOFARPC Starter 是 SOFARPC 基于 SOFABoot 实现的框架，能够将 SOFARPC 
             http://sofastack.io/schema/sofaboot http://sofastack.io/schema/sofaboot.xsd"
        default-autowire="byName">
 ```
+## 使用 Zookeeper 作为注册中心
+在 application.properties 中配置如下，就能够使用 Zookeeper 作为注册中心。
+```
+com.alipay.sofa.rpc.registry.address=zookeeper://127.0.0.1:2181
+```
 
 ## 服务发布
 在 XML 中配置如下，就能够发布一个 SOFARPC 服务。
@@ -139,3 +144,44 @@ System.out.println(result.getField("value"));
     </sofa:binding.bolt>
 </sofa:service>
 ```
+
+## 直连调用
+在 SOFABoot 环境中可以如下进行直连调用。利用 target-url 属性调用指定的协议， ip 和端口。
+```xml
+<sofa:reference id="directServiceReference" interface="com.alipay.sofa.rpc.samples.direct.DirectService">
+    <sofa:binding.bolt>
+        <sofa:route target-url="bolt://127.0.0.1:12200"/>
+    </sofa:binding.bolt>
+</sofa:reference>
+```
+
+## 负载均衡
+在 SOFABoot 环境中可以如下选择负载均衡的方式，利用 loadBalancer 属性指定调用时候使用的负载均衡策略。目前支持 random ， localPref ， roundRobin ， consistentHash ， weightRoundRobin 。
+```xml
+<sofa:reference id="loadBalancerServiceReference" interface="com.alipay.sofa.rpc.samples.loadBalancer.LoadBalancerService">
+    <sofa:binding.bolt>
+        <sofa:global-attrs loadBalancer="random"/>
+    </sofa:binding.bolt>
+</sofa:reference>
+```
+
+## 调用重试
+调用的重试次数，即在第一次调用失败后重试的最大次数，如果重试成功则不再继续重试。在 SOFABoot 环境中可以如下设置调用次数，利用 retries 属性指定重试次数。
+```xml
+<sofa:reference id="retriesServiceReferenceBolt" interface="com.alipay.sofa.rpc.samples.retries.RetriesService">
+    <sofa:binding.bolt>
+        <sofa:global-attrs retries="2"/>
+    </sofa:binding.bolt>
+</sofa:reference>
+```
+
+## lazy 连接
+lazy连接，即客户端在第一次调用时才和所要调用的远程地址建立连接。默认情况下是在注册中心推送地址到客户端时就立即建立好连接，这个过程通常是在第一次调用之前进行的。在 SOFABoot 环境中可以如下设置 lazy 连接方式，将 lazy 属性设为 true 。
+```xml
+<sofa:reference id="lazyServiceReferenceBolt" interface="com.alipay.sofa.rpc.samples.lazy.LazyService">
+    <sofa:binding.bolt>
+        <sofa:global-attrs lazy="true"/>
+    </sofa:binding.bolt>
+</sofa:reference>
+```
+

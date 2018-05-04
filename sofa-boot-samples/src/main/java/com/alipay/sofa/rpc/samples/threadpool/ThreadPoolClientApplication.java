@@ -43,7 +43,7 @@ public class ThreadPoolClientApplication {
 
         System.out.println("invoke result:" + result);
 
-        if ("threadPool".equalsIgnoreCase(result)) {
+        if (result.startsWith("threadPool[customerThreadPool_name")) {
             System.out.println("threadPool invoke success");
         } else {
             System.out.println("threadPool invoke fail");

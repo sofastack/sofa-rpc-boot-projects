@@ -17,6 +17,7 @@
 package com.alipay.sofa.rpc.samples.dubbo;
 
 /**
+ * dubbo sample
  *
  * @author liangen
  * @version $Id: DubboServiceImpl.java, v 0.1 2018年04月15日 下午6:28 liangen Exp $

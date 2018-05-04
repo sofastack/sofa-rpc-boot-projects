@@ -80,7 +80,7 @@ public abstract class RpcBinding extends AbstractBinding {
 
     @Override
     public int getBindingHashCode() {
-        return rpcBindingParam.hashCode();
+        return this.hashCode();
     }
 
     /**
@@ -212,5 +212,46 @@ public abstract class RpcBinding extends AbstractBinding {
      */
     public void setConsumerConfig(ConsumerConfig consumerConfig) {
         this.consumerConfig = consumerConfig;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) {
+            return true;
+        }
+        if (object == null || getClass() != object.getClass()) {
+            return false;
+        }
+
+        RpcBinding that = (RpcBinding) object;
+
+        if (inBinding != that.inBinding) {
+            return false;
+        }
+        if (appName != null ? !appName.equals(that.appName) : that.appName != null) {
+            return false;
+        }
+        if (beanId != null ? !beanId.equals(that.beanId) : that.beanId != null) {
+            return false;
+        }
+        if (rpcBindingParam != null ? !rpcBindingParam.equals(that.rpcBindingParam) : that.rpcBindingParam != null) {
+            return false;
+        }
+        if (applicationContext != null ? !applicationContext.equals(that.applicationContext)
+            : that.applicationContext != null) {
+            return false;
+        }
+        return consumerConfig != null ? consumerConfig.equals(that.consumerConfig) : that.consumerConfig == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = appName != null ? appName.hashCode() : 0;
+        result = 31 * result + (beanId != null ? beanId.hashCode() : 0);
+        result = 31 * result + (rpcBindingParam != null ? rpcBindingParam.hashCode() : 0);
+        result = 31 * result + (applicationContext != null ? applicationContext.hashCode() : 0);
+        result = 31 * result + (inBinding ? 1 : 0);
+        result = 31 * result + (consumerConfig != null ? consumerConfig.hashCode() : 0);
+        return result;
     }
 }
