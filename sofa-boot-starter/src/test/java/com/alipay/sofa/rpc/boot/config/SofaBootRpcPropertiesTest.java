@@ -28,7 +28,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootApplication
 @SpringBootTest(properties = {
                               SofaBootRpcProperties.PREFIX + ".bolt.port=5000",
-                              "com_alipay_sofa_rpc_bolt_io_thread_count=600"
+                              "com_alipay_sofa_rpc_bolt_thread_pool_max_size=600"
 })
 public class SofaBootRpcPropertiesTest {
     @Autowired
@@ -47,6 +47,6 @@ public class SofaBootRpcPropertiesTest {
 
     @Test
     public void testUnderscoreConfig() {
-        Assert.assertEquals("600", sofaBootRpcProperties.getBoltIoThreadCount());
+        Assert.assertEquals("600", sofaBootRpcProperties.getBoltThreadPoolMaxSize());
     }
 }

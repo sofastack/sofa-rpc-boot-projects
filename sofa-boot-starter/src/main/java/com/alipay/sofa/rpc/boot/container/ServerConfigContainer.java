@@ -136,9 +136,10 @@ public class ServerConfigContainer {
      */
     ServerConfig createBoltServerConfig() {
         String portStr = sofaBootRpcProperties.getBoltPort();
-        String ioThreadCountStr = sofaBootRpcProperties.getBoltIoThreadCount();
-        String executorThreadCountStr = sofaBootRpcProperties.getBoltExecutorThreadCount();
-        String acceptsCountStr = sofaBootRpcProperties.getBoltAcceptsCount();
+        String boltThreadPoolCoreSizeStr = sofaBootRpcProperties.getBoltThreadPoolCoreSize();
+        String boltThreadPoolMaxSizeStr = sofaBootRpcProperties.getBoltThreadPoolMaxSize();
+        String acceptsSizeStr = sofaBootRpcProperties.getBoltAcceptsSize();
+        String boltThreadPoolQueueSizeStr = sofaBootRpcProperties.getBoltThreadPoolQueueSize();
 
         ServerConfig serverConfig = new ServerConfig();
 
@@ -148,16 +149,20 @@ public class ServerConfigContainer {
             serverConfig.setPort(SofaBootRpcConfigConstants.BOLT_PORT_DEFAULT);
         }
 
-        if (StringUtils.hasText(ioThreadCountStr)) {
-            serverConfig.setIoThreads(Integer.parseInt(ioThreadCountStr));
+        if (StringUtils.hasText(boltThreadPoolMaxSizeStr)) {
+            serverConfig.setMaxThreads(Integer.parseInt(boltThreadPoolMaxSizeStr));
         }
 
-        if (StringUtils.hasText(executorThreadCountStr)) {
-            serverConfig.setMaxThreads(Integer.parseInt(executorThreadCountStr));
+        if (StringUtils.hasText(boltThreadPoolCoreSizeStr)) {
+            serverConfig.setCoreThreads(Integer.parseInt(boltThreadPoolCoreSizeStr));
         }
 
-        if (StringUtils.hasText(acceptsCountStr)) {
-            serverConfig.setAccepts(Integer.parseInt(acceptsCountStr));
+        if (StringUtils.hasText(acceptsSizeStr)) {
+            serverConfig.setAccepts(Integer.parseInt(acceptsSizeStr));
+        }
+
+        if (StringUtils.hasText(boltThreadPoolQueueSizeStr)) {
+            serverConfig.setQueues(Integer.parseInt(boltThreadPoolQueueSizeStr));
         }
 
         serverConfig.setAutoStart(false);
@@ -172,15 +177,15 @@ public class ServerConfigContainer {
     ServerConfig createRestServerConfig() {
         String hostName = sofaBootRpcProperties.getRestHostname();
         String portStr = sofaBootRpcProperties.getRestPort();
-        String ioThreadCountStr = sofaBootRpcProperties.getRestIoThreadCount();
-        String executorThreadCountStr = sofaBootRpcProperties.getRestExecutorThreadCount();
+        String ioThreadSizeStr = sofaBootRpcProperties.getRestIoThreadSize();
+        String restThreadPoolMaxSizeStr = sofaBootRpcProperties.getRestThreadPoolMaxSize();
         String maxRequestSizeStr = sofaBootRpcProperties.getRestMaxRequestSize();
         String telnetStr = sofaBootRpcProperties.getRestTelnet();
         String daemonStr = sofaBootRpcProperties.getRestDaemon();
 
         int port;
         int ioThreadCount;
-        int executorThreadCount;
+        int restThreadPoolMaxSize;
         int maxRequestSize;
         boolean telnet;
         boolean daemon;
@@ -195,16 +200,16 @@ public class ServerConfigContainer {
             port = Integer.parseInt(portStr);
         }
 
-        if (!StringUtils.hasText(ioThreadCountStr)) {
+        if (!StringUtils.hasText(ioThreadSizeStr)) {
             ioThreadCount = SofaBootRpcConfigConstants.REST_IO_THREAD_COUNT_DEFAULT;
         } else {
-            ioThreadCount = Integer.parseInt(ioThreadCountStr);
+            ioThreadCount = Integer.parseInt(ioThreadSizeStr);
         }
 
-        if (!StringUtils.hasText(executorThreadCountStr)) {
-            executorThreadCount = SofaBootRpcConfigConstants.REST_EXECUTOR_THREAD_COUNT_DEFAULT;
+        if (!StringUtils.hasText(restThreadPoolMaxSizeStr)) {
+            restThreadPoolMaxSize = SofaBootRpcConfigConstants.REST_EXECUTOR_THREAD_COUNT_DEFAULT;
         } else {
-            executorThreadCount = Integer.parseInt(executorThreadCountStr);
+            restThreadPoolMaxSize = Integer.parseInt(restThreadPoolMaxSizeStr);
         }
 
         if (!StringUtils.hasText(maxRequestSizeStr)) {
@@ -229,7 +234,7 @@ public class ServerConfigContainer {
             .setBoundHost(hostName)
             .setPort(port)
             .setIoThreads(ioThreadCount)
-            .setMaxThreads(executorThreadCount)
+            .setMaxThreads(restThreadPoolMaxSize)
             .setPayload(maxRequestSize)
             .setTelnet(telnet)
             .setDaemon(daemon);
@@ -245,9 +250,9 @@ public class ServerConfigContainer {
      */
     ServerConfig createDubboServerConfig() {
         String portStr = sofaBootRpcProperties.getDubboPort();
-        String ioThreadCountStr = sofaBootRpcProperties.getDubboIoThreadCount();
-        String executorThreadCountStr = sofaBootRpcProperties.getDubboExecutorThreadCount();
-        String acceptsCountStr = sofaBootRpcProperties.getDubboAcceptsCount();
+        String ioThreadSizeStr = sofaBootRpcProperties.getDubboIoThreadSize();
+        String dubboThreadPoolMaxSizeStr = sofaBootRpcProperties.getDubboThreadPoolMaxSize();
+        String dubboAcceptsSizeStr = sofaBootRpcProperties.getDubboAcceptsSize();
 
         ServerConfig serverConfig = new ServerConfig();
 
@@ -257,16 +262,16 @@ public class ServerConfigContainer {
             serverConfig.setPort(SofaBootRpcConfigConstants.DUBBO_PORT_DEFAULT);
         }
 
-        if (StringUtils.hasText(ioThreadCountStr)) {
-            serverConfig.setIoThreads(Integer.parseInt(ioThreadCountStr));
+        if (StringUtils.hasText(ioThreadSizeStr)) {
+            serverConfig.setIoThreads(Integer.parseInt(ioThreadSizeStr));
         }
 
-        if (StringUtils.hasText(executorThreadCountStr)) {
-            serverConfig.setMaxThreads(Integer.parseInt(executorThreadCountStr));
+        if (StringUtils.hasText(dubboThreadPoolMaxSizeStr)) {
+            serverConfig.setMaxThreads(Integer.parseInt(dubboThreadPoolMaxSizeStr));
         }
 
-        if (StringUtils.hasText(acceptsCountStr)) {
-            serverConfig.setAccepts(Integer.parseInt(acceptsCountStr));
+        if (StringUtils.hasText(dubboAcceptsSizeStr)) {
+            serverConfig.setAccepts(Integer.parseInt(dubboAcceptsSizeStr));
         }
 
         serverConfig.setAutoStart(false);

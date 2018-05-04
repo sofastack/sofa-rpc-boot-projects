@@ -37,13 +37,13 @@ public class ServerConfigContainerTest {
     @Test
     public void testBoltConfiguration() {
         sofaBootRpcProperties.setBoltPort("9090");
-        sofaBootRpcProperties.setBoltIoThreadCount("8080");
-        sofaBootRpcProperties.setBoltExecutorThreadCount("7070");
-        sofaBootRpcProperties.setBoltAcceptsCount(("6060"));
+        sofaBootRpcProperties.setBoltThreadPoolCoreSize("8080");
+        sofaBootRpcProperties.setBoltThreadPoolMaxSize("7070");
+        sofaBootRpcProperties.setBoltAcceptsSize(("6060"));
 
         ServerConfig serverConfig = serverConfigContainer.createBoltServerConfig();
         Assert.assertEquals(9090, serverConfig.getPort());
-        Assert.assertEquals(8080, serverConfig.getIoThreads());
+        Assert.assertEquals(8080, serverConfig.getCoreThreads());
         Assert.assertEquals(7070, serverConfig.getMaxThreads());
         Assert.assertEquals(6060, serverConfig.getAccepts());
     }
@@ -58,9 +58,9 @@ public class ServerConfigContainerTest {
     @Test
     public void testDubboServerConfiguration() {
         sofaBootRpcProperties.setDubboPort("9696");
-        sofaBootRpcProperties.setDubboIoThreadCount("8686");
-        sofaBootRpcProperties.setDubboExecutorThreadCount("7676");
-        sofaBootRpcProperties.setDubboAcceptsCount("6666");
+        sofaBootRpcProperties.setDubboIoThreadSize("8686");
+        sofaBootRpcProperties.setDubboThreadPoolMaxSize("7676");
+        sofaBootRpcProperties.setDubboAcceptsSize("6666");
 
         ServerConfig serverConfig = serverConfigContainer
             .createDubboServerConfig();
@@ -75,8 +75,8 @@ public class ServerConfigContainerTest {
     public void testRestServerConfiguration() {
         sofaBootRpcProperties.setRestHostname("host_name");
         sofaBootRpcProperties.setRestPort("123");
-        sofaBootRpcProperties.setRestIoThreadCount("456");
-        sofaBootRpcProperties.setRestExecutorThreadCount("789");
+        sofaBootRpcProperties.setRestIoThreadSize("456");
+        sofaBootRpcProperties.setRestThreadPoolMaxSize("789");
         sofaBootRpcProperties.setRestMaxRequestSize("1000");
         sofaBootRpcProperties.setRestTelnet("true");
         sofaBootRpcProperties.setRestDaemon("true");
