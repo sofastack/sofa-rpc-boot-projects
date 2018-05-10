@@ -22,6 +22,7 @@ import com.alipay.sofa.rpc.boot.common.SofaBootRpcRuntimeException;
 import com.alipay.sofa.rpc.boot.config.SofaBootRpcConfigConstants;
 import com.alipay.sofa.rpc.boot.container.SpringBridge;
 import com.alipay.sofa.rpc.boot.log.SofaBootRpcLoggerFactory;
+import com.alipay.sofa.rpc.log.factory.RpcLoggerFactory;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.env.Environment;
@@ -40,7 +41,9 @@ public class SofaBootRpcInitializer implements ApplicationContextInitializer<Con
 
         checkAppName(applicationContext.getEnvironment().getProperty(SofaBootRpcConfigConstants.APP_NAME));
 
-        initLog(applicationContext.getEnvironment());
+        initStarterLog(applicationContext.getEnvironment());
+
+        initRpcCoreLog(applicationContext.getEnvironment());
 
     }
 
@@ -51,9 +54,25 @@ public class SofaBootRpcInitializer implements ApplicationContextInitializer<Con
         }
     }
 
-    private void initLog(Environment environment) {
+    /**
+     * init sofa rpc starter log config
+     *
+     * @param environment
+     */
+    private void initStarterLog(Environment environment) {
         //log level
         String logLevelKey = Constants.LOG_LEVEL_PREFIX + SofaBootRpcLoggerFactory.RPC_LOG_SPACE;
+        SofaBootLogSpaceIsolationInit.initSofaBootLogger(environment, logLevelKey);
+    }
+
+    /**
+     * init sofa rpc log config
+     *
+     * @param environment
+     */
+    private void initRpcCoreLog(Environment environment) {
+        //log level
+        String logLevelKey = Constants.LOG_LEVEL_PREFIX + RpcLoggerFactory.RPC_LOG_SPACE;
         SofaBootLogSpaceIsolationInit.initSofaBootLogger(environment, logLevelKey);
     }
 }

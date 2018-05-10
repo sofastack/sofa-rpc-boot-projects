@@ -46,7 +46,22 @@ public class RpcShutdownTest implements ApplicationContextAware {
     @AfterClass
     public static void testRpcGracefulShutdown() {
         ((ConfigurableApplicationContext) applicationContext).close();
-        Assert.assertTrue(TestUtils.available(SofaBootRpcConfigConstants.BOLT_PORT_DEFAULT));
+
+        boolean portAvailale = false;
+        //in case of graceful shutdown too slow
+        for (int i = 0; i < 3; i++) {
+            portAvailale = TestUtils.available(SofaBootRpcConfigConstants.BOLT_PORT_DEFAULT);
+            if (portAvailale) {
+                break;
+            }
+            try {
+                Thread.sleep(50);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        Assert.assertTrue(portAvailale);
+
     }
 
     @Override
