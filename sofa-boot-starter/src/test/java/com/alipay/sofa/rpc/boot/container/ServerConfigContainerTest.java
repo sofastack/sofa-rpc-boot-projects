@@ -20,6 +20,7 @@ import com.alipay.sofa.rpc.boot.config.SofaBootRpcConfigConstants;
 import com.alipay.sofa.rpc.boot.config.SofaBootRpcProperties;
 import com.alipay.sofa.rpc.config.ServerConfig;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -40,12 +41,26 @@ public class ServerConfigContainerTest {
         sofaBootRpcProperties.setBoltThreadPoolCoreSize("8080");
         sofaBootRpcProperties.setBoltThreadPoolMaxSize("7070");
         sofaBootRpcProperties.setBoltAcceptsSize(("6060"));
-
+        sofaBootRpcProperties.setVirtualHost("127.0.0.2");
+        sofaBootRpcProperties.setBoundHost("127.0.0.3");
+        sofaBootRpcProperties.setVirtualPort("8888");
         ServerConfig serverConfig = serverConfigContainer.createBoltServerConfig();
         Assert.assertEquals(9090, serverConfig.getPort());
         Assert.assertEquals(8080, serverConfig.getCoreThreads());
         Assert.assertEquals(7070, serverConfig.getMaxThreads());
         Assert.assertEquals(6060, serverConfig.getAccepts());
+        Assert.assertEquals(8888, serverConfig.getVirtualPort().intValue());
+        Assert.assertEquals("127.0.0.2", serverConfig.getVirtualHost());
+        Assert.assertEquals("127.0.0.3", serverConfig.getBoundHost());
+    }
+
+    @Test
+    @Ignore("only can run in multi ip env")
+    public void testBoltIpCustomConfiguration() {
+        sofaBootRpcProperties.setEnabledIpRange("192.168");
+        serverConfigContainer = new ServerConfigContainer(sofaBootRpcProperties);
+        ServerConfig serverConfig = serverConfigContainer.createBoltServerConfig();
+        Assert.assertEquals("192.168", serverConfig.getVirtualHost());
     }
 
     @Test

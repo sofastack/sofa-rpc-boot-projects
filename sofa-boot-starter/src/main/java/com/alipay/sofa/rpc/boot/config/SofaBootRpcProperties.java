@@ -76,6 +76,20 @@ public class SofaBootRpcProperties {
     /* registry */
     private String      registryAddress;
 
+    //publish to registry
+    private String      virtualHost;
+
+    //publish to registry
+    private String      virtualPort;
+
+    //publish to registry virtual host range
+    private String      enabledIpRange;
+
+    private String      bindNetworkInterface;
+
+    // bound server
+    private String      boundHost;
+
     public SofaBootRpcProperties(Environment environment) {
         this.environment = environment;
     }
@@ -341,6 +355,51 @@ public class SofaBootRpcProperties {
         this.restThreadPoolCoreSize = restThreadPoolCoreSize;
     }
 
+    public String getVirtualHost() {
+        return StringUtils.isEmpty(virtualHost) ? getDotString(new Object() {
+        }.getClass().getEnclosingMethod().getName()) : virtualHost;
+    }
+
+    public void setVirtualHost(String virtualHost) {
+        this.virtualHost = virtualHost;
+    }
+
+    public String getBoundHost() {
+        return StringUtils.isEmpty(boundHost) ? getDotString(new Object() {
+        }.getClass().getEnclosingMethod().getName()) : boundHost;
+    }
+
+    public void setBoundHost(String boundHost) {
+        this.boundHost = boundHost;
+    }
+
+    public String getVirtualPort() {
+        return StringUtils.isEmpty(virtualPort) ? getDotString(new Object() {
+        }.getClass().getEnclosingMethod().getName()) : virtualPort;
+    }
+
+    public void setVirtualPort(String virtualPort) {
+        this.virtualPort = virtualPort;
+    }
+
+    public String getEnabledIpRange() {
+        return StringUtils.isEmpty(enabledIpRange) ? getDotString(new Object() {
+        }.getClass().getEnclosingMethod().getName()) : enabledIpRange;
+    }
+
+    public void setEnabledIpRange(String enabledIpRange) {
+        this.enabledIpRange = enabledIpRange;
+    }
+
+    public String getBindNetworkInterface() {
+        return StringUtils.isEmpty(bindNetworkInterface) ? getDotString(new Object() {
+        }.getClass().getEnclosingMethod().getName()) : bindNetworkInterface;
+    }
+
+    public void setBindNetworkInterface(String bindNetworkInterface) {
+        this.bindNetworkInterface = bindNetworkInterface;
+    }
+
     private String getDotString(String enclosingMethodName) {
         if (environment == null) {
             return null;
@@ -351,5 +410,4 @@ public class SofaBootRpcProperties {
     String camelToDot(String camelCaseString) {
         return CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_HYPHEN, camelCaseString).replaceAll("-", ".");
     }
-
 }
