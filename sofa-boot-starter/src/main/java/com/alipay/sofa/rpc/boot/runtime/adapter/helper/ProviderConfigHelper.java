@@ -71,7 +71,7 @@ public class ProviderConfigHelper {
         Integer warmupTime = param.getWarmUpTime();
         Integer warmupWeight = param.getWarmUpWeight();
         UserThreadPool threadPool = param.getUserThreadPool();
-
+        String serialization = param.getSerialization();
         List<Filter> filters = param.getFilters();
         List<MethodConfig> methodConfigs = convertToMethodConfig(param.getMethodInfos());
 
@@ -122,6 +122,10 @@ public class ProviderConfigHelper {
 
         String protocol = binding.getBindingType().getType();
         providerConfig.setBootstrap(protocol);
+
+        if (StringUtils.hasText(serialization)) {
+            providerConfig.setSerialization(serialization);
+        }
 
         providerConfig.setRegister(false);
 

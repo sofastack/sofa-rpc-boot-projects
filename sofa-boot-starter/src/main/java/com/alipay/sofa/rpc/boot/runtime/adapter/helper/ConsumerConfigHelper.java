@@ -73,6 +73,7 @@ public class ConsumerConfigHelper {
         Boolean lazy = param.getLazy();
         Boolean check = param.getCheck();
 
+        String serialization = param.getSerialization();
         List<Filter> filters = param.getFilters();
         List<MethodConfig> methodConfigs = convertToMethodConfig(param.getMethodInfos());
         String targetUrl = param.getTargetUrl();
@@ -143,6 +144,10 @@ public class ConsumerConfigHelper {
 
         if (protocol.equals(SofaBootRpcConfigConstants.RPC_PROTOCOL_DUBBO)) {
             consumerConfig.setInJVM(false);
+        }
+
+        if (StringUtils.hasText(serialization)) {
+            consumerConfig.setSerialization(serialization);
         }
 
         return consumerConfig.setProtocol(protocol);

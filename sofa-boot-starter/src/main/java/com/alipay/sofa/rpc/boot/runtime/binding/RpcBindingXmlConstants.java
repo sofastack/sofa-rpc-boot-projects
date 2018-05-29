@@ -43,6 +43,7 @@ public class RpcBindingXmlConstants {
     public static final String TAG_THREAD_POOL_REF   = "thread-pool-ref";
     public static final String TAG_GENERIC_INTERFACE = "generic-interface";
     public static final String TAG_TARGET_URL        = "target-url";
+    public static final String TAG_SERIALIZE_TYPE    = "serialize-type";
     public static final String TAG_LOAD_BALANCER     = "loadBalancer";
     public static final String TAG_LAZY              = "lazy";
     public static final String TAG_CHECK             = "check";

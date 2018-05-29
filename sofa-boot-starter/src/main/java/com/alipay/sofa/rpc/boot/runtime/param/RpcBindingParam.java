@@ -70,6 +70,8 @@ public abstract class RpcBindingParam implements BindingParam {
 
     protected String                     targetUrl;
 
+    protected String                     serialization;
+
     /**
      * Getter method for property <tt>timeout</tt>.
      *
@@ -412,6 +414,14 @@ public abstract class RpcBindingParam implements BindingParam {
         this.check = check;
     }
 
+    public String getSerialization() {
+        return serialization;
+    }
+
+    public void setSerialization(String serialization) {
+        this.serialization = serialization;
+    }
+
     @Override
     public boolean equals(Object object) {
         if (this == object) {
@@ -477,6 +487,10 @@ public abstract class RpcBindingParam implements BindingParam {
         if (methodInfos != null ? !methodInfos.equals(that.methodInfos) : that.methodInfos != null) {
             return false;
         }
+        if (serialization != null ? !serialization.equals(that.serialization) : that.serialization != null) {
+            return false;
+        }
+
         return targetUrl != null ? targetUrl.equals(that.targetUrl) : that.targetUrl == null;
     }
 
@@ -501,6 +515,7 @@ public abstract class RpcBindingParam implements BindingParam {
         result = 31 * result + (filters != null ? filters.hashCode() : 0);
         result = 31 * result + (methodInfos != null ? methodInfos.hashCode() : 0);
         result = 31 * result + (targetUrl != null ? targetUrl.hashCode() : 0);
+        result = 31 * result + (serialization != null ? serialization.hashCode() : 0);
         return result;
     }
 }
