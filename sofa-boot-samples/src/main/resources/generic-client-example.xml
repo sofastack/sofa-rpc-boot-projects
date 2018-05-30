@@ -6,7 +6,7 @@
             http://sofastack.io/schema/sofaboot http://sofastack.io/schema/sofaboot.xsd"
        default-autowire="byName">
     <!-- generic -->
-    <sofa:reference id="sampleGenericServiceReference" interface="com.alipay.sofa.rpc.api.GenericService">
+    <sofa:reference jvm-first="false" id="sampleGenericServiceReference" interface="com.alipay.sofa.rpc.api.GenericService">
         <sofa:binding.bolt>
             <sofa:global-attrs generic-interface="com.alipay.sofa.rpc.samples.generic.SampleGenericService"/>
         </sofa:binding.bolt>

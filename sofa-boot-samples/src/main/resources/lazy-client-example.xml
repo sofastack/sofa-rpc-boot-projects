@@ -6,13 +6,13 @@
             http://sofastack.io/schema/sofaboot http://sofastack.io/schema/sofaboot.xsd"
        default-autowire="byName">
 
-    <sofa:reference id="lazyServiceReferenceBolt" interface="com.alipay.sofa.rpc.samples.lazy.LazyService">
+    <sofa:reference jvm-first="false" id="lazyServiceReferenceBolt" interface="com.alipay.sofa.rpc.samples.lazy.LazyService">
         <sofa:binding.bolt>
             <sofa:global-attrs lazy="true"/>
         </sofa:binding.bolt>
     </sofa:reference>
 
-    <sofa:reference id="lazyServiceReferenceDubbo" interface="com.alipay.sofa.rpc.samples.lazy.LazyService">
+    <sofa:reference jvm-first="false" id="lazyServiceReferenceDubbo" interface="com.alipay.sofa.rpc.samples.lazy.LazyService">
         <sofa:binding.dubbo>
             <sofa:global-attrs lazy="true"/>
         </sofa:binding.dubbo>

@@ -139,7 +139,7 @@ public class SofaBootRpcAllTest {
     @Test
     public void testThreadPool() {
         Assert.assertTrue(threadPoolService.sayThreadPool("threadPool").startsWith(
-            "threadPool[customerThreadPool_name"));
+            "threadPool[SOFA-customerThreadPool_name"));
 
     }
 

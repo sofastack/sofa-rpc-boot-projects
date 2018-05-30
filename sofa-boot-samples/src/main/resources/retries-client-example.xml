@@ -6,13 +6,13 @@
             http://sofastack.io/schema/sofaboot http://sofastack.io/schema/sofaboot.xsd"
        default-autowire="byName">
 
-    <sofa:reference id="retriesServiceReferenceBolt" interface="com.alipay.sofa.rpc.samples.retries.RetriesService">
+    <sofa:reference jvm-first="false" id="retriesServiceReferenceBolt" interface="com.alipay.sofa.rpc.samples.retries.RetriesService">
         <sofa:binding.bolt>
             <sofa:global-attrs retries="2"/>
         </sofa:binding.bolt>
     </sofa:reference>
 
-    <sofa:reference id="retriesServiceReferenceDubbo" interface="com.alipay.sofa.rpc.samples.retries.RetriesService">
+    <sofa:reference jvm-first="false" id="retriesServiceReferenceDubbo" interface="com.alipay.sofa.rpc.samples.retries.RetriesService">
         <sofa:binding.dubbo>
             <sofa:global-attrs retries="2"/>
         </sofa:binding.dubbo>

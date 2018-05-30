@@ -5,7 +5,7 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
             http://sofastack.io/schema/sofaboot http://sofastack.io/schema/sofaboot.xsd"
        default-autowire="byName">
-    <sofa:reference id="dubboServiceReference" interface="com.alipay.sofa.rpc.samples.dubbo.DubboService">
+    <sofa:reference jvm-first="false" id="dubboServiceReference" interface="com.alipay.sofa.rpc.samples.dubbo.DubboService">
         <sofa:binding.dubbo/>
     </sofa:reference>
 </beans>

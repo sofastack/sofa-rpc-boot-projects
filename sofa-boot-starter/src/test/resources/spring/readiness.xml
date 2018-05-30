@@ -8,7 +8,7 @@
     <sofa:service ref="sampleFacadeBean" interface="com.alipay.sofa.rpc.test.bean.SampleFacade">
         <sofa:binding.bolt/>
     </sofa:service>
-    <sofa:reference interface="com.alipay.sofa.rpc.test.bean.SampleFacade" id="sampleFacade">
+    <sofa:reference jvm-first="false" interface="com.alipay.sofa.rpc.test.bean.SampleFacade" id="sampleFacade">
         <sofa:binding.bolt/>
     </sofa:reference>
 </beans>

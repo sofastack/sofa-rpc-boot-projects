@@ -6,7 +6,7 @@
             http://sofastack.io/schema/sofaboot http://sofastack.io/schema/sofaboot.xsd"
        default-autowire="byName">
     <!-- rest -->
-    <sofa:reference id="restServiceReference" interface="com.alipay.sofa.rpc.samples.rest.RestService">
+    <sofa:reference jvm-first="false" id="restServiceReference" interface="com.alipay.sofa.rpc.samples.rest.RestService">
         <sofa:binding.rest/>
     </sofa:reference>
 </beans>

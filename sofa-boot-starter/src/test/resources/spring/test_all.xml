@@ -10,7 +10,7 @@
     <sofa:service ref="helloSyncServiceImpl" interface="com.alipay.sofa.rpc.boot.invoke.HelloSyncService">
         <sofa:binding.bolt/>
     </sofa:service>
-    <sofa:reference id="helloSyncService" interface="com.alipay.sofa.rpc.boot.invoke.HelloSyncService">
+    <sofa:reference jvm-first="false" id="helloSyncService" interface="com.alipay.sofa.rpc.boot.invoke.HelloSyncService">
         <sofa:binding.bolt/>
     </sofa:reference>
 
@@ -19,7 +19,7 @@
     <sofa:service ref="helloFutureServiceImpl" interface="com.alipay.sofa.rpc.boot.invoke.HelloFutureService">
         <sofa:binding.bolt/>
     </sofa:service>
-    <sofa:reference id="helloFutureService" interface="com.alipay.sofa.rpc.boot.invoke.HelloFutureService">
+    <sofa:reference jvm-first="false" id="helloFutureService" interface="com.alipay.sofa.rpc.boot.invoke.HelloFutureService">
         <sofa:binding.bolt>
             <sofa:global-attrs type="future"/>
         </sofa:binding.bolt>
@@ -31,7 +31,7 @@
         <sofa:binding.bolt/>
     </sofa:service>
     <bean id="callbackImpl" class="com.alipay.sofa.rpc.boot.invoke.CallbackImpl"/>
-    <sofa:reference id="helloCallbackService"
+    <sofa:reference jvm-first="false" id="helloCallbackService"
                     interface="com.alipay.sofa.rpc.boot.invoke.HelloCallbackService">
         <sofa:binding.bolt>
             <sofa:global-attrs type="callback" callback-ref="callbackImpl"/>
@@ -46,7 +46,7 @@
             <sofa:global-attrs filter="testFilter"/>
         </sofa:binding.bolt>
     </sofa:service>
-    <sofa:reference id="filterService" interface="com.alipay.sofa.rpc.boot.filter.FilterService">
+    <sofa:reference jvm-first="false" id="filterService" interface="com.alipay.sofa.rpc.boot.filter.FilterService">
         <sofa:binding.bolt/>
     </sofa:reference>
 
@@ -58,7 +58,7 @@
     <sofa:service ref="globalFilterServiceImpl" interface="com.alipay.sofa.rpc.boot.globalfilter.GlobalFilterService">
         <sofa:binding.bolt/>
     </sofa:service>
-    <sofa:reference id="globalFilterService" interface="com.alipay.sofa.rpc.boot.globalfilter.GlobalFilterService">
+    <sofa:reference jvm-first="false" id="globalFilterService" interface="com.alipay.sofa.rpc.boot.globalfilter.GlobalFilterService">
         <sofa:binding.bolt/>
     </sofa:reference>
 
@@ -67,7 +67,7 @@
     <sofa:service ref="directServiceImpl" interface="com.alipay.sofa.rpc.boot.direct.DirectService">
         <sofa:binding.bolt/>
     </sofa:service>
-    <sofa:reference id="directService" interface="com.alipay.sofa.rpc.boot.direct.DirectService">
+    <sofa:reference jvm-first="false" id="directService" interface="com.alipay.sofa.rpc.boot.direct.DirectService">
         <sofa:binding.bolt>
             <sofa:route target-url="bolt://127.0.0.1:12200"/>
         </sofa:binding.bolt>
@@ -78,7 +78,7 @@
     <sofa:service ref="sampleGenericServiceImpl" interface="com.alipay.sofa.rpc.boot.generic.GenericService">
         <sofa:binding.bolt/>
     </sofa:service>
-    <sofa:reference id="sampleGenericService" interface="com.alipay.sofa.rpc.api.GenericService">
+    <sofa:reference jvm-first="false" id="sampleGenericService" interface="com.alipay.sofa.rpc.api.GenericService">
         <sofa:binding.bolt>
             <sofa:global-attrs generic-interface="com.alipay.sofa.rpc.boot.generic.GenericService"/>
         </sofa:binding.bolt>
@@ -97,7 +97,7 @@
             <sofa:global-attrs thread-pool-ref="customerThreadPool"/>
         </sofa:binding.bolt>
     </sofa:service>
-    <sofa:reference id="threadPoolService"
+    <sofa:reference jvm-first="false" id="threadPoolService"
                     interface="com.alipay.sofa.rpc.boot.threadpool.ThreadPoolService">
         <sofa:binding.bolt/>
     </sofa:reference>
@@ -107,7 +107,7 @@
     <sofa:service ref="restServiceImpl" interface="com.alipay.sofa.rpc.boot.rest.RestService">
         <sofa:binding.rest/>
     </sofa:service>
-    <sofa:reference id="restService" interface="com.alipay.sofa.rpc.boot.rest.RestService">
+    <sofa:reference jvm-first="false" id="restService" interface="com.alipay.sofa.rpc.boot.rest.RestService">
         <sofa:binding.rest/>
     </sofa:reference>
 
@@ -116,7 +116,7 @@
     <sofa:service ref="dubboServiceImpl" interface="com.alipay.sofa.rpc.boot.dubbo.DubboService">
         <sofa:binding.dubbo/>
     </sofa:service>
-    <sofa:reference id="dubboService" interface="com.alipay.sofa.rpc.boot.dubbo.DubboService">
+    <sofa:reference jvm-first="false" id="dubboService" interface="com.alipay.sofa.rpc.boot.dubbo.DubboService">
         <sofa:binding.dubbo/>
     </sofa:reference>
 
@@ -126,12 +126,12 @@
         <sofa:binding.bolt/>
         <sofa:binding.dubbo/>
     </sofa:service>
-    <sofa:reference id="retriesServiceBolt" interface="com.alipay.sofa.rpc.boot.retry.RetriesService">
+    <sofa:reference jvm-first="false" id="retriesServiceBolt" interface="com.alipay.sofa.rpc.boot.retry.RetriesService">
         <sofa:binding.bolt>
             <sofa:global-attrs retries="2"/>
         </sofa:binding.bolt>
     </sofa:reference>
-    <sofa:reference id="retriesServiceDubbo" interface="com.alipay.sofa.rpc.boot.retry.RetriesService">
+    <sofa:reference jvm-first="false" id="retriesServiceDubbo" interface="com.alipay.sofa.rpc.boot.retry.RetriesService">
         <sofa:binding.dubbo>
             <sofa:global-attrs retries="2"/>
         </sofa:binding.dubbo>
@@ -144,13 +144,13 @@
         <sofa:binding.dubbo/>
     </sofa:service>
 
-    <sofa:reference id="lazyServiceBolt" interface="com.alipay.sofa.rpc.boot.lazy.LazyService">
+    <sofa:reference jvm-first="false" id="lazyServiceBolt" interface="com.alipay.sofa.rpc.boot.lazy.LazyService">
         <sofa:binding.bolt>
             <sofa:global-attrs lazy="true"/>
         </sofa:binding.bolt>
     </sofa:reference>
 
-    <sofa:reference id="lazyServiceDubbo" interface="com.alipay.sofa.rpc.boot.lazy.LazyService">
+    <sofa:reference jvm-first="false" id="lazyServiceDubbo" interface="com.alipay.sofa.rpc.boot.lazy.LazyService">
         <sofa:binding.dubbo>
             <sofa:global-attrs lazy="true"/>
         </sofa:binding.dubbo>

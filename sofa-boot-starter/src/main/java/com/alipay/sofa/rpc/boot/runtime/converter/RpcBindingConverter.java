@@ -20,13 +20,20 @@ import com.alipay.sofa.rpc.boot.common.SofaBootRpcParserUtil;
 import com.alipay.sofa.rpc.boot.common.SofaBootRpcRuntimeException;
 import com.alipay.sofa.rpc.boot.common.SofaBootRpcSpringUtil;
 import com.alipay.sofa.rpc.boot.container.RpcFilterContainer;
+import com.alipay.sofa.rpc.boot.runtime.binding.BoltBinding;
 import com.alipay.sofa.rpc.boot.runtime.binding.RpcBinding;
 import com.alipay.sofa.rpc.boot.runtime.binding.RpcBindingMethodInfo;
 import com.alipay.sofa.rpc.boot.runtime.binding.RpcBindingXmlConstants;
+import com.alipay.sofa.rpc.boot.runtime.param.BoltBindingParam;
 import com.alipay.sofa.rpc.boot.runtime.param.RpcBindingParam;
+import com.alipay.sofa.rpc.config.UserThreadPoolManager;
 import com.alipay.sofa.rpc.filter.ExcludeFilter;
 import com.alipay.sofa.rpc.filter.Filter;
 import com.alipay.sofa.rpc.server.UserThreadPool;
+import com.alipay.sofa.runtime.api.annotation.SofaReference;
+import com.alipay.sofa.runtime.api.annotation.SofaReferenceBinding;
+import com.alipay.sofa.runtime.api.annotation.SofaService;
+import com.alipay.sofa.runtime.api.annotation.SofaServiceBinding;
 import com.alipay.sofa.runtime.spi.service.BindingConverter;
 import com.alipay.sofa.runtime.spi.service.BindingConverterContext;
 import org.springframework.context.ApplicationContext;
@@ -323,4 +330,125 @@ public abstract class RpcBindingConverter implements BindingConverter<RpcBinding
         }
     }
 
+    /**
+     * transfer sofa service annotation
+     *
+     * @param sofaServiceAnnotation
+     * @param sofaServiceBindingAnnotation
+     * @param bindingConverterContext
+     * @return
+     */
+    @Override
+    public RpcBinding convert(SofaService sofaServiceAnnotation, SofaServiceBinding sofaServiceBindingAnnotation,
+                              BindingConverterContext bindingConverterContext) {
+        RpcBindingParam bindingParam = new BoltBindingParam();
+        bindingParam.setTimeout(sofaServiceBindingAnnotation.timeout());
+
+        //TODO need a magic number
+        if (sofaServiceBindingAnnotation.weight() != 0) {
+            bindingParam.setWeight(sofaServiceBindingAnnotation.weight());
+        }
+        if (sofaServiceBindingAnnotation.warmUpTime() != 0) {
+            bindingParam.setWarmUpTime(sofaServiceBindingAnnotation.warmUpTime());
+        }
+        if (sofaServiceBindingAnnotation.warmUpWeight() != 0) {
+            bindingParam.setWarmUpWeight(sofaServiceBindingAnnotation.warmUpWeight());
+        }
+
+        ApplicationContext applicationContext = bindingConverterContext.getApplicationContext();
+        List<Filter> filters = new ArrayList<Filter>(RpcFilterContainer.getInstance().getFilters(
+            applicationContext));
+
+        String[] filterNames = sofaServiceBindingAnnotation.filters();
+        if (filterNames.length > 0) {
+            for (String filterName : filterNames) {
+                Object filter = applicationContext.getBean(filterName);
+                if (filter instanceof Filter) {
+                    filters.add((Filter) filter);
+                } else {
+                    throw new SofaBootRpcRuntimeException("filter name[" + filterName + "] is not ref a Filter.");
+                }
+            }
+        }
+
+        if (!CollectionUtils.isEmpty(filters)) {
+            bindingParam.setFilters(filters);
+        }
+        String threadPool = sofaServiceBindingAnnotation.userThreadPool();
+        if (StringUtils.hasText(threadPool)) {
+
+            UserThreadPool threadPoolObj = (UserThreadPool) applicationContext.getBean(threadPool);
+
+            String interfaceName = sofaServiceAnnotation.interfaceType().getCanonicalName();
+            String uniqId = sofaServiceAnnotation.uniqueId();
+            String uniqueName = interfaceName
+                + ":1.0"
+                + (StringUtils.isEmpty(uniqId) ? "" : ":" + uniqId);
+
+            UserThreadPoolManager.registerUserThread(uniqueName,
+                threadPoolObj);
+        }
+
+        return new BoltBinding(bindingParam, bindingConverterContext.getApplicationContext(),
+            bindingConverterContext.isInBinding());
+
+    }
+
+    /**
+     * transfer sofareference annotation
+     *
+     * @param sofaReferenceAnnotation
+     * @param sofaReferenceBindingAnnotation
+     * @param bindingConverterContext
+     * @return
+     */
+    @Override
+    public RpcBinding convert(SofaReference sofaReferenceAnnotation,
+                              SofaReferenceBinding sofaReferenceBindingAnnotation,
+                              BindingConverterContext bindingConverterContext) {
+        RpcBindingParam bindingParam = new BoltBindingParam();
+
+        //TODO need a magic number
+        if (sofaReferenceBindingAnnotation.addressWaitTime() != 0) {
+            bindingParam.setAddressWaitTime(sofaReferenceBindingAnnotation.addressWaitTime());
+        }
+        if (StringUtils.hasText(sofaReferenceBindingAnnotation.directUrl())) {
+            bindingParam.setTargetUrl(sofaReferenceBindingAnnotation.directUrl());
+        }
+        if (sofaReferenceBindingAnnotation.timeout() != 0) {
+            bindingParam.setTimeout(sofaReferenceBindingAnnotation.timeout());
+        }
+        bindingParam.setType(sofaReferenceBindingAnnotation.bindingType());
+
+        ApplicationContext applicationContext = bindingConverterContext.getApplicationContext();
+        List<Filter> filters = new ArrayList<Filter>(RpcFilterContainer.getInstance().getFilters(
+            applicationContext));
+
+        String[] filterNames = sofaReferenceBindingAnnotation.filters();
+
+        if (filterNames.length > 0) {
+            for (String filterName : filterNames) {
+                Object filter = applicationContext.getBean(filterName);
+                if (filter instanceof Filter) {
+                    filters.add((Filter) filter);
+                } else {
+                    throw new SofaBootRpcRuntimeException("filter name[" + filterName + "] is not ref a Filter.");
+                }
+            }
+        }
+
+        if (!CollectionUtils.isEmpty(filters)) {
+            bindingParam.setFilters(filters);
+        }
+
+        bindingParam.setRetries(sofaReferenceBindingAnnotation.retries());
+
+        String callbackRef = sofaReferenceBindingAnnotation.callbackHandler();
+        if (StringUtils.hasText(callbackRef)) {
+            bindingParam.setCallbackHandler(applicationContext.getBean(callbackRef));
+        }
+        bindingParam.setLazy(sofaReferenceBindingAnnotation.lazy());
+        return new BoltBinding(bindingParam, bindingConverterContext.getApplicationContext(),
+            bindingConverterContext.isInBinding());
+    }
 }

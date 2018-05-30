@@ -14,40 +14,36 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.alipay.sofa.rpc.samples.threadpool;
+package com.alipay.sofa.rpc.samples.annotation;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.ImportResource;
 
 /**
  * @author <a href="mailto:leizhiyuan@gmail.com">leizhiyuan</a>
  */
-@ImportResource({ "classpath:threadpool-client-example.xml" })
 @SpringBootApplication
-public class ThreadPoolClientApplication {
+public class AnotationClientApplication {
 
     public static void main(String[] args) {
 
         //change port to run in local machine
         System.setProperty("server.port", "8081");
 
-        SpringApplication springApplication = new SpringApplication(ThreadPoolClientApplication.class);
+        SpringApplication springApplication = new SpringApplication(AnotationClientApplication.class);
+
         ApplicationContext applicationContext = springApplication.run(args);
 
-        ThreadPoolService threadPoolService = (ThreadPoolService) applicationContext
-            .getBean("threadPoolServiceReference");
+        AnnotationClientImpl annotationService = applicationContext.getBean(AnnotationClientImpl.class);
 
-        String result = threadPoolService.sayThreadPool("threadPool");
-
+        String result = annotationService.sayClientAnnotation("annotation");
         System.out.println("invoke result:" + result);
 
-        if (result.startsWith("threadPool[SOFA-customerThreadPool_name")) {
-            System.out.println("threadPool invoke success");
+        if ("annotation".equalsIgnoreCase(result)) {
+            System.out.println("annotation invoke success");
         } else {
-            System.out.println("threadPool invoke fail");
+            System.out.println("annotation invoke fail");
         }
-
     }
 }

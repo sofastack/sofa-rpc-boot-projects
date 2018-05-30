@@ -6,18 +6,18 @@
             http://sofastack.io/schema/sofaboot http://sofastack.io/schema/sofaboot.xsd"
        default-autowire="byName">
     <!-- invoke sync-->
-    <sofa:reference id="helloSyncServiceReference" interface="com.alipay.sofa.rpc.samples.invoke.HelloSyncService">
+    <sofa:reference jvm-first="false" id="helloSyncServiceReference" interface="com.alipay.sofa.rpc.samples.invoke.HelloSyncService">
         <sofa:binding.bolt/>
     </sofa:reference>
     <!-- invoke future -->
-    <sofa:reference id="helloFutureServiceReference" interface="com.alipay.sofa.rpc.samples.invoke.HelloFutureService">
+    <sofa:reference jvm-first="false" id="helloFutureServiceReference" interface="com.alipay.sofa.rpc.samples.invoke.HelloFutureService">
         <sofa:binding.bolt>
             <sofa:global-attrs type="future"/>
         </sofa:binding.bolt>
     </sofa:reference>
     <!-- invoke callback -->
     <bean id="callbackImpl" class="com.alipay.sofa.rpc.samples.invoke.CallbackImpl"/>
-    <sofa:reference id="helloCallbackServiceReference"
+    <sofa:reference jvm-first="false" id="helloCallbackServiceReference"
                     interface="com.alipay.sofa.rpc.samples.invoke.HelloCallbackService">
         <sofa:binding.bolt>
             <sofa:global-attrs type="callback" callback-ref="callbackImpl"/>

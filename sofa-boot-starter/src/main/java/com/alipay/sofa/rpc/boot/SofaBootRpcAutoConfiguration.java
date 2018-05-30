@@ -16,17 +16,21 @@
  */
 package com.alipay.sofa.rpc.boot;
 
+import com.alipay.sofa.healthcheck.startup.SofaBootMiddlewareAfterReadinessCheckCallback;
 import com.alipay.sofa.rpc.boot.config.*;
 import com.alipay.sofa.rpc.boot.container.ConsumerConfigContainer;
 import com.alipay.sofa.rpc.boot.container.ProviderConfigContainer;
 import com.alipay.sofa.rpc.boot.container.RegistryConfigContainer;
 import com.alipay.sofa.rpc.boot.container.ServerConfigContainer;
 import com.alipay.sofa.rpc.boot.context.ApplicationContextClosedListener;
+import com.alipay.sofa.rpc.boot.context.ApplicationContextRefreshedListener;
 import com.alipay.sofa.rpc.boot.context.SofaBootRpcStartListener;
 import com.alipay.sofa.rpc.boot.health.RpcAfterHealthCheckCallback;
 import com.alipay.sofa.rpc.boot.runtime.adapter.helper.ConsumerConfigHelper;
 import com.alipay.sofa.rpc.boot.runtime.adapter.helper.ProviderConfigHelper;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingClass;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
@@ -102,6 +106,12 @@ public class SofaBootRpcAutoConfiguration {
     }
 
     @Bean
+    @ConditionalOnMissingClass({ "com.alipay.sofa.healthcheck.startup.SofaBootMiddlewareAfterReadinessCheckCallback" })
+    public ApplicationContextRefreshedListener applicationContextRefreshedListener() {
+        return new ApplicationContextRefreshedListener();
+    }
+
+    @Bean
     public SofaBootRpcStartListener sofaBootRpcStartListener(
                                                              ProviderConfigContainer providerConfigContainer,
                                                              FaultToleranceConfigurator faultToleranceConfigurator,
@@ -112,8 +122,13 @@ public class SofaBootRpcAutoConfiguration {
             registryConfigContainer);
     }
 
-    @Bean
-    public RpcAfterHealthCheckCallback rpcAfterHealthCheckCallback() {
-        return new RpcAfterHealthCheckCallback();
+    @Configuration
+    @ConditionalOnClass({ SofaBootMiddlewareAfterReadinessCheckCallback.class })
+    public static class SofaModuleHealthCheckConfiguration {
+        @Bean
+        public RpcAfterHealthCheckCallback rpcAfterHealthCheckCallback() {
+            return new RpcAfterHealthCheckCallback();
+        }
     }
+
 }

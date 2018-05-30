@@ -26,7 +26,6 @@ import com.alipay.sofa.runtime.api.binding.BindingType;
 import org.springframework.context.ApplicationContext;
 
 /**
- *
  * @author <a href="mailto:lw111072@antfin.com">LiWei</a>
  */
 public class BoltBindingConverter extends RpcBindingConverter {

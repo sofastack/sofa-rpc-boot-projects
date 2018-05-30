@@ -54,7 +54,7 @@ public class ReadinessTest {
     public void testCannotFoundAddress() throws InterruptedException {
         thrown.expect(SofaRouteException.class);
         thrown
-            .expectMessage("RPC-02306: Cannot get the service address of service [com.alipay.sofa.rpc.test.bean.SampleFacade:1.0], please check the registry log.");
+            .expectMessage("RPC-02306");
         TimeUnit.SECONDS.sleep(1);
         Assert.assertEquals("hi World!", sampleFacade.sayHi("World"));
     }

@@ -7,7 +7,7 @@
        default-autowire="byName">
     <!-- filter -->
     <bean id="sampleFilter" class="com.alipay.sofa.rpc.samples.filter.SampleClientFilter"/>
-    <sofa:reference id="filterServiceReference" interface="com.alipay.sofa.rpc.samples.filter.FilterService">
+    <sofa:reference jvm-first="false" id="filterServiceReference" interface="com.alipay.sofa.rpc.samples.filter.FilterService">
         <sofa:binding.bolt>
             <sofa:global-attrs filter="sampleFilter"/>
         </sofa:binding.bolt>
