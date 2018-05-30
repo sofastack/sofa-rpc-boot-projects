@@ -50,6 +50,14 @@ public class SofaBootRpcProperties {
     private String      boltAcceptsSize;
     /* Bolt end*/
 
+    /* H2c start*/
+    private String      h2cPort;
+    private String      h2cThreadPoolCoreSize;
+    private String      h2cThreadPoolMaxSize;
+    private String      h2cThreadPoolQueueSize;
+    private String      h2cAcceptsSize;
+    /* Bolt end*/
+
     /* rest start*/
     private String      restHostname;
     private String      restPort;
@@ -398,6 +406,51 @@ public class SofaBootRpcProperties {
 
     public void setBindNetworkInterface(String bindNetworkInterface) {
         this.bindNetworkInterface = bindNetworkInterface;
+    }
+
+    public String getH2cPort() {
+        return StringUtils.isEmpty(h2cPort) ? getDotString(new Object() {
+        }.getClass().getEnclosingMethod().getName()) : h2cPort;
+    }
+
+    public void setH2cPort(String h2cPort) {
+        this.h2cPort = h2cPort;
+    }
+
+    public String getH2cThreadPoolCoreSize() {
+        return StringUtils.isEmpty(h2cThreadPoolCoreSize) ? getDotString(new Object() {
+        }.getClass().getEnclosingMethod().getName()) : h2cThreadPoolCoreSize;
+    }
+
+    public void setH2cThreadPoolCoreSize(String h2cThreadPoolCoreSize) {
+        this.h2cThreadPoolCoreSize = h2cThreadPoolCoreSize;
+    }
+
+    public String getH2cThreadPoolMaxSize() {
+        return StringUtils.isEmpty(h2cThreadPoolMaxSize) ? getDotString(new Object() {
+        }.getClass().getEnclosingMethod().getName()) : h2cThreadPoolMaxSize;
+    }
+
+    public void setH2cThreadPoolMaxSize(String h2cThreadPoolMaxSize) {
+        this.h2cThreadPoolMaxSize = h2cThreadPoolMaxSize;
+    }
+
+    public String getH2cThreadPoolQueueSize() {
+        return StringUtils.isEmpty(h2cThreadPoolQueueSize) ? getDotString(new Object() {
+        }.getClass().getEnclosingMethod().getName()) : h2cThreadPoolQueueSize;
+    }
+
+    public void setH2cThreadPoolQueueSize(String h2cThreadPoolQueueSize) {
+        this.h2cThreadPoolQueueSize = h2cThreadPoolQueueSize;
+    }
+
+    public String getH2cAcceptsSize() {
+        return StringUtils.isEmpty(h2cAcceptsSize) ? getDotString(new Object() {
+        }.getClass().getEnclosingMethod().getName()) : h2cAcceptsSize;
+    }
+
+    public void setH2cAcceptsSize(String h2cAcceptsSize) {
+        this.h2cAcceptsSize = h2cAcceptsSize;
     }
 
     private String getDotString(String enclosingMethodName) {

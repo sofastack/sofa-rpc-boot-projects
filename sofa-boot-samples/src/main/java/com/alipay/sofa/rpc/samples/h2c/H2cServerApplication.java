@@ -14,22 +14,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.alipay.sofa.rpc.boot.runtime.binding;
+package com.alipay.sofa.rpc.samples.h2c;
 
-import com.alipay.sofa.runtime.api.binding.BindingType;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.ImportResource;
 
 /**
- *
- * @author <a href="mailto:lw111072@antfin.com">LiWei</a>
+ * @author <a href="mailto:leizhiyuan@gmail.com">leizhiyuan</a>
  */
-public class RpcBindingType {
+@ImportResource({ "classpath:h2c-server-example.xml" })
+@SpringBootApplication
+public class H2cServerApplication {
 
-    public static final BindingType BOLT_BINDING_TYPE  = new BindingType("bolt");
+    public static void main(String[] args) {
 
-    public static final BindingType REST_BINDING_TYPE  = new BindingType("rest");
-
-    public static final BindingType DUBBO_BINDING_TYPE = new BindingType("dubbo");
-
-    public static final BindingType H2C_BINDING_TYPE   = new BindingType("h2c");
-
+        SpringApplication springApplication = new SpringApplication(H2cServerApplication.class);
+        ApplicationContext applicationContext = springApplication.run(args);
+    }
 }

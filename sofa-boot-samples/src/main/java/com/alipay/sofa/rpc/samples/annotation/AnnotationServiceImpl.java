@@ -18,7 +18,6 @@ package com.alipay.sofa.rpc.samples.annotation;
 
 import com.alipay.sofa.runtime.api.annotation.SofaService;
 import com.alipay.sofa.runtime.api.annotation.SofaServiceBinding;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 /**

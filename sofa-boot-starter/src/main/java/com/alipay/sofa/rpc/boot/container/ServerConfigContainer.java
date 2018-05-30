@@ -57,6 +57,12 @@ public class ServerConfigContainer {
     private volatile ServerConfig dubboServerConfig;
     private final Object          DUBBO_LOCK = new Object();
 
+    /**
+     * h2c ServerConfig
+     */
+    private volatile ServerConfig h2cServerConfig;
+    private final Object          H2C_LOCK   = new Object();
+
     public ServerConfigContainer(SofaBootRpcProperties sofaBootRpcProperties) {
         this.sofaBootRpcProperties = sofaBootRpcProperties;
 
@@ -85,6 +91,10 @@ public class ServerConfigContainer {
 
         if (restServerConfig != null) {
             restServerConfig.buildIfAbsent().start();
+        }
+
+        if (h2cServerConfig != null) {
+            h2cServerConfig.buildIfAbsent().start();
         }
     }
 
@@ -127,6 +137,19 @@ public class ServerConfigContainer {
             }
 
             return dubboServerConfig;
+        }
+
+        else if (protocol.equalsIgnoreCase(SofaBootRpcConfigConstants.RPC_PROTOCOL_H2C)) {
+
+            if (h2cServerConfig == null) {
+                synchronized (H2C_LOCK) {
+                    if (h2cServerConfig == null) {
+                        h2cServerConfig = createH2cServerConfig();
+                    }
+                }
+            }
+
+            return h2cServerConfig;
         } else {
             throw new SofaBootRpcRuntimeException("protocol [" + protocol + "] is not supported");
         }
@@ -160,6 +183,46 @@ public class ServerConfigContainer {
         if (StringUtils.hasText(virtualPortStr)) {
             serverConfig.setVirtualPort(Integer.parseInt(virtualPortStr));
         }
+    }
+
+    /**
+     * 创建 h2c ServerConfig。rest 的 配置不需要外层 starter 设置默认值。
+     *
+     * @return H2c 的服务端配置信息
+     */
+    ServerConfig createH2cServerConfig() {
+        String portStr = sofaBootRpcProperties.getH2cPort();
+        String h2cThreadPoolCoreSizeStr = sofaBootRpcProperties.getH2cThreadPoolCoreSize();
+        String h2cThreadPoolMaxSizeStr = sofaBootRpcProperties.getH2cThreadPoolMaxSize();
+        String acceptsSizeStr = sofaBootRpcProperties.getH2cAcceptsSize();
+        String h2cThreadPoolQueueSizeStr = sofaBootRpcProperties.getH2cThreadPoolQueueSize();
+
+        ServerConfig serverConfig = new ServerConfig();
+
+        if (StringUtils.hasText(portStr)) {
+            serverConfig.setPort(Integer.parseInt(portStr));
+        } else {
+            serverConfig.setPort(SofaBootRpcConfigConstants.H2C_PORT_DEFAULT);
+        }
+
+        if (StringUtils.hasText(h2cThreadPoolMaxSizeStr)) {
+            serverConfig.setMaxThreads(Integer.parseInt(h2cThreadPoolMaxSizeStr));
+        }
+
+        if (StringUtils.hasText(h2cThreadPoolCoreSizeStr)) {
+            serverConfig.setCoreThreads(Integer.parseInt(h2cThreadPoolCoreSizeStr));
+        }
+
+        if (StringUtils.hasText(acceptsSizeStr)) {
+            serverConfig.setAccepts(Integer.parseInt(acceptsSizeStr));
+        }
+
+        if (StringUtils.hasText(h2cThreadPoolQueueSizeStr)) {
+            serverConfig.setQueues(Integer.parseInt(h2cThreadPoolQueueSizeStr));
+        }
+
+        serverConfig.setAutoStart(false);
+        return serverConfig.setProtocol(SofaBootRpcConfigConstants.RPC_PROTOCOL_H2C);
     }
 
     /**
@@ -341,6 +404,11 @@ public class ServerConfigContainer {
         if (dubboServerConfig != null) {
             dubboServerConfig.destroy();
             dubboServerConfig = null;
+        }
+
+        if (h2cServerConfig != null) {
+            h2cServerConfig.destroy();
+            h2cServerConfig = null;
         }
     }
 }

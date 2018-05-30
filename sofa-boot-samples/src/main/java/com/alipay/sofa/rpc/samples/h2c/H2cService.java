@@ -14,22 +14,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.alipay.sofa.rpc.boot.runtime.binding;
-
-import com.alipay.sofa.runtime.api.binding.BindingType;
+package com.alipay.sofa.rpc.samples.h2c;
 
 /**
  *
- * @author <a href="mailto:lw111072@antfin.com">LiWei</a>
+ * @author leizhiyuan
+ * @version $Id: H2cService.java, v 0.1 2018年04月15日 下午6:27 leizhiyuan Exp $
  */
-public class RpcBindingType {
+public interface H2cService {
 
-    public static final BindingType BOLT_BINDING_TYPE  = new BindingType("bolt");
-
-    public static final BindingType REST_BINDING_TYPE  = new BindingType("rest");
-
-    public static final BindingType DUBBO_BINDING_TYPE = new BindingType("dubbo");
-
-    public static final BindingType H2C_BINDING_TYPE   = new BindingType("h2c");
-
+    String sayH2c(String string);
 }

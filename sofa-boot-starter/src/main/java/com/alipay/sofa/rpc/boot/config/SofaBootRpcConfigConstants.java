@@ -29,6 +29,7 @@ public class SofaBootRpcConfigConstants {
 
     /* default config value start ********************************************************/
     public static final int     BOLT_PORT_DEFAULT                  = 12200;
+    public static final int     H2C_PORT_DEFAULT                   = 12300;
 
     /* rest default configuration */
     public static final int     REST_PORT_DEFAULT                  = 8341;
@@ -62,6 +63,7 @@ public class SofaBootRpcConfigConstants {
     public static final String  RPC_PROTOCOL_BOLT                  = "bolt";
     public static final String  RPC_PROTOCOL_REST                  = "rest";
     public static final String  RPC_PROTOCOL_DUBBO                 = "dubbo";
+    public static final String  RPC_PROTOCOL_H2C                   = "h2c";
 
     /* possible config value end ********************************************************/
 
