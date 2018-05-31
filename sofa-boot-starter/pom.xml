@@ -5,7 +5,7 @@
     <parent>
         <groupId>com.alipay.sofa</groupId>
         <artifactId>sofaboot-dependencies</artifactId>
-        <version>2.4.0-SNAPSHOT</version>
+        <version>2.4.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -30,18 +30,12 @@
         <dependency>
             <groupId>com.alipay.sofa</groupId>
             <artifactId>sofa-rpc-all</artifactId>
-            <version>5.4.0-SNAPSHOT</version>
+            <version>5.4.0</version>
         </dependency>
 
         <dependency>
             <groupId>com.alipay.sofa</groupId>
             <artifactId>runtime-sofa-boot-starter</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.alipay.sofa</groupId>
-            <artifactId>healthcheck-sofa-boot-starter</artifactId>
-            <optional>true</optional>
         </dependency>
 
         <dependency>
@@ -372,28 +366,29 @@
                             <exported>
                                 <packages>
                                     <package>com.alipay.sofa.rpc.api</package>
-                                    <package>com.alipay.sofa.rpc.common</package>
-                                    <package>com.alipay.sofa.rpc.ext</package>
-                                    <package>com.alipay.sofa.rpc.message</package>
-                                    <package>com.alipay.sofa.rpc.server</package>
                                     <package>com.alipay.sofa.rpc.base</package>
-                                    <package>com.alipay.sofa.rpc.config</package>
-                                    <package>com.alipay.sofa.rpc.filter</package>
-                                    <package>com.alipay.sofa.rpc.module</package>
-                                    <package>com.alipay.sofa.rpc.tracer</package>
                                     <package>com.alipay.sofa.rpc.bootstrap</package>
-                                    <package>com.alipay.sofa.rpc.context</package>
-                                    <package>com.alipay.sofa.rpc.invoke</package>
-                                    <package>com.alipay.sofa.rpc.protocol</package>
-                                    <package>com.alipay.sofa.rpc.transport</package>
                                     <package>com.alipay.sofa.rpc.client</package>
-                                    <package>com.alipay.sofa.rpc.core</package>
-                                    <package>com.alipay.sofa.rpc.listener</package>
-                                    <package>com.alipay.sofa.rpc.proxy</package>
                                     <package>com.alipay.sofa.rpc.codec</package>
+                                    <package>com.alipay.sofa.rpc.common</package>
+                                    <package>com.alipay.sofa.rpc.config</package>
+                                    <package>com.alipay.sofa.rpc.context</package>
+                                    <package>com.alipay.sofa.rpc.core</package>
                                     <package>com.alipay.sofa.rpc.event</package>
+                                    <package>com.alipay.sofa.rpc.ext</package>
+                                    <package>com.alipay.sofa.rpc.filter</package>
+                                    <package>com.alipay.sofa.rpc.invoke</package>
+                                    <package>com.alipay.sofa.rpc.listener</package>
                                     <package>com.alipay.sofa.rpc.log</package>
+                                    <package>com.alipay.sofa.rpc.message</package>
+                                    <package>com.alipay.sofa.rpc.metrics</package>
+                                    <package>com.alipay.sofa.rpc.module</package>
+                                    <package>com.alipay.sofa.rpc.protocol</package>
+                                    <package>com.alipay.sofa.rpc.proxy</package>
                                     <package>com.alipay.sofa.rpc.registry</package>
+                                    <package>com.alipay.sofa.rpc.server</package>
+                                    <package>com.alipay.sofa.rpc.tracer</package>
+                                    <package>com.alipay.sofa.rpc.transport</package>
                                     <package>com.alipay.hessian.generic.model</package>
                                     <package>com.alibaba.dubbo</package>
                                     <package>org.I0Itec.zkclient</package>
