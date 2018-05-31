@@ -3,13 +3,17 @@
 ## 简介
 该用例工程演示如何在 SOFABoot 环境中使用 SOFARPC，阅读该文档之前，建议先了解 [SOFARPC](https://github.com/alipay/sofa-rpc) 和 [SOFABoot](https://github.com/alipay/sofa-boot)
 
+## 在本地启动Zookeeper
+在运行本示例工程之前，需要先在本地启动一个 Zookeeper 服务端。本工程已经提供了一个 Zookeeper 的启动类，运行该类的主函数即可:
+`com.alipay.sofa.rpc.samples.util.LocalZookeeperServer`
+
 ## 引入 SOFABoot 依赖
 SOFABoot 提供了如健康检查，上下文隔离等基础能力，同时提供了多种中间件进行选择使用。 SOFABoot 对这些提供这些能力的依赖利用如下 pom 进行了管控，将工程的 parent 设为该 pom 。
 ```xml
 <parent>
     <groupId>com.alipay.sofa</groupId>
     <artifactId>sofaboot-dependencies</artifactId>
-    <version>2.3.0</version>
+    <version>2.4.0</version>
 </parent>
 ```
 
