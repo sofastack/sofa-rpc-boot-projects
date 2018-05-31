@@ -16,12 +16,16 @@
  */
 package com.alipay.sofa.rpc.boot.context;
 
+import com.alipay.sofa.rpc.boot.common.SofaBootRpcParserUtil;
 import com.alipay.sofa.rpc.boot.config.FaultToleranceConfigurator;
+import com.alipay.sofa.rpc.boot.config.SofaBootRpcProperties;
 import com.alipay.sofa.rpc.boot.container.ProviderConfigContainer;
 import com.alipay.sofa.rpc.boot.container.RegistryConfigContainer;
 import com.alipay.sofa.rpc.boot.container.ServerConfigContainer;
 import com.alipay.sofa.rpc.boot.context.event.SofaBootRpcStartEvent;
+import com.alipay.sofa.rpc.event.LookoutSubscriber;
 import com.alipay.sofa.rpc.registry.Registry;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 
 /**
@@ -32,6 +36,10 @@ import org.springframework.context.ApplicationListener;
  * @author <a href="mailto:lw111072@antfin.com">LiWei</a>
  */
 public class SofaBootRpcStartListener implements ApplicationListener<SofaBootRpcStartEvent> {
+
+    @Autowired
+    private SofaBootRpcProperties            sofaBootRpcProperties;
+
     private final ProviderConfigContainer    providerConfigContainer;
     private final FaultToleranceConfigurator faultToleranceConfigurator;
     private final ServerConfigContainer      serverConfigContainer;
@@ -50,6 +58,9 @@ public class SofaBootRpcStartListener implements ApplicationListener<SofaBootRpc
 
     @Override
     public void onApplicationEvent(SofaBootRpcStartEvent event) {
+        //choose disable metrics lookout
+        disableLookout();
+
         //start fault tolerance
         faultToleranceConfigurator.startFaultTolerance();
 
@@ -67,5 +78,13 @@ public class SofaBootRpcStartListener implements ApplicationListener<SofaBootRpc
 
         //export dubbo
         providerConfigContainer.exportAllDubboProvideConfig();
+    }
+
+    private void disableLookout() {
+        Boolean disable = SofaBootRpcParserUtil.parseBoolean(sofaBootRpcProperties.getLookoutCollectDisable());
+
+        if (disable != null) {
+            LookoutSubscriber.setLookoutCollectDisable(disable);
+        }
     }
 }
