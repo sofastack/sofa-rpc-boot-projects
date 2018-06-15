@@ -17,15 +17,18 @@
 package com.alipay.sofa.rpc.boot.runtime.converter;
 
 import com.alipay.sofa.rpc.boot.config.SofaBootRpcConfigConstants;
-import com.alipay.sofa.rpc.boot.runtime.binding.BoltBinding;
-import com.alipay.sofa.rpc.boot.runtime.binding.H2cBinding;
-import com.alipay.sofa.rpc.boot.runtime.binding.RpcBinding;
-import com.alipay.sofa.rpc.boot.runtime.binding.RpcBindingType;
+import com.alipay.sofa.rpc.boot.runtime.binding.*;
 import com.alipay.sofa.rpc.boot.runtime.param.BoltBindingParam;
+import com.alipay.sofa.rpc.boot.runtime.param.DubboBindingParam;
 import com.alipay.sofa.rpc.boot.runtime.param.H2cBindingParam;
 import com.alipay.sofa.rpc.boot.runtime.param.RpcBindingParam;
+import com.alipay.sofa.runtime.api.annotation.SofaReference;
+import com.alipay.sofa.runtime.api.annotation.SofaReferenceBinding;
+import com.alipay.sofa.runtime.api.annotation.SofaService;
+import com.alipay.sofa.runtime.api.annotation.SofaServiceBinding;
 import com.alipay.sofa.runtime.api.binding.BindingType;
 import com.alipay.sofa.runtime.api.client.param.BindingParam;
+import com.alipay.sofa.runtime.spi.service.BindingConverterContext;
 import org.springframework.context.ApplicationContext;
 
 /**
@@ -42,6 +45,27 @@ public class H2cBindingConverter extends RpcBindingConverter {
     @Override
     protected RpcBindingParam createRpcBindingParam() {
         return new H2cBindingParam();
+    }
+
+    @Override
+    public RpcBinding convert(SofaService sofaServiceAnnotation, SofaServiceBinding sofaServiceBindingAnnotation,
+                              BindingConverterContext bindingConverterContext) {
+        RpcBindingParam bindingParam = new H2cBindingParam();
+        convertServiceAnnotation(bindingParam, sofaServiceAnnotation, sofaServiceBindingAnnotation,
+            bindingConverterContext);
+        return new H2cBinding(bindingParam, bindingConverterContext.getApplicationContext(),
+            bindingConverterContext.isInBinding());
+    }
+
+    @Override
+    public RpcBinding convert(SofaReference sofaReferenceAnnotation,
+                              SofaReferenceBinding sofaReferenceBindingAnnotation,
+                              BindingConverterContext bindingConverterContext) {
+        RpcBindingParam bindingParam = new H2cBindingParam();
+        convertReferenceAnnotation(bindingParam, sofaReferenceBindingAnnotation, bindingConverterContext);
+
+        return new H2cBinding(bindingParam, bindingConverterContext.getApplicationContext(),
+            bindingConverterContext.isInBinding());
     }
 
     @Override

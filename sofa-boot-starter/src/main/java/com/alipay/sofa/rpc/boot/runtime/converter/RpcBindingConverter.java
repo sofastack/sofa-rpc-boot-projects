@@ -20,11 +20,9 @@ import com.alipay.sofa.rpc.boot.common.SofaBootRpcParserUtil;
 import com.alipay.sofa.rpc.boot.common.SofaBootRpcRuntimeException;
 import com.alipay.sofa.rpc.boot.common.SofaBootRpcSpringUtil;
 import com.alipay.sofa.rpc.boot.container.RpcFilterContainer;
-import com.alipay.sofa.rpc.boot.runtime.binding.BoltBinding;
 import com.alipay.sofa.rpc.boot.runtime.binding.RpcBinding;
 import com.alipay.sofa.rpc.boot.runtime.binding.RpcBindingMethodInfo;
 import com.alipay.sofa.rpc.boot.runtime.binding.RpcBindingXmlConstants;
-import com.alipay.sofa.rpc.boot.runtime.param.BoltBindingParam;
 import com.alipay.sofa.rpc.boot.runtime.param.RpcBindingParam;
 import com.alipay.sofa.rpc.config.UserThreadPoolManager;
 import com.alipay.sofa.rpc.filter.ExcludeFilter;
@@ -339,9 +337,21 @@ public abstract class RpcBindingConverter implements BindingConverter<RpcBinding
      * @return
      */
     @Override
-    public RpcBinding convert(SofaService sofaServiceAnnotation, SofaServiceBinding sofaServiceBindingAnnotation,
-                              BindingConverterContext bindingConverterContext) {
-        RpcBindingParam bindingParam = new BoltBindingParam();
+    public abstract RpcBinding convert(SofaService sofaServiceAnnotation,
+                                       SofaServiceBinding sofaServiceBindingAnnotation,
+                                       BindingConverterContext bindingConverterContext);
+
+    /**
+     * convert props to RpcBindingParam
+     *
+     * @param bindingParam
+     * @param sofaServiceAnnotation
+     * @param sofaServiceBindingAnnotation
+     * @param bindingConverterContext
+     */
+    protected void convertServiceAnnotation(RpcBindingParam bindingParam, SofaService sofaServiceAnnotation,
+                                            SofaServiceBinding sofaServiceBindingAnnotation,
+                                            BindingConverterContext bindingConverterContext) {
         bindingParam.setTimeout(sofaServiceBindingAnnotation.timeout());
 
         //TODO need a magic number
@@ -388,10 +398,6 @@ public abstract class RpcBindingConverter implements BindingConverter<RpcBinding
             UserThreadPoolManager.registerUserThread(uniqueName,
                 threadPoolObj);
         }
-
-        return new BoltBinding(bindingParam, bindingConverterContext.getApplicationContext(),
-            bindingConverterContext.isInBinding());
-
     }
 
     /**
@@ -403,11 +409,19 @@ public abstract class RpcBindingConverter implements BindingConverter<RpcBinding
      * @return
      */
     @Override
-    public RpcBinding convert(SofaReference sofaReferenceAnnotation,
-                              SofaReferenceBinding sofaReferenceBindingAnnotation,
-                              BindingConverterContext bindingConverterContext) {
-        RpcBindingParam bindingParam = new BoltBindingParam();
+    public abstract RpcBinding convert(SofaReference sofaReferenceAnnotation,
+                                       SofaReferenceBinding sofaReferenceBindingAnnotation,
+                                       BindingConverterContext bindingConverterContext);
 
+    /**
+     * convert props to RpcBindingParam
+     * @param bindingParam
+     * @param sofaReferenceBindingAnnotation
+     * @param bindingConverterContext
+     */
+    protected void convertReferenceAnnotation(RpcBindingParam bindingParam,
+                                              SofaReferenceBinding sofaReferenceBindingAnnotation,
+                                              BindingConverterContext bindingConverterContext) {
         //TODO need a magic number
         if (sofaReferenceBindingAnnotation.addressWaitTime() != 0) {
             bindingParam.setAddressWaitTime(sofaReferenceBindingAnnotation.addressWaitTime());
@@ -418,7 +432,7 @@ public abstract class RpcBindingConverter implements BindingConverter<RpcBinding
         if (sofaReferenceBindingAnnotation.timeout() != 0) {
             bindingParam.setTimeout(sofaReferenceBindingAnnotation.timeout());
         }
-        bindingParam.setType(sofaReferenceBindingAnnotation.bindingType());
+        bindingParam.setType(sofaReferenceBindingAnnotation.invokeType());
 
         ApplicationContext applicationContext = bindingConverterContext.getApplicationContext();
         List<Filter> filters = new ArrayList<Filter>(RpcFilterContainer.getInstance().getFilters(
@@ -448,7 +462,5 @@ public abstract class RpcBindingConverter implements BindingConverter<RpcBinding
             bindingParam.setCallbackHandler(applicationContext.getBean(callbackRef));
         }
         bindingParam.setLazy(sofaReferenceBindingAnnotation.lazy());
-        return new BoltBinding(bindingParam, bindingConverterContext.getApplicationContext(),
-            bindingConverterContext.isInBinding());
     }
 }

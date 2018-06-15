@@ -17,12 +17,18 @@
 package com.alipay.sofa.rpc.boot.runtime.converter;
 
 import com.alipay.sofa.rpc.boot.config.SofaBootRpcConfigConstants;
-import com.alipay.sofa.rpc.boot.runtime.binding.RestBinding;
-import com.alipay.sofa.rpc.boot.runtime.binding.RpcBinding;
-import com.alipay.sofa.rpc.boot.runtime.binding.RpcBindingType;
+import com.alipay.sofa.rpc.boot.runtime.binding.*;
+import com.alipay.sofa.rpc.boot.runtime.param.BoltBindingParam;
+import com.alipay.sofa.rpc.boot.runtime.param.H2cBindingParam;
 import com.alipay.sofa.rpc.boot.runtime.param.RestBindingParam;
 import com.alipay.sofa.rpc.boot.runtime.param.RpcBindingParam;
+import com.alipay.sofa.runtime.api.annotation.SofaReference;
+import com.alipay.sofa.runtime.api.annotation.SofaReferenceBinding;
+import com.alipay.sofa.runtime.api.annotation.SofaService;
+import com.alipay.sofa.runtime.api.annotation.SofaServiceBinding;
 import com.alipay.sofa.runtime.api.binding.BindingType;
+import com.alipay.sofa.runtime.api.client.param.BindingParam;
+import com.alipay.sofa.runtime.spi.service.BindingConverterContext;
 import org.springframework.context.ApplicationContext;
 
 /**
@@ -39,6 +45,27 @@ public class RestBindingConverter extends RpcBindingConverter {
     @Override
     protected RpcBindingParam createRpcBindingParam() {
         return new RestBindingParam();
+    }
+
+    @Override
+    public RpcBinding convert(SofaService sofaServiceAnnotation, SofaServiceBinding sofaServiceBindingAnnotation,
+                              BindingConverterContext bindingConverterContext) {
+        RpcBindingParam bindingParam = new RestBindingParam();
+        convertServiceAnnotation(bindingParam, sofaServiceAnnotation, sofaServiceBindingAnnotation,
+            bindingConverterContext);
+        return new RestBinding(bindingParam, bindingConverterContext.getApplicationContext(),
+            bindingConverterContext.isInBinding());
+    }
+
+    @Override
+    public RpcBinding convert(SofaReference sofaReferenceAnnotation,
+                              SofaReferenceBinding sofaReferenceBindingAnnotation,
+                              BindingConverterContext bindingConverterContext) {
+        RpcBindingParam bindingParam = new RestBindingParam();
+        convertReferenceAnnotation(bindingParam, sofaReferenceBindingAnnotation, bindingConverterContext);
+
+        return new RestBinding(bindingParam, bindingConverterContext.getApplicationContext(),
+            bindingConverterContext.isInBinding());
     }
 
     @Override
