@@ -23,7 +23,6 @@ import org.apache.curator.test.TestingServer;
  * Before running these samples, start a Zookeeper locally through the main function.
  *
  * @author <a href="mailto:lw111072@antfin.com">LiWei.Liangen</a>
- * @date 2018.05.31 下午7:37
  */
 public class LocalZookeeperServer {
 

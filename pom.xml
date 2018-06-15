@@ -21,6 +21,7 @@
     <modules>
         <module>sofa-boot-starter</module>
         <module>sofa-boot-samples</module>
+        <module>sofa-boot-core</module>
     </modules>
 
     <properties>

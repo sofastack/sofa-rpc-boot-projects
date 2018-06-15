@@ -46,6 +46,10 @@ public class SpringBridge {
         return applicationContext.getBean("consumerConfigContainer", ConsumerConfigContainer.class);
     }
 
+    public static ServerConfigContainer getServerConfigContainer() {
+        return applicationContext.getBean("serverConfigContainer", ServerConfigContainer.class);
+    }
+
     public static void setApplicationContext(ApplicationContext applicationContext) {
         SpringBridge.applicationContext = applicationContext;
     }
