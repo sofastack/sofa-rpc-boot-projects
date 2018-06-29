@@ -16,6 +16,7 @@
  */
 package com.alipay.sofa.rpc.boot.container;
 
+import com.alipay.sofa.rpc.boot.common.SofaBootRpcRuntimeException;
 import com.alipay.sofa.rpc.boot.config.SofaBootRpcConfigConstants;
 import com.alipay.sofa.rpc.boot.config.SofaBootRpcProperties;
 import com.alipay.sofa.rpc.config.ServerConfig;
@@ -106,5 +107,51 @@ public class ServerConfigContainerTest {
         Assert.assertEquals(1000, serverConfig.getPayload());
         Assert.assertTrue(serverConfig.isTelnet());
         Assert.assertTrue(serverConfig.isDaemon());
+    }
+
+    @Test
+    public void testCustomServerConfig() {
+
+        final ServerConfig serverConfig = new ServerConfig();
+        serverConfig.setPort(123);
+        final String protocol = "xxx";
+        serverConfigContainer.registerCustomServerConfig(protocol, serverConfig);
+
+        ServerConfig serverConfig2 = serverConfigContainer.getServerConfig(protocol);
+
+        Assert.assertEquals(123, serverConfig2.getPort());
+        Assert.assertEquals(serverConfig.getPort(), serverConfig2.getPort());
+
+        boolean result = false;
+        serverConfigContainer.unRegisterCustomServerConfig(protocol);
+        try {
+            serverConfigContainer.getServerConfig(protocol);
+
+        } catch (Exception e) {
+            Assert.assertTrue(e instanceof SofaBootRpcRuntimeException);
+            result = true;
+        }
+
+        Assert.assertTrue(result);
+
+    }
+
+    @Test
+    public void testCustomServerConfigTwice() {
+
+        final ServerConfig serverConfig = new ServerConfig();
+        serverConfig.setPort(123);
+        final String protocol = "xxx";
+        serverConfigContainer.registerCustomServerConfig(protocol, serverConfig);
+
+        ServerConfig serverConfig2 = serverConfigContainer.getServerConfig(protocol);
+
+        Assert.assertEquals(123, serverConfig2.getPort());
+        Assert.assertEquals(serverConfig.getPort(), serverConfig2.getPort());
+
+        boolean twiceResult = serverConfigContainer.registerCustomServerConfig(protocol, serverConfig);
+
+        Assert.assertFalse(twiceResult);
+
     }
 }

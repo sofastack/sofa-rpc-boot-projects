@@ -27,6 +27,8 @@ import com.alipay.sofa.rpc.server.bolt.BoltServer;
 import org.slf4j.Logger;
 import org.springframework.util.StringUtils;
 
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ThreadPoolExecutor;
 
 /**
@@ -36,32 +38,36 @@ import java.util.concurrent.ThreadPoolExecutor;
  */
 public class ServerConfigContainer {
 
-    private static final Logger   LOGGER     = SofaBootRpcLoggerFactory.getLogger(ServerConfigContainer.class);
+    private static final Logger       LOGGER              = SofaBootRpcLoggerFactory
+                                                              .getLogger(ServerConfigContainer.class);
 
-    private SofaBootRpcProperties sofaBootRpcProperties;
+    private SofaBootRpcProperties     sofaBootRpcProperties;
     /**
      * bolt ServerConfig
      */
-    private volatile ServerConfig boltServerConfig;
-    private final Object          BOLT_LOCK  = new Object();
+    private volatile ServerConfig     boltServerConfig;
+    private final Object              BOLT_LOCK           = new Object();
 
     /**
      * rest ServerConfig
      */
-    private volatile ServerConfig restServerConfig;
-    private final Object          REST_LOCK  = new Object();
+    private volatile ServerConfig     restServerConfig;
+    private final Object              REST_LOCK           = new Object();
 
     /**
      * dubbo ServerConfig
      */
-    private volatile ServerConfig dubboServerConfig;
-    private final Object          DUBBO_LOCK = new Object();
+    private volatile ServerConfig     dubboServerConfig;
+    private final Object              DUBBO_LOCK          = new Object();
 
     /**
      * h2c ServerConfig
      */
-    private volatile ServerConfig h2cServerConfig;
-    private final Object          H2C_LOCK   = new Object();
+    private volatile ServerConfig     h2cServerConfig;
+    private final Object              H2C_LOCK            = new Object();
+
+    //custom server configs
+    private Map<String, ServerConfig> customServerConfigs = new ConcurrentHashMap<String, ServerConfig>();
 
     public ServerConfigContainer(SofaBootRpcProperties sofaBootRpcProperties) {
         this.sofaBootRpcProperties = sofaBootRpcProperties;
@@ -96,6 +102,14 @@ public class ServerConfigContainer {
         if (h2cServerConfig != null) {
             h2cServerConfig.buildIfAbsent().start();
         }
+
+        for (Map.Entry<String, ServerConfig> entry : customServerConfigs.entrySet()) {
+            final ServerConfig serverConfig = entry.getValue();
+            if (serverConfig != null) {
+                serverConfig.buildIfAbsent().start();
+            }
+        }
+
     }
 
     /**
@@ -137,9 +151,7 @@ public class ServerConfigContainer {
             }
 
             return dubboServerConfig;
-        }
-
-        else if (protocol.equalsIgnoreCase(SofaBootRpcConfigConstants.RPC_PROTOCOL_H2C)) {
+        } else if (protocol.equalsIgnoreCase(SofaBootRpcConfigConstants.RPC_PROTOCOL_H2C)) {
 
             if (h2cServerConfig == null) {
                 synchronized (H2C_LOCK) {
@@ -150,6 +162,8 @@ public class ServerConfigContainer {
             }
 
             return h2cServerConfig;
+        } else if (customServerConfigs.get(protocol) != null) {
+            return customServerConfigs.get(protocol);
         } else {
             throw new SofaBootRpcRuntimeException("protocol [" + protocol + "] is not supported");
         }
@@ -410,5 +424,42 @@ public class ServerConfigContainer {
             h2cServerConfig.destroy();
             h2cServerConfig = null;
         }
+
+        for (Map.Entry<String, ServerConfig> entry : customServerConfigs.entrySet()) {
+            final ServerConfig serverConfig = entry.getValue();
+            if (serverConfig != null) {
+                serverConfig.destroy();
+            }
+        }
+
+        customServerConfigs.clear();
+    }
+
+    /**
+     * allow user register serverConfig
+     *
+     * @param protocol
+     * @param serverConfig
+     * @return
+     */
+    public boolean registerCustomServerConfig(String protocol, ServerConfig serverConfig) {
+
+        if (customServerConfigs.containsKey(protocol)) {
+            return false;
+        } else {
+            customServerConfigs.put(protocol, serverConfig);
+            return true;
+        }
+    }
+
+    /**
+     * allow user register serverConfig
+     *
+     * @param protocol
+     * @return
+     */
+    public boolean unRegisterCustomServerConfig(String protocol) {
+        customServerConfigs.remove(protocol);
+        return true;
     }
 }
