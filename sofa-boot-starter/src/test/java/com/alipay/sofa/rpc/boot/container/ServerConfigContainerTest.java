@@ -92,6 +92,7 @@ public class ServerConfigContainerTest {
         sofaBootRpcProperties.setRestHostname("host_name");
         sofaBootRpcProperties.setRestPort("123");
         sofaBootRpcProperties.setRestIoThreadSize("456");
+        sofaBootRpcProperties.setRestContextPath("/api");
         sofaBootRpcProperties.setRestThreadPoolMaxSize("789");
         sofaBootRpcProperties.setRestMaxRequestSize("1000");
         sofaBootRpcProperties.setRestTelnet("true");
@@ -103,6 +104,7 @@ public class ServerConfigContainerTest {
         Assert.assertEquals("host_name", serverConfig.getBoundHost());
         Assert.assertEquals(123, serverConfig.getPort());
         Assert.assertEquals(456, serverConfig.getIoThreads());
+        Assert.assertEquals("/api/", serverConfig.getContextPath());
         Assert.assertEquals(789, serverConfig.getMaxThreads());
         Assert.assertEquals(1000, serverConfig.getPayload());
         Assert.assertTrue(serverConfig.isTelnet());

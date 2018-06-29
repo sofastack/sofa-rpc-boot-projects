@@ -16,10 +16,11 @@
  */
 package com.alipay.sofa.rpc.boot.config;
 
-import com.google.common.base.CaseFormat;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.core.env.Environment;
 import org.springframework.util.StringUtils;
+
+import com.google.common.base.CaseFormat;
 
 /**
  * @author khotyn
@@ -62,6 +63,7 @@ public class SofaBootRpcProperties {
     private String      restHostname;
     private String      restPort;
     private String      restIoThreadSize;
+    private String      restContextPath;
     // has no use
     private String      restThreadPoolCoreSize;
     private String      restThreadPoolMaxSize;
@@ -142,8 +144,10 @@ public class SofaBootRpcProperties {
     }
 
     public String getAftLeastWindowExceptionRateMultiple() {
-        return StringUtils.isEmpty(aftLeastWindowExceptionRateMultiple) ? getDotString(new Object() {
-        }.getClass().getEnclosingMethod().getName()) : aftLeastWindowExceptionRateMultiple;
+        return StringUtils.isEmpty(aftLeastWindowExceptionRateMultiple)
+            ? getDotString(new Object() {
+            }.getClass().getEnclosingMethod().getName())
+            : aftLeastWindowExceptionRateMultiple;
     }
 
     public void setAftLeastWindowExceptionRateMultiple(String aftLeastWindowExceptionRateMultiple) {
@@ -256,6 +260,15 @@ public class SofaBootRpcProperties {
 
     public void setRestIoThreadSize(String restIoThreadSize) {
         this.restIoThreadSize = restIoThreadSize;
+    }
+
+    public String getRestContextPath() {
+        return StringUtils.isEmpty(restContextPath) ? getDotString(new Object() {
+        }.getClass().getEnclosingMethod().getName()) : restContextPath;
+    }
+
+    public void setRestContextPath(String restContextPath) {
+        this.restContextPath = restContextPath;
     }
 
     public String getRestThreadPoolMaxSize() {
@@ -473,6 +486,7 @@ public class SofaBootRpcProperties {
     }
 
     String camelToDot(String camelCaseString) {
-        return CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_HYPHEN, camelCaseString).replaceAll("-", ".");
+        return CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_HYPHEN, camelCaseString).replaceAll("-",
+            ".");
     }
 }
