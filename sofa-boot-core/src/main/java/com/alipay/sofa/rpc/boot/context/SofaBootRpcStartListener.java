@@ -16,6 +16,8 @@
  */
 package com.alipay.sofa.rpc.boot.context;
 
+import java.util.Collection;
+
 import com.alipay.sofa.rpc.boot.common.SofaBootRpcParserUtil;
 import com.alipay.sofa.rpc.boot.config.FaultToleranceConfigurator;
 import com.alipay.sofa.rpc.boot.config.SofaBootRpcProperties;
@@ -23,10 +25,12 @@ import com.alipay.sofa.rpc.boot.container.ProviderConfigContainer;
 import com.alipay.sofa.rpc.boot.container.RegistryConfigContainer;
 import com.alipay.sofa.rpc.boot.container.ServerConfigContainer;
 import com.alipay.sofa.rpc.boot.context.event.SofaBootRpcStartEvent;
+import com.alipay.sofa.rpc.config.ProviderConfig;
 import com.alipay.sofa.rpc.event.LookoutSubscriber;
 import com.alipay.sofa.rpc.registry.Registry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
+import org.springframework.util.CollectionUtils;
 
 /**
  * {@link SofaBootRpcStartEvent) 事件监听器.
@@ -64,8 +68,11 @@ public class SofaBootRpcStartListener implements ApplicationListener<SofaBootRpc
         //start fault tolerance
         faultToleranceConfigurator.startFaultTolerance();
 
-        //start server
-        serverConfigContainer.startServers();
+        Collection<ProviderConfig> allProviderConfig = providerConfigContainer.getAllProviderConfig();
+        if (!CollectionUtils.isEmpty(allProviderConfig)) {
+            //start server
+            serverConfigContainer.startServers();
+        }
 
         //init registry
         Registry registry = registryConfigContainer.getRegistry();
