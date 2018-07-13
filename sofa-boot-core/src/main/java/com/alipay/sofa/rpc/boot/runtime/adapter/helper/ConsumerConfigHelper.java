@@ -150,6 +150,10 @@ public class ConsumerConfigHelper {
             consumerConfig.setSerialization(serialization);
         }
 
+        if (param.getParamters() != null) {
+            consumerConfig.setParameters(param.getParamters());
+        }
+
         return consumerConfig.setProtocol(protocol);
     }
 

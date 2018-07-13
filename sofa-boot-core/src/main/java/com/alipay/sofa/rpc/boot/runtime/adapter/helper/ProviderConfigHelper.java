@@ -127,6 +127,10 @@ public class ProviderConfigHelper {
             providerConfig.setSerialization(serialization);
         }
 
+        if (param.getParamters() != null) {
+            providerConfig.setParameters(param.getParamters());
+        }
+
         providerConfig.setRegister(false);
 
         return providerConfig;
