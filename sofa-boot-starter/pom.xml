@@ -10,7 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>rpc-sofa-boot-starter</artifactId>
-    <version>5.4.2</version>
+    <version>5.4.3</version>
 
     <url>https://github.com/alipay/sofa-rpc</url>
 
@@ -25,7 +25,7 @@
         <dependency>
             <groupId>com.alipay.sofa</groupId>
             <artifactId>rpc-sofa-boot-core</artifactId>
-            <version>5.4.2</version>
+            <version>5.4.3</version>
         </dependency>
 
         <dependency>
