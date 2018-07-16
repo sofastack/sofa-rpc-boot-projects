@@ -28,12 +28,12 @@
 编译需要 JDK 7 及以上、Maven 3.2.5 及以上。
 
 ## 文档
-* [快速开始](https://github.com/alipay/sofa-rpc-boot-projects/wiki/GettingStarted)
-* [用户手册](https://github.com/alipay/sofa-rpc-boot-projects/wiki/UserGuide)
-* [开发者指南](https://github.com/alipay/sofa-rpc-boot-projects/wiki/DeveloperGuide)
+* [快速开始](http://www.sofastack.tech/sofa-rpc/docs/Getting-Started-With-SOFA-Boot)
+* [用户手册](http://www.sofastack.tech/sofa-rpc/docs/Programming)
+* [开发者指南](http://www.sofastack.tech/sofa-rpc/docs/How-To-Build)
 
 ## 贡献
-[如何参与代码贡献](https://github.com/alipay/sofa-rpc-boot-projects/wiki/Contributing)
+[如何参与代码贡献](http://www.sofastack.tech/sofa-rpc/docs/Contributing)
 
 ## 开源许可
 基于 [Apache License 2.0](https://github.com/alipay/sofa-rpc-boot-projects/blob/master/LICENSE) 协议。
