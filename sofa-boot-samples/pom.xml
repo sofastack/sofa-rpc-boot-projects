@@ -13,6 +13,8 @@
     <properties>
         <dubbo_version>2.4.10</dubbo_version>
         <cxf.version>3.0.14</cxf.version>
+        <sofaboot.version>2.4.3</sofaboot.version>
+        <rpc.starter.version>5.4.3</rpc.starter.version>
     </properties>
 
     <artifactId>rpc-sofa-boot-samples</artifactId>
@@ -21,17 +23,17 @@
         <dependency>
             <groupId>com.alipay.sofa</groupId>
             <artifactId>rpc-sofa-boot-starter</artifactId>
-            <version>5.4.3</version>
+            <version>${rpc.starter.version}</version>
         </dependency>
         <dependency>
             <groupId>com.alipay.sofa</groupId>
             <artifactId>test-sofa-boot-starter</artifactId>
-            <version>2.4.1</version>
+            <version>${sofaboot.version}</version>
         </dependency>
         <dependency>
             <groupId>com.alipay.sofa</groupId>
             <artifactId>healthcheck-sofa-boot-starter</artifactId>
-            <version>2.4.1</version>
+            <version>${sofaboot.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.curator</groupId>
@@ -119,7 +121,7 @@
                     <groupId>com.alipay.sofa</groupId>
                     <artifactId>rpc-sofa-boot-starter</artifactId>
                     <classifier>ark-plugin</classifier>
-                    <version>5.4.3</version>
+                    <version>${rpc.starter.version}</version>
                 </dependency>
 
                 <dependency>
