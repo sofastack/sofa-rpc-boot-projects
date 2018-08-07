@@ -8,4 +8,11 @@
     <sofa:reference jvm-first="false" id="dubboServiceReference" interface="com.alipay.sofa.rpc.samples.dubbo.DubboService">
         <sofa:binding.dubbo/>
     </sofa:reference>
+
+
+    <sofa:reference jvm-first="false" id="dubboServiceReference1" interface="com.alibaba.dubbo.rpc.service.GenericService">
+        <sofa:binding.dubbo>
+            <sofa:global-attrs generic-interface="com.alipay.sofa.rpc.samples.dubbo.DubboService" />
+        </sofa:binding.dubbo>
+    </sofa:reference>
 </beans>

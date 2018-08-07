@@ -16,6 +16,7 @@
  */
 package com.alipay.sofa.rpc.samples.dubbo;
 
+import com.alibaba.dubbo.rpc.service.GenericService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
@@ -45,6 +46,23 @@ public class DubboClientApplication {
         }
 
         String result = directService.sayDubbo("dubbo");
+        System.out.println("invoke result:" + result);
+        if ("dubbo".equalsIgnoreCase(result)) {
+            System.out.println("dubbo invoke success");
+        } else {
+            System.out.println("dubbo invoke fail");
+        }
+
+        GenericService genericService = (GenericService) applicationContext.getBean("dubboServiceReference1");
+
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        result = (String) genericService.$invoke("sayDubbo", new String[] { "java.lang.String" },
+            new Object[] { "dubbo" });
         System.out.println("invoke result:" + result);
         if ("dubbo".equalsIgnoreCase(result)) {
             System.out.println("dubbo invoke success");
