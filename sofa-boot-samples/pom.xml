@@ -119,15 +119,14 @@
                 <!--以下两个依赖用于测试ark插件 -->
                 <dependency>
                     <groupId>com.alipay.sofa</groupId>
-                    <artifactId>rpc-sofa-boot-starter</artifactId>
-                    <classifier>ark-plugin</classifier>
+                    <artifactId>rpc-sofa-boot-plugin</artifactId>
                     <version>${rpc.starter.version}</version>
                 </dependency>
 
                 <dependency>
                     <groupId>com.alipay.sofa</groupId>
                     <artifactId>sofa-ark-springboot-starter</artifactId>
-                    <version>0.2.0</version>
+                    <version>0.4.0</version>
                 </dependency>
             </dependencies>
         </profile>

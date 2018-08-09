@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>com.alipay.sofa</groupId>
+        <artifactId>sofaboot-dependencies</artifactId>
+        <version>2.4.5-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>rpc-sofa-boot-plugin</artifactId>
+    <version>5.4.4-SNAPSHOT</version>
+
+    <properties>
+        <ark.plugin.name>rpc-sofa-boot-plugin</ark.plugin.name>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.alipay.sofa</groupId>
+            <artifactId>rpc-sofa-boot-starter</artifactId>
+            <version>${project.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.alipay.sofa</groupId>
+                    <artifactId>sofa-rpc-all</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>com.alipay.sofa</groupId>
+            <artifactId>healthcheck-sofa-boot-starter</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+        <dependency>
+            <groupId>com.alipay.sofa</groupId>
+            <artifactId>sofa-rpc-all</artifactId>
+            <version>${project.version}</version>
+            <optional>true</optional>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.alipay.sofa</groupId>
+                <artifactId>sofa-ark-plugin-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>default-cli</id>
+                        <goals>
+                            <goal>ark-plugin</goal>
+                        </goals>
+
+                        <configuration>
+                            <priority>2000</priority>
+                            <pluginName>${ark.plugin.name}</pluginName>
+                            <classifier> </classifier>
+
+                            <exported>
+                                <packages>
+                                    <package>com.alipay.sofa.rpc.api.*</package>
+                                    <package>com.alipay.sofa.rpc.base.*</package>
+                                    <package>com.alipay.sofa.rpc.bootstrap.*</package>
+                                    <package>com.alipay.sofa.rpc.client.*</package>
+                                    <package>com.alipay.sofa.rpc.codec.*</package>
+                                    <package>com.alipay.sofa.rpc.common.*</package>
+                                    <package>com.alipay.sofa.rpc.config.*</package>
+                                    <package>com.alipay.sofa.rpc.context.*</package>
+                                    <package>com.alipay.sofa.rpc.core.*</package>
+                                    <package>com.alipay.sofa.rpc.event.*</package>
+                                    <package>com.alipay.sofa.rpc.ext.*</package>
+                                    <package>com.alipay.sofa.rpc.filter.*</package>
+                                    <package>com.alipay.sofa.rpc.invoke.*</package>
+                                    <package>com.alipay.sofa.rpc.listener.*</package>
+                                    <package>com.alipay.sofa.rpc.log.*</package>
+                                    <package>com.alipay.sofa.rpc.message.*</package>
+                                    <package>com.alipay.sofa.rpc.metrics.*</package>
+                                    <package>com.alipay.sofa.rpc.module.*</package>
+                                    <package>com.alipay.sofa.rpc.protocol.*</package>
+                                    <package>com.alipay.sofa.rpc.proxy.*</package>
+                                    <package>com.alipay.sofa.rpc.registry.*</package>
+                                    <package>com.alipay.sofa.rpc.server.*</package>
+                                    <package>com.alipay.sofa.rpc.tracer.*</package>
+                                    <package>com.alipay.sofa.rpc.transport.*</package>
+                                    <package>com.alipay.hessian.generic.model.*</package>
+                                    <package>com.alibaba.dubbo.*</package>
+                                    <package>org.I0Itec.zkclient.*</package>
+                                    <package>javax.ws.rs.*</package>
+                                </packages>
+                            </exported>
+
+                            <excludeGroupIds>
+                                <excludeGroupId>org.springframework</excludeGroupId>
+                                <excludeGroupId>org.springframework.boot</excludeGroupId>
+                                <excludeGroupId>org.apache.tomcat.embed</excludeGroupId>
+                            </excludeGroupIds>
+
+                            <excludes>
+                                <exclude>com.alipay.sofa:healthcheck-sofa-boot-starter</exclude>
+                            </excludes>
+
+                            <shades>
+                                <shade>com.alipay.sofa:rpc-sofa-boot-starter</shade>
+                            </shades>
+                        </configuration>
+                    </execution>
+
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <profiles>
+        <profile>
+            <id>default</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <repositories>
+                <repository>
+                    <snapshots>
+                        <enabled>true</enabled>
+                    </snapshots>
+                    <id>maven-snapshot</id>
+                    <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+                </repository>
+            </repositories>
+            <pluginRepositories>
+                <pluginRepository>
+                    <snapshots>
+                        <enabled>true</enabled>
+                    </snapshots>
+                    <id>maven-snapshot</id>
+                    <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+                </pluginRepository>
+            </pluginRepositories>
+        </profile>
+    </profiles>
+
+</project>
