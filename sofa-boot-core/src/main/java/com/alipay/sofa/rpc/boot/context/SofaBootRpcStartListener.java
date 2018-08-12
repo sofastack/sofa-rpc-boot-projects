@@ -74,14 +74,11 @@ public class SofaBootRpcStartListener implements ApplicationListener<SofaBootRpc
             serverConfigContainer.startServers();
         }
 
-        //init registry
-        Registry registry = registryConfigContainer.getRegistry();
-
         //set allow all publish
         providerConfigContainer.setAllowPublish(true);
 
         //register registry
-        providerConfigContainer.publishAllProviderConfig(registry);
+        providerConfigContainer.publishAllProviderConfig();
 
         //export dubbo
         providerConfigContainer.exportAllDubboProvideConfig();

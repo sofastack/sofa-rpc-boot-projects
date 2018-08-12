@@ -22,86 +22,92 @@ import org.springframework.util.StringUtils;
 
 import com.google.common.base.CaseFormat;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author khotyn
  */
 @ConfigurationProperties(SofaBootRpcProperties.PREFIX)
 public class SofaBootRpcProperties {
-    static final String PREFIX = "com.alipay.sofa.rpc";
+    static final String         PREFIX     = "com.alipay.sofa.rpc";
 
-    private Environment environment;
+    private Environment         environment;
 
     /* fault-tolerance start */
-    private String      aftRegulationEffective;
-    private String      aftDegradeEffective;
-    private String      aftTimeWindow;
-    private String      aftLeastWindowCount;
-    private String      aftLeastWindowExceptionRateMultiple;
-    private String      aftWeightDegradeRate;
-    private String      aftWeightRecoverRate;
-    private String      aftDegradeLeastWeight;
-    private String      aftDegradeMaxIpCount;
+    private String              aftRegulationEffective;
+    private String              aftDegradeEffective;
+    private String              aftTimeWindow;
+    private String              aftLeastWindowCount;
+    private String              aftLeastWindowExceptionRateMultiple;
+    private String              aftWeightDegradeRate;
+    private String              aftWeightRecoverRate;
+    private String              aftDegradeLeastWeight;
+    private String              aftDegradeMaxIpCount;
     /* fault-tolerance end */
 
     /* Bolt start*/
-    private String      boltPort;
-    private String      boltThreadPoolCoreSize;
-    private String      boltThreadPoolMaxSize;
-    private String      boltThreadPoolQueueSize;
-    private String      boltAcceptsSize;
+    private String              boltPort;
+    private String              boltThreadPoolCoreSize;
+    private String              boltThreadPoolMaxSize;
+    private String              boltThreadPoolQueueSize;
+    private String              boltAcceptsSize;
     /* Bolt end*/
 
     /* H2c start*/
-    private String      h2cPort;
-    private String      h2cThreadPoolCoreSize;
-    private String      h2cThreadPoolMaxSize;
-    private String      h2cThreadPoolQueueSize;
-    private String      h2cAcceptsSize;
+    private String              h2cPort;
+    private String              h2cThreadPoolCoreSize;
+    private String              h2cThreadPoolMaxSize;
+    private String              h2cThreadPoolQueueSize;
+    private String              h2cAcceptsSize;
     /* Bolt end*/
 
     /* rest start*/
-    private String      restHostname;
-    private String      restPort;
-    private String      restIoThreadSize;
-    private String      restContextPath;
+    private String              restHostname;
+    private String              restPort;
+    private String              restIoThreadSize;
+    private String              restContextPath;
     // has no use
-    private String      restThreadPoolCoreSize;
-    private String      restThreadPoolMaxSize;
-    private String      restMaxRequestSize;
-    private String      restTelnet;
-    private String      restDaemon;
+    private String              restThreadPoolCoreSize;
+    private String              restThreadPoolMaxSize;
+    private String              restMaxRequestSize;
+    private String              restTelnet;
+    private String              restDaemon;
     /* rest end */
 
     /* dubbo  start*/
-    private String      dubboPort;
-    private String      dubboIoThreadSize;
+    private String              dubboPort;
+    private String              dubboIoThreadSize;
     //has no use
-    private String      dubboThreadPoolCoreSize;
-    private String      dubboThreadPoolMaxSize;
+    private String              dubboThreadPoolCoreSize;
+    private String              dubboThreadPoolMaxSize;
     //has no use
-    private String      dubboThreadPoolQueueSize;
-    private String      dubboAcceptsSize;
+    private String              dubboThreadPoolQueueSize;
+    private String              dubboAcceptsSize;
     /* dubbo  end*/
 
     /* registry */
-    private String      registryAddress;
+    private String              registryAddress;
 
     //publish to registry
-    private String      virtualHost;
+    private String              virtualHost;
 
     //publish to registry
-    private String      virtualPort;
+    private String              virtualPort;
 
     //publish to registry virtual host range
-    private String      enabledIpRange;
+    private String              enabledIpRange;
 
-    private String      bindNetworkInterface;
+    private String              bindNetworkInterface;
 
     // bound server
-    private String      boundHost;
+    private String              boundHost;
 
     // disable lookout
-    private String      lookoutCollectDisable;
+    private String              lookoutCollectDisable;
+
+    //custom registry
+    private Map<String, String> registries = new HashMap<String, String>();
 
     public SofaBootRpcProperties(Environment environment) {
         this.environment = environment;
@@ -476,6 +482,14 @@ public class SofaBootRpcProperties {
 
     public void setLookoutCollectDisable(String lookoutCollectDisable) {
         this.lookoutCollectDisable = lookoutCollectDisable;
+    }
+
+    public Map<String, String> getRegistries() {
+        return registries;
+    }
+
+    public void setRegistries(Map<String, String> registries) {
+        this.registries = registries;
     }
 
     private String getDotString(String enclosingMethodName) {

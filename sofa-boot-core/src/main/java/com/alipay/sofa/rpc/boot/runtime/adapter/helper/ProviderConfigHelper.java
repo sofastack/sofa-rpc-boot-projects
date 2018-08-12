@@ -24,7 +24,13 @@ import com.alipay.sofa.rpc.boot.runtime.binding.RpcBinding;
 import com.alipay.sofa.rpc.boot.runtime.binding.RpcBindingMethodInfo;
 import com.alipay.sofa.rpc.boot.runtime.param.RpcBindingParam;
 import com.alipay.sofa.rpc.client.ProviderInfoAttrs;
-import com.alipay.sofa.rpc.config.*;
+import com.alipay.sofa.rpc.config.ApplicationConfig;
+import com.alipay.sofa.rpc.config.ConfigUniqueNameGenerator;
+import com.alipay.sofa.rpc.config.MethodConfig;
+import com.alipay.sofa.rpc.config.ProviderConfig;
+import com.alipay.sofa.rpc.config.RegistryConfig;
+import com.alipay.sofa.rpc.config.ServerConfig;
+import com.alipay.sofa.rpc.config.UserThreadPoolManager;
 import com.alipay.sofa.rpc.filter.Filter;
 import com.alipay.sofa.rpc.server.UserThreadPool;
 import com.alipay.sofa.runtime.spi.binding.Contract;
@@ -76,7 +82,6 @@ public class ProviderConfigHelper {
         List<MethodConfig> methodConfigs = convertToMethodConfig(param.getMethodInfos());
 
         ServerConfig serverConfig = serverConfigContainer.getServerConfig(binding.getBindingType().getType());
-        RegistryConfig registryConfig = registryConfigContainer.getRegistryConfig();
 
         ProviderConfig providerConfig = new ProviderConfig();
         if (StringUtils.hasText(appName)) {
@@ -118,7 +123,6 @@ public class ProviderConfigHelper {
         }
 
         providerConfig.setServer(serverConfig);
-        providerConfig.setRegistry(registryConfig);
 
         String protocol = binding.getBindingType().getType();
         providerConfig.setBootstrap(protocol);
@@ -129,6 +133,20 @@ public class ProviderConfigHelper {
 
         if (param.getParamters() != null) {
             providerConfig.setParameters(param.getParamters());
+        }
+
+        if (param.getRegistrys() != null && param.getRegistrys().size() > 0) {
+            List<String> registrys = param.getRegistrys();
+            for (String registryAlias : registrys) {
+                RegistryConfig registryConfig = registryConfigContainer.getRegistryConfig(registryAlias);
+                providerConfig.setRegistry(registryConfig);
+            }
+        }
+        else {
+            RegistryConfig registryConfig = registryConfigContainer.getRegistryConfig();
+
+            providerConfig.setRegistry(registryConfig);
+
         }
 
         providerConfig.setRegister(false);

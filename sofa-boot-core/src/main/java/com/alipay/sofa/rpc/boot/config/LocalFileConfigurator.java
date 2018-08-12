@@ -16,7 +16,8 @@
  */
 package com.alipay.sofa.rpc.boot.config;
 
-import org.springframework.util.StringUtils;
+import com.alipay.sofa.rpc.common.utils.StringUtils;
+import com.alipay.sofa.rpc.config.RegistryConfig;
 
 /**
  * 本地注册中心配置
@@ -25,57 +26,37 @@ import org.springframework.util.StringUtils;
  * @author liangen
  * @version $Id: LocalFileConfigurator.java, v 0.1 2018年04月17日 下午2:44 liangen Exp $
  */
-public class LocalFileConfigurator {
-    private SofaBootRpcProperties sofaBootRpcProperties;
+public class LocalFileConfigurator implements RegistryConfigureProcessor {
 
-    public LocalFileConfigurator(SofaBootRpcProperties sofaBootRpcProperties) {
-        this.sofaBootRpcProperties = sofaBootRpcProperties;
-    }
+    private static String COLON = ":";
 
-    /**
-     * 缓存文件地址
-     */
-    private String  file;
-
-    /**
-     * 是否已经解析配置
-     */
-    private boolean alreadyParse = false;
-
-    /**
-     * 获取缓存文件地址
-     *
-     * @return 缓存文件地址
-     */
-    public String getFile() {
-
-        return file;
-
-    }
-
-    /**
-     * 解析配置 value
-     *
-     * @param config 配置 value
-     */
-    void parseConfig(String config) {
-        if (StringUtils.hasText(config) && config.startsWith("local") && config.length() > 5) {
-            file = config.substring(6);
-        }
+    public LocalFileConfigurator() {
     }
 
     /**
      * 读取配置 key ,获取其 value 进行解析。
      */
-    public void parseConfig() {
-        if (!alreadyParse) {
-            parseConfig(sofaBootRpcProperties.getRegistryAddress());
-            alreadyParse = true;
+    public String parseConfig(String config) {
+        String file = null;
+        if (StringUtils.isNotEmpty(config) && config.startsWith(SofaBootRpcConfigConstants.REGISTRY_PROTOCOL_LOCAL) &&
+            config.length() > SofaBootRpcConfigConstants.REGISTRY_PROTOCOL_LOCAL.length()) {
+            file = config.substring(SofaBootRpcConfigConstants.REGISTRY_PROTOCOL_LOCAL.length() + COLON.length());
         }
+
+        return file;
     }
 
-    public void setFile(String file) {
-        this.file = file;
+    @Override
+    public RegistryConfig buildFromAddress(String address) {
+        String filePath = parseConfig(address);
+
+        if (StringUtils.isEmpty(filePath)) {
+            filePath = SofaBootRpcConfigConstants.REGISTRY_FILE_PATH_DEFAULT;
+        }
+
+        return new RegistryConfig()
+            .setFile(filePath)
+            .setProtocol(SofaBootRpcConfigConstants.REGISTRY_PROTOCOL_LOCAL);
     }
 
 }

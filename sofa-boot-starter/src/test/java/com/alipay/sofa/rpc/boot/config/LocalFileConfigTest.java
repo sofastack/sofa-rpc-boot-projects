@@ -27,15 +27,15 @@ public class LocalFileConfigTest {
 
     @Test
     public void test() {
-        LocalFileConfigurator localFileConfigurator = new LocalFileConfigurator(new SofaBootRpcProperties(null));
+        LocalFileConfigurator localFileConfigurator = new LocalFileConfigurator();
         String configA = "local";
 
-        localFileConfigurator.parseConfig(configA);
-        Assert.assertNull(localFileConfigurator.getFile());
+        String file = localFileConfigurator.parseConfig(configA);
+        Assert.assertNull(file);
 
         String config = "local:/home/admin/registry";
 
-        localFileConfigurator.parseConfig(config);
-        Assert.assertEquals("/home/admin/registry", localFileConfigurator.getFile());
+        file = localFileConfigurator.parseConfig(config);
+        Assert.assertEquals("/home/admin/registry", file);
     }
 }

@@ -17,14 +17,15 @@
 package com.alipay.sofa.rpc.boot.runtime.binding;
 
 /**
- *
  * SOFABoot RPC 相关的 XML 元素和属性
  *
  * @author <a href="mailto:lw111072@antfin.com">LiWei</a>
  */
 public class RpcBindingXmlConstants {
 
-    /** key start */
+    /**
+     * key start
+     */
     public static final String TAG_GLOBAL_ATTRS      = "global-attrs";
     public static final String TAG_FILTER            = "filter";
     public static final String TAG_ROUTE             = "route";
@@ -41,6 +42,7 @@ public class RpcBindingXmlConstants {
     public static final String TAG_WARMUP_TIME       = "warm-up-time";
     public static final String TAG_WARMUP_WEIGHT     = "warm-up-weight";
     public static final String TAG_THREAD_POOL_REF   = "thread-pool-ref";
+    public static final String TAG_REGISTRY          = "registry";
     public static final String TAG_GENERIC_INTERFACE = "generic-interface";
     public static final String TAG_TARGET_URL        = "target-url";
     public static final String TAG_SERIALIZE_TYPE    = "serialize-type";
@@ -52,7 +54,9 @@ public class RpcBindingXmlConstants {
 
     /** key end */
 
-    /** value start */
+    /**
+     * value start
+     */
     public static final String TYPE_SYNC             = "sync";
     public static final String TYPE_FUTURE           = "future";
     public static final String TYPE_CALLBACK         = "callback";

@@ -16,7 +16,8 @@
  */
 package com.alipay.sofa.rpc.boot.config;
 
-import org.springframework.util.StringUtils;
+import com.alipay.sofa.rpc.common.utils.StringUtils;
+import com.alipay.sofa.rpc.config.RegistryConfig;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -28,57 +29,9 @@ import java.util.Map;
  *
  * @author <a href="mailto:lw111072@antfin.com">LiWei</a>
  */
-public class ZookeeperConfigurator {
+public class ZookeeperConfigurator implements RegistryConfigureProcessor {
 
-    /**
-     * 注册中心地址
-     */
-    private String                    address;
-
-    /**
-     * 参数
-     */
-    private final Map<String, String> PARAM_MAP    = new HashMap<String, String>();
-
-    /**
-     * 是否已经解析配置
-     */
-    private boolean                   alreadyParse = false;
-
-    private SofaBootRpcProperties     sofaBootRpcProperties;
-
-    public ZookeeperConfigurator(SofaBootRpcProperties sofaBootRpcProperties) {
-        this.sofaBootRpcProperties = sofaBootRpcProperties;
-    }
-
-    /**
-     * 根据参数 key 读取 value
-     *
-     * @param key 参数 key
-     * @return 参数valule
-     */
-    String getParamValue(String key) {
-        if (StringUtils.hasText(key)) {
-            return PARAM_MAP.get(key);
-        } else {
-            return null;
-        }
-    }
-
-    /**
-     * 获取缓存文件地址
-     *
-     * @return 缓存文件地址
-     */
-    public String getFile() {
-        String file = PARAM_MAP.get("file");
-
-        if (!StringUtils.hasText(file)) {
-            file = SofaBootRpcConfigConstants.REGISTRY_FILE_PATH_DEFAULT;
-        }
-
-        return file;
-
+    public ZookeeperConfigurator() {
     }
 
     /**
@@ -86,69 +39,81 @@ public class ZookeeperConfigurator {
      *
      * @param config 配置 value
      */
-    void parseConfig(String config) {
-        if (StringUtils.hasText(config) && config.startsWith("zookeeper")) {
+    String parseAddress(String config) {
+        String address = null;
 
-            String value = config.substring(12);
-
+        if (StringUtils.isNotEmpty(config) && config.startsWith(SofaBootRpcConfigConstants.REGISTRY_PROTOCOL_ZOOKEEPER)) {
+            final String zkProtol = SofaBootRpcConfigConstants.REGISTRY_PROTOCOL_ZOOKEEPER + "://";
+            String value = config.substring(zkProtol.length());
             if (!value.contains("?")) {
                 address = value;
             } else {
-
                 int index = value.lastIndexOf('?');
-
                 address = value.substring(0, index);
-                String paramString = value.substring(index + 1);
-                parseParam(paramString);
-
             }
         }
-    }
 
-    /**
-     * 读取配置 key ,获取其 value 进行解析。
-     */
-    public void parseConfig() {
-        if (!alreadyParse) {
-            parseConfig(sofaBootRpcProperties.getRegistryAddress());
-            alreadyParse = true;
-        }
-
-    }
-
-    private void parseParam(String paramString) {
-        if (paramString.contains("&")) {
-            String[] paramSplit = paramString.split("&");
-            for (String param : paramSplit) {
-                parseKeyValue(param);
-            }
-        } else {
-            parseKeyValue(paramString);
-        }
-    }
-
-    private void parseKeyValue(String kv) {
-        String[] kvSplit = kv.split("=");
-        String key = kvSplit[0];
-        String value = kvSplit[1];
-        PARAM_MAP.put(key, value);
-    }
-
-    /**
-     * Getter method for property <tt>address</tt>.
-     *
-     * @return property value of address
-     */
-    public String getAddress() {
         return address;
     }
 
     /**
-     * Setter method for property <tt>address</tt>.
+     * 传递原始 url
      *
-     * @param address value to be assigned to property address
+     * @param address
+     * @return
      */
-    public void setAddress(String address) {
-        this.address = address;
+    public Map<String, String> parseParam(String address) {
+
+        String host = parseAddress(address);
+
+        //for config ?
+        String paramString = address.substring(address.indexOf(host) + host.length());
+
+        if (StringUtils.isNotEmpty(paramString) && paramString.startsWith("?")) {
+            paramString = paramString.substring(1);
+        }
+
+        Map<String, String> map = new HashMap<String, String>();
+        if (paramString.contains("&")) {
+            String[] paramSplit = paramString.split("&");
+            for (String param : paramSplit) {
+                Map<String, String> tempMap = parseKeyValue(param);
+                map.putAll(tempMap);
+            }
+        } else {
+            Map<String, String> tempMap = parseKeyValue(paramString);
+            map.putAll(tempMap);
+        }
+
+        return map;
+    }
+
+    private Map<String, String> parseKeyValue(String kv) {
+        Map<String, String> map = new HashMap<String, String>();
+        if (StringUtils.isNotEmpty(kv)) {
+            String[] kvSplit = kv.split("=");
+            String key = kvSplit[0];
+            String value = kvSplit[1];
+            map.put(key, value);
+        }
+        return map;
+    }
+
+    @Override
+    public RegistryConfig buildFromAddress(String address) {
+        String zkAddress = parseAddress(address);
+        Map<String, String> map = parseParam(address);
+
+        String file = map.get("file");
+
+        if (StringUtils.isEmpty(file)) {
+            file = SofaBootRpcConfigConstants.REGISTRY_FILE_PATH_DEFAULT;
+        }
+
+        return new RegistryConfig()
+            .setAddress(zkAddress)
+            .setFile(file)
+            .setProtocol(SofaBootRpcConfigConstants.REGISTRY_PROTOCOL_ZOOKEEPER);
+
     }
 }

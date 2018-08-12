@@ -42,6 +42,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -194,6 +195,7 @@ public abstract class RpcBindingConverter implements BindingConverter<RpcBinding
         String loadBalancer = element.getAttribute(RpcBindingXmlConstants.TAG_LOAD_BALANCER);
         Boolean lazy = SofaBootRpcParserUtil.parseBoolean(element.getAttribute(RpcBindingXmlConstants.TAG_LAZY));
         Boolean check = SofaBootRpcParserUtil.parseBoolean(element.getAttribute(RpcBindingXmlConstants.TAG_CHECK));
+        String registryAlias = element.getAttribute(RpcBindingXmlConstants.TAG_REGISTRY);
 
         String serialization = element.getAttribute(RpcBindingXmlConstants.TAG_SERIALIZE_TYPE);
         if (timeout != null) {
@@ -243,6 +245,11 @@ public abstract class RpcBindingConverter implements BindingConverter<RpcBinding
         }
         if (StringUtils.hasText(serialization)) {
             param.setSerialization(serialization);
+        }
+
+        if (StringUtils.hasText(registryAlias)) {
+            String[] registrys = StringUtils.split(registryAlias, ",");
+            param.setRegistrys(Arrays.asList(registrys));
         }
     }
 
@@ -415,6 +422,7 @@ public abstract class RpcBindingConverter implements BindingConverter<RpcBinding
 
     /**
      * convert props to RpcBindingParam
+     *
      * @param bindingParam
      * @param sofaReferenceBindingAnnotation
      * @param bindingConverterContext

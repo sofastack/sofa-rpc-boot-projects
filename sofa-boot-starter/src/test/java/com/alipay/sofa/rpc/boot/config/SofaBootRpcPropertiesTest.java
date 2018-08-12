@@ -24,11 +24,14 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.Map;
+
 @RunWith(SpringRunner.class)
 @SpringBootApplication
 @SpringBootTest(properties = {
                               SofaBootRpcProperties.PREFIX + ".bolt.port=5000",
-                              "com_alipay_sofa_rpc_bolt_thread_pool_max_size=600"
+                              "com_alipay_sofa_rpc_bolt_thread_pool_max_size=600",
+                              SofaBootRpcProperties.PREFIX + ".registries.zk1=zookeeper://xxxx"
 })
 public class SofaBootRpcPropertiesTest {
     @Autowired
@@ -49,4 +52,13 @@ public class SofaBootRpcPropertiesTest {
     public void testUnderscoreConfig() {
         Assert.assertEquals("600", sofaBootRpcProperties.getBoltThreadPoolMaxSize());
     }
+
+    @Test
+    public void testCustoMapConfig() {
+        Map<String, String> map = sofaBootRpcProperties.getRegistries();
+
+        Assert.assertTrue(map != null);
+        Assert.assertEquals("zookeeper://xxxx", map.get("zk1"));
+    }
+
 }

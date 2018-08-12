@@ -17,14 +17,16 @@
 package com.alipay.sofa.rpc.boot.container;
 
 import com.alipay.sofa.rpc.boot.common.SofaBootRpcRuntimeException;
-import com.alipay.sofa.rpc.boot.config.LocalFileConfigurator;
+import com.alipay.sofa.rpc.boot.config.RegistryConfigureProcessor;
 import com.alipay.sofa.rpc.boot.config.SofaBootRpcConfigConstants;
 import com.alipay.sofa.rpc.boot.config.SofaBootRpcProperties;
-import com.alipay.sofa.rpc.boot.config.ZookeeperConfigurator;
 import com.alipay.sofa.rpc.common.utils.StringUtils;
 import com.alipay.sofa.rpc.config.RegistryConfig;
-import com.alipay.sofa.rpc.registry.Registry;
-import com.alipay.sofa.rpc.registry.RegistryFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import javax.annotation.Resource;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * RegistryConfig 工厂
@@ -32,39 +34,48 @@ import com.alipay.sofa.rpc.registry.RegistryFactory;
  * @author <a href="mailto:lw111072@antfin.com">LiWei</a>
  */
 public class RegistryConfigContainer {
-    private SofaBootRpcProperties sofaBootRpcProperties;
-    private ZookeeperConfigurator zookeeperConfigurator;
-    private LocalFileConfigurator localFileConfigurator;
 
-    public RegistryConfigContainer(SofaBootRpcProperties sofaBootRpcProperties,
-                                   ZookeeperConfigurator zookeeperConfigurator,
-                                   LocalFileConfigurator localFileConfigurator) {
-        this.sofaBootRpcProperties = sofaBootRpcProperties;
-        this.zookeeperConfigurator = zookeeperConfigurator;
-        this.localFileConfigurator = localFileConfigurator;
+    private static final String                     GLOBAL_REGISTRY   = "DEFAULT";
+
+    @Autowired
+    private SofaBootRpcProperties                   sofaBootRpcProperties;
+
+    @Resource(name = "registryConfigMap")
+    private Map<String, RegistryConfigureProcessor> registryConfigMap = new HashMap<String, RegistryConfigureProcessor>(
+                                                                          4);
+
+    public RegistryConfigContainer() {
     }
 
-    /**
-     * 单例 local 模式 RegistryConfig
-     */
-    private volatile RegistryConfig localRegistryConfig;
+    public RegistryConfig getRegistryConfig(String registryAlias) throws SofaBootRpcRuntimeException {
 
-    /**
-     * 单例 zookeeper 模式 RegistryConfig
-     */
-    private volatile RegistryConfig zookeeperRegistryConfig;
+        String registryProtocol;
+        String registryAddress = null;
+        if (StringUtils.isEmpty(registryAlias) || GLOBAL_REGISTRY.equalsIgnoreCase(registryAlias)) {
+            registryAddress = sofaBootRpcProperties.getRegistryAddress();
+        } else {
+            registryAddress = sofaBootRpcProperties.getRegistries().get(registryAlias);
+        }
 
-    /**
-     * 获取 Registry
-     *
-     * @return the Registry
-     */
-    public Registry getRegistry() {
-        Registry registry = RegistryFactory.getRegistry(getRegistryConfig());
-        registry.init();
-        registry.start();
+        if (StringUtils.isBlank(registryAddress)) {
+            registryProtocol = SofaBootRpcConfigConstants.REGISTRY_PROTOCOL_LOCAL;
+        } else {
+            final int endIndex = registryAddress.indexOf(":");
+            if (endIndex != -1) {
+                registryProtocol = registryAddress.substring(0, endIndex);
+            }
+            else {
+                registryProtocol = registryAlias;
+            }
+        }
 
-        return registry;
+        if (registryConfigMap.get(registryProtocol) != null) {
+            RegistryConfigureProcessor registryConfigureProcessor = registryConfigMap.get(registryProtocol);
+            RegistryConfig registryConfig = registryConfigureProcessor.buildFromAddress(registryAddress);
+            return registryConfig;
+        } else {
+            throw new SofaBootRpcRuntimeException("registry config [" + registryAddress + "] is not supported");
+        }
     }
 
     /**
@@ -74,77 +85,22 @@ public class RegistryConfigContainer {
      * @throws SofaBootRpcRuntimeException SofaBoot运行时异常
      */
     public RegistryConfig getRegistryConfig() throws SofaBootRpcRuntimeException {
-        String registryConfig = sofaBootRpcProperties.getRegistryAddress();
 
-        if (StringUtils.isBlank(registryConfig) ||
-            registryConfig.startsWith(SofaBootRpcConfigConstants.REGISTRY_PROTOCOL_LOCAL)) {
-
-            if (localRegistryConfig == null) {
-                synchronized (RegistryConfigContainer.class) {
-                    if (localRegistryConfig == null) {
-                        localRegistryConfig = createLocalRegistryConfig();
-                    }
-                }
-            }
-
-            return localRegistryConfig;
-        } else if (registryConfig.startsWith(SofaBootRpcConfigConstants.REGISTRY_PROTOCOL_ZOOKEEPER)) {
-
-            if (zookeeperRegistryConfig == null) {
-                synchronized (RegistryConfigContainer.class) {
-                    if (zookeeperRegistryConfig == null) {
-                        zookeeperRegistryConfig = createZookeeperRegistryConfig();
-                    }
-                }
-            }
-
-            return zookeeperRegistryConfig;
-        } else {
-            throw new SofaBootRpcRuntimeException("protocol[" + registryConfig + "] is not supported");
-        }
-    }
-
-    /**
-     * 创建 local 协议的 RegistryConfig
-     *
-     * @return local RegistryConfig
-     */
-    RegistryConfig createLocalRegistryConfig() {
-        localFileConfigurator.parseConfig();
-
-        String filePath = localFileConfigurator.getFile();
-        if (StringUtils.isBlank(filePath)) {
-            filePath = SofaBootRpcConfigConstants.REGISTRY_FILE_PATH_DEFAULT;
-        }
-
-        return new RegistryConfig()
-            .setFile(filePath)
-            .setProtocol(SofaBootRpcConfigConstants.REGISTRY_PROTOCOL_LOCAL);
-
-    }
-
-    /**
-     * 创建 zookeeper 协议的 RegistryConfig
-     *
-     * @return zookeeper RegistryConfig
-     */
-    public RegistryConfig createZookeeperRegistryConfig() {
-        zookeeperConfigurator.parseConfig();
-
-        String address = zookeeperConfigurator.getAddress();
-        String filePath = zookeeperConfigurator.getFile();
-
-        return new RegistryConfig()
-            .setAddress(address)
-            .setFile(filePath)
-            .setProtocol(SofaBootRpcConfigConstants.REGISTRY_PROTOCOL_ZOOKEEPER);
+        return getRegistryConfig(GLOBAL_REGISTRY);
     }
 
     /**
      * 移除所有 RegistryConfig
      */
     public void removeAllRegistryConfig() {
-        localRegistryConfig = null;
-        zookeeperRegistryConfig = null;
+        registryConfigMap.clear();
+    }
+
+    public Map<String, RegistryConfigureProcessor> getRegistryConfigMap() {
+        return registryConfigMap;
+    }
+
+    public void setRegistryConfigMap(Map<String, RegistryConfigureProcessor> registryConfigMap) {
+        this.registryConfigMap = registryConfigMap;
     }
 }

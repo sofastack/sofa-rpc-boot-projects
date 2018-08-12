@@ -21,9 +21,11 @@ import com.alipay.sofa.rpc.boot.runtime.binding.RpcBinding;
 import com.alipay.sofa.rpc.boot.runtime.param.RpcBindingParam;
 import com.alipay.sofa.rpc.config.ConsumerConfig;
 import com.alipay.sofa.rpc.config.ProviderConfig;
+import com.alipay.sofa.rpc.config.RegistryConfig;
 import com.alipay.sofa.rpc.config.ServerConfig;
 import com.alipay.sofa.rpc.log.LogCodes;
 import com.alipay.sofa.rpc.registry.Registry;
+import com.alipay.sofa.rpc.registry.RegistryFactory;
 import com.alipay.sofa.runtime.api.ServiceRuntimeException;
 import com.alipay.sofa.runtime.spi.binding.BindingAdapter;
 import com.alipay.sofa.runtime.spi.binding.Contract;
@@ -85,9 +87,14 @@ public abstract class RpcBindingAdapter implements BindingAdapter<RpcBinding> {
         }
 
         if (SpringBridge.getProviderConfigContainer().isAllowPublish()) {
-            Registry registry = SpringBridge.getRegistryConfigContainer().getRegistry();
             providerConfig.setRegister(true);
-            registry.register(providerConfig);
+            List<RegistryConfig> registrys = providerConfig.getRegistry();
+            for (RegistryConfig registryConfig : registrys) {
+                Registry registry = RegistryFactory.getRegistry(registryConfig);
+                registry.init();
+                registry.start();
+                registry.register(providerConfig);
+            }
         }
         return Boolean.TRUE;
     }

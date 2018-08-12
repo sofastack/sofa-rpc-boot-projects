@@ -20,13 +20,16 @@ import com.alipay.sofa.rpc.boot.config.SofaBootRpcConfigConstants;
 import com.alipay.sofa.rpc.boot.log.SofaBootRpcLoggerFactory;
 import com.alipay.sofa.rpc.boot.runtime.binding.RpcBinding;
 import com.alipay.sofa.rpc.config.ProviderConfig;
+import com.alipay.sofa.rpc.config.RegistryConfig;
 import com.alipay.sofa.rpc.config.ServerConfig;
 import com.alipay.sofa.rpc.registry.Registry;
+import com.alipay.sofa.rpc.registry.RegistryFactory;
 import com.alipay.sofa.runtime.spi.binding.Contract;
 import org.slf4j.Logger;
 import org.springframework.util.StringUtils;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -99,21 +102,30 @@ public class ProviderConfigContainer {
 
     /**
      * 发布所有 ProviderConfig 元数据信息到注册中心
-     *
-     * @param registry 注册中心
      */
-    public void publishAllProviderConfig(Registry registry) {
+    public void publishAllProviderConfig() {
         for (ProviderConfig providerConfig : getAllProviderConfig()) {
 
             ServerConfig serverConfig = (ServerConfig) providerConfig.getServer().get(0);
             if (!serverConfig.getProtocol().equalsIgnoreCase(SofaBootRpcConfigConstants.RPC_PROTOCOL_DUBBO)) {
                 providerConfig.setRegister(true);
-                registry.register(providerConfig);
 
-                if (LOGGER.isInfoEnabled()) {
-                    LOGGER.info("service published.  interfaceId[" + providerConfig.getInterfaceId() + "]; protocol[" +
-                        serverConfig.getProtocol() + "]");
+                List<RegistryConfig> registrys = providerConfig.getRegistry();
+                for (RegistryConfig registryConfig : registrys) {
+
+                    Registry registry = RegistryFactory.getRegistry(registryConfig);
+                    registry.init();
+                    registry.start();
+
+                    registry.register(providerConfig);
+
+                    if (LOGGER.isInfoEnabled()) {
+                        LOGGER.info("service published.  interfaceId[" + providerConfig.getInterfaceId() +
+                            "]; protocol[" +
+                            serverConfig.getProtocol() + "]");
+                    }
                 }
+
             }
         }
     }

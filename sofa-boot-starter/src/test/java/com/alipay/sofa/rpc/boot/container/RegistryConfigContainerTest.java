@@ -18,6 +18,7 @@ package com.alipay.sofa.rpc.boot.container;
 
 import com.alipay.sofa.rpc.boot.common.SofaBootRpcRuntimeException;
 import com.alipay.sofa.rpc.boot.config.LocalFileConfigurator;
+import com.alipay.sofa.rpc.boot.config.RegistryConfigureProcessor;
 import com.alipay.sofa.rpc.boot.config.SofaBootRpcProperties;
 import com.alipay.sofa.rpc.boot.config.ZookeeperConfigurator;
 import com.alipay.sofa.rpc.config.RegistryConfig;
@@ -25,36 +26,43 @@ import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author <a href="mailto:lw111072@antfin.com">LiWei</a>
  */
+@SpringBootTest()
+@RunWith(SpringRunner.class)
 public class RegistryConfigContainerTest {
     @Rule
-    public ExpectedException        thrown = ExpectedException.none();
+    public ExpectedException           thrown                = ExpectedException.none();
 
-    private SofaBootRpcProperties   sofaBootRpcProperties;
-    private RegistryConfigContainer registryConfigContainer;
+    @Autowired
+    private SofaBootRpcProperties      sofaBootRpcProperties;
+    @Autowired
+    private RegistryConfigContainer    registryConfigContainer;
 
-    public RegistryConfigContainerTest() {
-        sofaBootRpcProperties = new SofaBootRpcProperties(null);
-        registryConfigContainer = new RegistryConfigContainer(sofaBootRpcProperties,
-            new ZookeeperConfigurator(sofaBootRpcProperties),
-            new LocalFileConfigurator(sofaBootRpcProperties));
-    }
+    private RegistryConfigureProcessor localFileConfigurator = new LocalFileConfigurator();
+
+    private RegistryConfigureProcessor zkFileConfigurator    = new ZookeeperConfigurator();
 
     @Test
     public void testGetLocalRegistryConfig() {
-        sofaBootRpcProperties.setRegistryAddress("local:/home/admin/local");
-        RegistryConfig registryConfigLocal = registryConfigContainer.createLocalRegistryConfig();
+        RegistryConfig registryConfigLocal = localFileConfigurator.buildFromAddress("local:/home/admin/local");
         Assert.assertEquals("local", registryConfigLocal.getProtocol());
         Assert.assertEquals("/home/admin/local", registryConfigLocal.getFile());
     }
 
     @Test
     public void testZooKeeperRegistryConfig() {
-        sofaBootRpcProperties.setRegistryAddress("zookeeper://127.0.0.1:2181?file=/home/admin/zookeeper");
-        RegistryConfig registryConfigZk = registryConfigContainer.createZookeeperRegistryConfig();
+        RegistryConfig registryConfigZk = zkFileConfigurator
+            .buildFromAddress("zookeeper://127.0.0.1:2181?file=/home/admin/zookeeper");
         Assert.assertEquals("zookeeper", registryConfigZk.getProtocol());
         Assert.assertEquals("/home/admin/zookeeper", registryConfigZk.getFile());
     }
@@ -62,9 +70,19 @@ public class RegistryConfigContainerTest {
     @Test
     public void testWrongRegistryConfig() {
         thrown.expect(SofaBootRpcRuntimeException.class);
-        thrown.expectMessage("protocol[no] is not supported");
+        thrown.expectMessage("registry config [no] is not supported");
         sofaBootRpcProperties.setRegistryAddress("no");
         registryConfigContainer.getRegistryConfig();
+
+    }
+
+    @Test
+    public void testCustomRegistryConfig() {
+        Map<String, String> registryAlias = new HashMap<String, String>();
+        registryAlias.put("zk1", "zookeeper://127.0.0.1:2181?file=/home/admin/zookeeper");
+        sofaBootRpcProperties.setRegistries(registryAlias);
+        RegistryConfig registryConfig = registryConfigContainer.getRegistryConfig("zk1");
+        Assert.assertEquals(registryConfig.getProtocol(), "zookeeper");
     }
 
 }

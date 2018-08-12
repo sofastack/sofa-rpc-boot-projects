@@ -16,26 +16,14 @@
  */
 package com.alipay.sofa.rpc.boot.config;
 
-import org.junit.Assert;
-import org.junit.Test;
-
-import java.util.Map;
+import com.alipay.sofa.rpc.config.RegistryConfig;
 
 /**
- * @author <a href="mailto:lw111072@antfin.com">LiWei</a>
+ * @author bystander
+ * @version $Id: RegistryConfigureProcessor.java, v 0.1 2018年08月09日 12:10 PM bystander Exp $
  */
-public class ZookeeperConfiguratorTest {
+public interface RegistryConfigureProcessor {
 
-    @Test
-    public void test() {
-        ZookeeperConfigurator zookeeperConfigurator = new ZookeeperConfigurator();
-        String config = "zookeeper://127.0.0.1:2181?aaa=111&rrr=666&file=/host/zk";
-        String address = zookeeperConfigurator.parseAddress(config);
+    public RegistryConfig buildFromAddress(String address);
 
-        Map<String, String> map = zookeeperConfigurator.parseParam(config);
-        Assert.assertEquals("111", map.get("aaa"));
-        Assert.assertEquals("666", map.get("rrr"));
-        Assert.assertEquals("127.0.0.1:2181", address);
-        Assert.assertEquals("/host/zk", map.get("file"));
-    }
 }

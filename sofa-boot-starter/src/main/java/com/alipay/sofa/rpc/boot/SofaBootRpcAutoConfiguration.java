@@ -17,7 +17,12 @@
 package com.alipay.sofa.rpc.boot;
 
 import com.alipay.sofa.healthcheck.startup.SofaBootMiddlewareAfterReadinessCheckCallback;
-import com.alipay.sofa.rpc.boot.config.*;
+import com.alipay.sofa.rpc.boot.config.FaultToleranceConfigurator;
+import com.alipay.sofa.rpc.boot.config.LocalFileConfigurator;
+import com.alipay.sofa.rpc.boot.config.RegistryConfigureProcessor;
+import com.alipay.sofa.rpc.boot.config.SofaBootRpcConfigConstants;
+import com.alipay.sofa.rpc.boot.config.SofaBootRpcProperties;
+import com.alipay.sofa.rpc.boot.config.ZookeeperConfigurator;
 import com.alipay.sofa.rpc.boot.container.ConsumerConfigContainer;
 import com.alipay.sofa.rpc.boot.container.ProviderConfigContainer;
 import com.alipay.sofa.rpc.boot.container.RegistryConfigContainer;
@@ -35,6 +40,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.core.env.Environment;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author <a href="mailto:lw111072@antfin.com">LiWei</a>
@@ -63,11 +71,8 @@ public class SofaBootRpcAutoConfiguration {
     }
 
     @Bean
-    public RegistryConfigContainer registryConfigContainer(
-                                                           SofaBootRpcProperties sofaBootRpcProperties,
-                                                           ZookeeperConfigurator zookeeperConfigurator,
-                                                           LocalFileConfigurator localFileConfigurator) {
-        return new RegistryConfigContainer(sofaBootRpcProperties, zookeeperConfigurator, localFileConfigurator);
+    public RegistryConfigContainer registryConfigContainer() {
+        return new RegistryConfigContainer();
     }
 
     @Bean
@@ -83,15 +88,21 @@ public class SofaBootRpcAutoConfiguration {
     }
 
     @Bean
-    public ZookeeperConfigurator zookeeperConfigurator(
-                                                       SofaBootRpcProperties sofaBootRpcProperties) {
-        return new ZookeeperConfigurator(sofaBootRpcProperties);
+    public ZookeeperConfigurator zookeeperConfigurator() {
+        return new ZookeeperConfigurator();
     }
 
     @Bean
-    public LocalFileConfigurator localFileConfigurator(
-                                                       SofaBootRpcProperties sofaBootRpcProperties) {
-        return new LocalFileConfigurator(sofaBootRpcProperties);
+    public LocalFileConfigurator localFileConfigurator() {
+        return new LocalFileConfigurator();
+    }
+
+    @Bean(name = "registryConfigMap")
+    public Map<String, RegistryConfigureProcessor> configureProcessorMap() {
+        Map<String, RegistryConfigureProcessor> map = new HashMap<String, RegistryConfigureProcessor>();
+        map.put(SofaBootRpcConfigConstants.REGISTRY_PROTOCOL_LOCAL, localFileConfigurator());
+        map.put(SofaBootRpcConfigConstants.REGISTRY_PROTOCOL_ZOOKEEPER, zookeeperConfigurator());
+        return map;
     }
 
     @Bean

@@ -78,8 +78,6 @@ public class ConsumerConfigHelper {
         List<MethodConfig> methodConfigs = convertToMethodConfig(param.getMethodInfos());
         String targetUrl = param.getTargetUrl();
 
-        RegistryConfig registryConfig = registryConfigContainer.getRegistryConfig();
-
         ConsumerConfig consumerConfig = new ConsumerConfig();
         if (StringUtils.hasText(appName)) {
             consumerConfig.setApplication(new ApplicationConfig().setAppName(appName));
@@ -137,7 +135,20 @@ public class ConsumerConfigHelper {
             consumerConfig.setSubscribe(false);
             consumerConfig.setRegister(false);
         }
-        consumerConfig.setRegistry(registryConfig);
+
+        if (param.getRegistrys() != null && param.getRegistrys().size() > 0) {
+            List<String> registrys = param.getRegistrys();
+            for (String registryAlias : registrys) {
+                RegistryConfig registryConfig = registryConfigContainer.getRegistryConfig(registryAlias);
+                consumerConfig.setRegistry(registryConfig);
+            }
+        }
+        else {
+            RegistryConfig registryConfig = registryConfigContainer.getRegistryConfig();
+
+            consumerConfig.setRegistry(registryConfig);
+
+        }
 
         String protocol = binding.getBindingType().getType();
         consumerConfig.setBootstrap(protocol);
