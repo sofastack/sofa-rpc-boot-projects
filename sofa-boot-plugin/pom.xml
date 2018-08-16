@@ -37,6 +37,13 @@
 
         <dependency>
             <groupId>com.alipay.sofa</groupId>
+            <artifactId>sofa-ark-spi</artifactId>
+            <version>${sofa.ark.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.alipay.sofa</groupId>
             <artifactId>sofa-rpc-all</artifactId>
             <version>${project.version}</version>
             <optional>true</optional>
@@ -45,6 +52,34 @@
 
     <build>
         <plugins>
+            <plugin>
+                <groupId>com.mycila</groupId>
+                <artifactId>license-maven-plugin</artifactId>
+                <version>3.0</version>
+                <executions>
+                    <!-- https://github.com/mycila/license-maven-plugin#maven-license-plugin -->
+                    <execution>
+                        <phase>process-sources</phase>
+                        <goals>
+                            <!-- among available goals remove, format, check, help  -->
+                            <goal>format</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <!-- session.executionRootDirectory resolves properly even with nested modules -->
+                    <header>${user.dir}/tools/codestyle/HEADER</header>
+                    <includes>
+                        <include>**/src/main/java/**</include>
+                        <include>**/src/test/java/**</include>
+                    </includes>
+                    <strictCheck>true</strictCheck>
+                    <mapping>
+                        <java>SLASHSTAR_STYLE</java>
+                    </mapping>
+                </configuration>
+            </plugin>
+
             <plugin>
                 <groupId>com.alipay.sofa</groupId>
                 <artifactId>sofa-ark-plugin-maven-plugin</artifactId>
