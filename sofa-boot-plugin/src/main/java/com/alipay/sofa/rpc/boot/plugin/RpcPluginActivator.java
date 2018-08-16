@@ -23,7 +23,7 @@ import com.alipay.sofa.ark.spi.service.PluginActivator;
  * @author qilong.zql
  * @since 5.4.4
  */
-public class RpcPluginActivator implements PluginActivator{
+public class RpcPluginActivator implements PluginActivator {
     @Override
     public void start(PluginContext context) {
         //ignore
