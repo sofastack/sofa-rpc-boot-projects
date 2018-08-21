@@ -25,3 +25,6 @@ sed "/<parent>/,/<\/parent>/ s/<version>[^\$].*<\/version>/<version>$1<\/version
 
 echo "Change SOFABoot version in sofa-boot-starter ===>"
 sed "/<parent>/,/<\/parent>/ s/<version>[^\$].*<\/version>/<version>$1<\/version>/" $shellDir/../sofa-boot-starter/pom.xml
+
+echo "Change SOFABoot version in sofa-boot-plugin ===>"
+sed "/<parent>/,/<\/parent>/ s/<version>[^\$].*<\/version>/<version>$1<\/version>/" $shellDir/../sofa-boot-plugin/pom.xml
