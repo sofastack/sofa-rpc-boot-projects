@@ -170,7 +170,7 @@ public class NetworkAddressUtil {
      * @param ip ip地址，XXX.XXX.XXX.XXX
      * @return 是否符合要求
      */
-    protected static boolean ipEnabled(String ip) {
+    public static boolean ipEnabled(String ip) {
         if (StringUtils.isEmpty(ip)) {
             return false;
         }

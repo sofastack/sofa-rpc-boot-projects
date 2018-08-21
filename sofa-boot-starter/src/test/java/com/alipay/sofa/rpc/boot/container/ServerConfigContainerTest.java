@@ -23,6 +23,8 @@ import com.alipay.sofa.rpc.config.ServerConfig;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.springframework.core.env.Environment;
+import org.springframework.mock.env.MockEnvironment;
 
 /**
  * @author <a href="mailto:lw111072@antfin.com">LiWei</a>
@@ -32,7 +34,8 @@ public class ServerConfigContainerTest {
     private ServerConfigContainer serverConfigContainer;
 
     public ServerConfigContainerTest() {
-        sofaBootRpcProperties = new SofaBootRpcProperties(null);
+        Environment environment = new MockEnvironment();
+        sofaBootRpcProperties = new SofaBootRpcProperties(environment);
         serverConfigContainer = new ServerConfigContainer(sofaBootRpcProperties);
     }
 
