@@ -5,12 +5,12 @@
     <parent>
         <groupId>com.alipay.sofa</groupId>
         <artifactId>sofaboot-dependencies</artifactId>
-        <version>2.4.5-SNAPSHOT</version>
+        <version>2.4.5</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>rpc-sofa-boot-plugin</artifactId>
-    <version>5.4.4-SNAPSHOT</version>
+    <version>5.4.4</version>
 
     <properties>
         <ark.plugin.name>rpc-sofa-boot-plugin</ark.plugin.name>
@@ -37,6 +37,13 @@
 
         <dependency>
             <groupId>com.alipay.sofa</groupId>
+            <artifactId>sofa-ark-spi</artifactId>
+            <version>${sofa.ark.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.alipay.sofa</groupId>
             <artifactId>sofa-rpc-all</artifactId>
             <version>${project.version}</version>
             <optional>true</optional>
@@ -45,6 +52,84 @@
 
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.10.4</version>
+                <configuration>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                    <detectOfflineLinks>true</detectOfflineLinks>
+                    <breakiterator>true</breakiterator>
+                    <author>false</author>
+                    <keywords>true</keywords>
+                    <quiet>true</quiet>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.0.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>com.googlecode.maven-java-formatter-plugin</groupId>
+                <artifactId>maven-java-formatter-plugin</artifactId>
+                <version>0.4</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>format</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <configFile>${user.dir}/tools/codestyle/formatter.xml</configFile>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.mycila</groupId>
+                <artifactId>license-maven-plugin</artifactId>
+                <version>3.0</version>
+                <executions>
+                    <!-- https://github.com/mycila/license-maven-plugin#maven-license-plugin -->
+                    <execution>
+                        <phase>process-sources</phase>
+                        <goals>
+                            <!-- among available goals remove, format, check, help  -->
+                            <goal>format</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <!-- session.executionRootDirectory resolves properly even with nested modules -->
+                    <header>${user.dir}/tools/codestyle/HEADER</header>
+                    <includes>
+                        <include>**/src/main/java/**</include>
+                        <include>**/src/test/java/**</include>
+                    </includes>
+                    <strictCheck>true</strictCheck>
+                    <mapping>
+                        <java>SLASHSTAR_STYLE</java>
+                    </mapping>
+                </configuration>
+            </plugin>
+
             <plugin>
                 <groupId>com.alipay.sofa</groupId>
                 <artifactId>sofa-ark-plugin-maven-plugin</artifactId>
