@@ -24,7 +24,7 @@ import org.springframework.context.ApplicationContext;
  * @author khotyn
  */
 public class SpringBridge {
-    private static ApplicationContext applicationContext;
+    protected static ApplicationContext applicationContext;
 
     public static ConsumerConfigHelper getConsumerConfigHelper() {
         return applicationContext.getBean("consumerConfigHelper", ConsumerConfigHelper.class);

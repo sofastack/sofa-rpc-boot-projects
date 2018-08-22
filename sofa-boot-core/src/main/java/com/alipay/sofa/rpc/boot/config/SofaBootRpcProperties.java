@@ -109,6 +109,10 @@ public class SofaBootRpcProperties {
     //custom registry
     private Map<String, String> registries = new HashMap<String, String>();
 
+    //mesh switch,can be protocol,like bolt,mesh,all,now we only support bolt
+
+    private String              enableMesh;
+
     public SofaBootRpcProperties(Environment environment) {
         this.environment = environment;
     }
@@ -521,6 +525,15 @@ public class SofaBootRpcProperties {
         this.registries = registries;
     }
 
+    public String getEnableMesh() {
+        return StringUtils.isEmpty(enableMesh) ? getDotString(new Object() {
+        }.getClass().getEnclosingMethod().getName()) : enableMesh;
+    }
+
+    public void setEnableMesh(String enableMesh) {
+        this.enableMesh = enableMesh;
+    }
+
     private String getDotString(String enclosingMethodName) {
         if (environment == null) {
             return null;
@@ -531,5 +544,9 @@ public class SofaBootRpcProperties {
     String camelToDot(String camelCaseString) {
         return CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_HYPHEN, camelCaseString).replaceAll("-",
             ".");
+    }
+
+    public Environment getEnvironment() {
+        return environment;
     }
 }

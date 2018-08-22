@@ -142,6 +142,11 @@ public class ProviderConfigHelper {
                 providerConfig.setRegistry(registryConfig);
             }
         }
+        else if (registryConfigContainer.isMeshEnabled(protocol)) {
+            RegistryConfig registryConfig = registryConfigContainer
+                .getRegistryConfig(SofaBootRpcConfigConstants.REGISTRY_PROTOCOL_MESH);
+            providerConfig.setRegistry(registryConfig);
+        }
         else {
             RegistryConfig registryConfig = registryConfigContainer.getRegistryConfig();
 

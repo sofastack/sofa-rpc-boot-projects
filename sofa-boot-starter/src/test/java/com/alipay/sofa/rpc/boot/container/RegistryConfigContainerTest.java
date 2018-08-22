@@ -37,7 +37,7 @@ import java.util.Map;
 /**
  * @author <a href="mailto:lw111072@antfin.com">LiWei</a>
  */
-@SpringBootTest()
+@SpringBootTest
 @RunWith(SpringRunner.class)
 public class RegistryConfigContainerTest {
     @Rule
@@ -72,6 +72,8 @@ public class RegistryConfigContainerTest {
         thrown.expect(SofaBootRpcRuntimeException.class);
         thrown.expectMessage("registry config [no] is not supported");
         sofaBootRpcProperties.setRegistryAddress("no");
+        //Test case will init by other xmls.
+        registryConfigContainer.getRegistryConfigs().clear();
         registryConfigContainer.getRegistryConfig();
 
     }

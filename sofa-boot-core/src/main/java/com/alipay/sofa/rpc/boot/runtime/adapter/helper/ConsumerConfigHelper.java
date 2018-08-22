@@ -136,25 +136,29 @@ public class ConsumerConfigHelper {
             consumerConfig.setRegister(false);
         }
 
+        String protocol = binding.getBindingType().getType();
+        consumerConfig.setBootstrap(protocol);
+
+        if (protocol.equals(SofaBootRpcConfigConstants.RPC_PROTOCOL_DUBBO)) {
+            consumerConfig.setInJVM(false);
+        }
+
         if (param.getRegistrys() != null && param.getRegistrys().size() > 0) {
             List<String> registrys = param.getRegistrys();
             for (String registryAlias : registrys) {
                 RegistryConfig registryConfig = registryConfigContainer.getRegistryConfig(registryAlias);
                 consumerConfig.setRegistry(registryConfig);
             }
+        } else if (registryConfigContainer.isMeshEnabled(protocol)) {
+            RegistryConfig registryConfig = registryConfigContainer
+                .getRegistryConfig(SofaBootRpcConfigConstants.REGISTRY_PROTOCOL_MESH);
+            consumerConfig.setRegistry(registryConfig);
         }
         else {
             RegistryConfig registryConfig = registryConfigContainer.getRegistryConfig();
 
             consumerConfig.setRegistry(registryConfig);
 
-        }
-
-        String protocol = binding.getBindingType().getType();
-        consumerConfig.setBootstrap(protocol);
-
-        if (protocol.equals(SofaBootRpcConfigConstants.RPC_PROTOCOL_DUBBO)) {
-            consumerConfig.setInJVM(false);
         }
 
         if (StringUtils.hasText(serialization)) {

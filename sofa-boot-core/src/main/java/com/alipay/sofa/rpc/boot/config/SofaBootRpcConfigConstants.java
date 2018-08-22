@@ -58,12 +58,18 @@ public class SofaBootRpcConfigConstants {
     /* registry */
     public static final String  REGISTRY_PROTOCOL_LOCAL            = "local";
     public static final String  REGISTRY_PROTOCOL_ZOOKEEPER        = "zookeeper";
+    public static final String  REGISTRY_PROTOCOL_MESH             = "mesh";
 
     /* server */
     public static final String  RPC_PROTOCOL_BOLT                  = "bolt";
     public static final String  RPC_PROTOCOL_REST                  = "rest";
     public static final String  RPC_PROTOCOL_DUBBO                 = "dubbo";
     public static final String  RPC_PROTOCOL_H2C                   = "h2c";
+
+    /** mesh **/
+    public static final String  ENABLE_MESH_ALL                    = "all";
+
+    public static final String  DEFAULT_REGISTRY                   = "default.registry";
 
     /* possible config value end ********************************************************/
 
