@@ -176,7 +176,15 @@
                                     <package>org.I0Itec.zkclient.*</package>
                                     <package>javax.ws.rs.*</package>
                                 </packages>
+
                             </exported>
+
+                            <imported>
+                                <packages>
+                                    <package>com.alipay.common.tracer.core.*</package>
+                                    <package>io.opentracing.*</package>
+                                </packages>
+                            </imported>
 
                             <excludeGroupIds>
                                 <excludeGroupId>org.springframework</excludeGroupId>
