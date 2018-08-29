@@ -21,6 +21,7 @@ import static org.junit.Assert.assertNull;
 
 import java.util.List;
 
+import com.alipay.sofa.rpc.test.base.ActivelyDestroyTest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +46,7 @@ import com.google.common.collect.Lists;
 @SpringBootTest(classes = ReferenceTest.class)
 @RunWith(SpringRunner.class)
 @ImportResource("classpath*:spring/test_only_reference.xml")
-public class ReferenceTest {
+public class ReferenceTest extends ActivelyDestroyTest {
 
     @Autowired
     private HelloSyncService      helloSyncService;

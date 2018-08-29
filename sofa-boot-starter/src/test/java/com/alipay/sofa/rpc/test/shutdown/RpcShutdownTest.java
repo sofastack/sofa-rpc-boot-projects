@@ -17,6 +17,7 @@
 package com.alipay.sofa.rpc.test.shutdown;
 
 import com.alipay.sofa.rpc.boot.config.SofaBootRpcConfigConstants;
+import com.alipay.sofa.rpc.test.base.ActivelyDestroyTest;
 import com.alipay.sofa.rpc.test.util.TestUtils;
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -35,7 +36,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest(classes = RpcShutdownTest.class)
 @RunWith(SpringRunner.class)
 @ImportResource("classpath:spring/readiness.xml")
-public class RpcShutdownTest implements ApplicationContextAware {
+public class RpcShutdownTest extends ActivelyDestroyTest implements ApplicationContextAware {
     private static ApplicationContext applicationContext;
 
     @Test

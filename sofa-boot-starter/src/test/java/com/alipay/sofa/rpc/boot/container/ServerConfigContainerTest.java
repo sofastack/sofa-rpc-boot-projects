@@ -20,6 +20,7 @@ import com.alipay.sofa.rpc.boot.common.SofaBootRpcRuntimeException;
 import com.alipay.sofa.rpc.boot.config.SofaBootRpcConfigConstants;
 import com.alipay.sofa.rpc.boot.config.SofaBootRpcProperties;
 import com.alipay.sofa.rpc.config.ServerConfig;
+import com.alipay.sofa.rpc.test.base.ActivelyDestroyTest;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -29,7 +30,7 @@ import org.springframework.mock.env.MockEnvironment;
 /**
  * @author <a href="mailto:lw111072@antfin.com">LiWei</a>
  */
-public class ServerConfigContainerTest {
+public class ServerConfigContainerTest extends ActivelyDestroyTest {
     private SofaBootRpcProperties sofaBootRpcProperties;
     private ServerConfigContainer serverConfigContainer;
 

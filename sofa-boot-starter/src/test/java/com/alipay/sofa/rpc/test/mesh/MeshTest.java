@@ -19,6 +19,7 @@ package com.alipay.sofa.rpc.test.mesh;
 import com.alipay.rpc.common.service.facade.SampleService;
 import com.alipay.sofa.rpc.boot.invoke.HelloSyncService;
 import com.alipay.sofa.rpc.core.exception.SofaRpcException;
+import com.alipay.sofa.rpc.test.base.ActivelyDestroyTest;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -43,7 +44,8 @@ import static org.junit.Assert.assertEquals;
         classes = MeshTest.class)
 @RunWith(SpringRunner.class)
 @ImportResource("classpath*:spring/test_only_mesh.xml")
-public class MeshTest {
+@Ignore
+public class MeshTest extends ActivelyDestroyTest {
 
     @Resource(name = "helloSyncConsumerMesh")
     private HelloSyncService helloSyncConsumerMesh;
