@@ -10,10 +10,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>rpc-sofa-boot-plugin</artifactId>
-    <version>5.4.5</version>
+    <version>5.4.6-SNAPSHOT</version>
 
     <properties>
         <ark.plugin.name>rpc-sofa-boot-plugin</ark.plugin.name>
+        <rpc.all.version>5.4.5</rpc.all.version>
     </properties>
 
     <dependencies>
@@ -45,7 +46,7 @@
         <dependency>
             <groupId>com.alipay.sofa</groupId>
             <artifactId>sofa-rpc-all</artifactId>
-            <version>${project.version}</version>
+            <version>${rpc.all.version}</version>
             <optional>true</optional>
         </dependency>
     </dependencies>
