@@ -18,6 +18,7 @@ package com.alipay.sofa.rpc.boot.runtime.adapter.helper;
 
 import com.alipay.sofa.rpc.boot.common.SofaBootRpcRuntimeException;
 import com.alipay.sofa.rpc.boot.config.SofaBootRpcConfigConstants;
+import com.alipay.sofa.rpc.boot.config.SofaBootRpcProperties;
 import com.alipay.sofa.rpc.boot.container.RegistryConfigContainer;
 import com.alipay.sofa.rpc.boot.runtime.binding.RpcBinding;
 import com.alipay.sofa.rpc.boot.runtime.binding.RpcBindingMethodInfo;
@@ -43,8 +44,11 @@ import java.util.List;
 public class ConsumerConfigHelper {
     private final RegistryConfigContainer registryConfigContainer;
     private final String                  appName;
+    private final SofaBootRpcProperties   sofaBootRpcProperties;
 
-    public ConsumerConfigHelper(RegistryConfigContainer registryConfigContainer, String appName) {
+    public ConsumerConfigHelper(SofaBootRpcProperties sofaBootRpcProperties,
+                                RegistryConfigContainer registryConfigContainer, String appName) {
+        this.sofaBootRpcProperties = sofaBootRpcProperties;
         this.registryConfigContainer = registryConfigContainer;
         this.appName = appName;
     }
@@ -77,6 +81,8 @@ public class ConsumerConfigHelper {
         List<Filter> filters = param.getFilters();
         List<MethodConfig> methodConfigs = convertToMethodConfig(param.getMethodInfos());
         String targetUrl = param.getTargetUrl();
+
+        String referenceLimit = sofaBootRpcProperties.getConsumerRepeatedReferenceLimit();
 
         ConsumerConfig consumerConfig = new ConsumerConfig();
         if (StringUtils.hasText(appName)) {
@@ -134,6 +140,9 @@ public class ConsumerConfigHelper {
             consumerConfig.setLazy(true);
             consumerConfig.setSubscribe(false);
             consumerConfig.setRegister(false);
+        }
+        if (StringUtils.hasText(referenceLimit)) {
+            consumerConfig.setRepeatedReferLimit(Integer.valueOf(referenceLimit));
         }
 
         String protocol = binding.getBindingType().getType();

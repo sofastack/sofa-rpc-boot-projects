@@ -36,7 +36,8 @@ public class ServerConfigContainerTest extends ActivelyDestroyTest {
 
     public ServerConfigContainerTest() {
         Environment environment = new MockEnvironment();
-        sofaBootRpcProperties = new SofaBootRpcProperties(environment);
+        sofaBootRpcProperties = new SofaBootRpcProperties();
+        sofaBootRpcProperties.setEnvironment(environment);
         serverConfigContainer = new ServerConfigContainer(sofaBootRpcProperties);
     }
 

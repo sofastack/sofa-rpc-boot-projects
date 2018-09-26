@@ -37,10 +37,10 @@ import com.alipay.sofa.rpc.boot.runtime.adapter.helper.ProviderConfigHelper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingClass;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.core.env.Environment;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -49,12 +49,8 @@ import java.util.Map;
  * @author <a href="mailto:lw111072@antfin.com">LiWei</a>
  */
 @Configuration
+@EnableConfigurationProperties(SofaBootRpcProperties.class)
 public class SofaBootRpcAutoConfiguration {
-    @Bean
-    public SofaBootRpcProperties sofaBootRpcProperties(Environment environment) {
-        return new SofaBootRpcProperties(environment);
-    }
-
     @Bean
     public ProviderConfigContainer providerConfigContainer() {
         return new ProviderConfigContainer();
@@ -77,10 +73,10 @@ public class SofaBootRpcAutoConfiguration {
     }
 
     @Bean
-    public ConsumerConfigHelper consumerConfigHelper(
+    public ConsumerConfigHelper consumerConfigHelper(SofaBootRpcProperties sofaBootRpcProperties,
                                                      @Lazy RegistryConfigContainer registryConfigContainer,
                                                      @Value("${" + SofaBootRpcConfigConstants.APP_NAME + "}") String appName) {
-        return new ConsumerConfigHelper(registryConfigContainer, appName);
+        return new ConsumerConfigHelper(sofaBootRpcProperties, registryConfigContainer, appName);
     }
 
     @Bean
