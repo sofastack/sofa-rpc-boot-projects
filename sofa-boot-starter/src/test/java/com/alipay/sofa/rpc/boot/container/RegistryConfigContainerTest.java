@@ -19,6 +19,7 @@ package com.alipay.sofa.rpc.boot.container;
 import com.alipay.sofa.rpc.boot.common.SofaBootRpcRuntimeException;
 import com.alipay.sofa.rpc.boot.config.LocalFileConfigurator;
 import com.alipay.sofa.rpc.boot.config.RegistryConfigureProcessor;
+import com.alipay.sofa.rpc.boot.config.SofaBootRpcConfigConstants;
 import com.alipay.sofa.rpc.boot.config.SofaBootRpcProperties;
 import com.alipay.sofa.rpc.boot.config.ZookeeperConfigurator;
 import com.alipay.sofa.rpc.config.RegistryConfig;
@@ -87,4 +88,12 @@ public class RegistryConfigContainerTest {
         Assert.assertEquals(registryConfig.getProtocol(), "zookeeper");
     }
 
+    @Test
+    public void testCustomRegistryConfig2() {
+        Map<String, String> registryAlias = new HashMap<String, String>();
+        registryAlias.put("zk1", "zookeeper://127.0.0.1:2181?file=/home/admin/zookeeper");
+        sofaBootRpcProperties.setRegistries(registryAlias);
+        RegistryConfig registryConfig = registryConfigContainer.getRegistryConfig();
+        Assert.assertEquals(registryConfig.getProtocol(), "zookeeper");
+    }
 }
