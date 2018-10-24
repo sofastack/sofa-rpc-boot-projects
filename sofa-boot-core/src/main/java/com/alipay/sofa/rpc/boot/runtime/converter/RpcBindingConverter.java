@@ -248,7 +248,7 @@ public abstract class RpcBindingConverter implements BindingConverter<RpcBinding
         }
 
         if (StringUtils.hasText(registryAlias)) {
-            String[] registrys = StringUtils.split(registryAlias, ",");
+            String[] registrys = registryAlias.split(",");
             param.setRegistrys(Arrays.asList(registrys));
         }
     }
@@ -405,6 +405,12 @@ public abstract class RpcBindingConverter implements BindingConverter<RpcBinding
             UserThreadPoolManager.registerUserThread(uniqueName,
                 threadPoolObj);
         }
+
+        String registryAlias = sofaServiceBindingAnnotation.registry();
+        if (StringUtils.hasText(registryAlias)) {
+            String[] registrys = registryAlias.split(",");
+            bindingParam.setRegistrys(Arrays.asList(registrys));
+        }
     }
 
     /**
@@ -470,5 +476,11 @@ public abstract class RpcBindingConverter implements BindingConverter<RpcBinding
             bindingParam.setCallbackHandler(applicationContext.getBean(callbackRef));
         }
         bindingParam.setLazy(sofaReferenceBindingAnnotation.lazy());
+
+        String registryAlias = sofaReferenceBindingAnnotation.registry();
+        if (StringUtils.hasText(registryAlias)) {
+            String[] registrys = registryAlias.split(",");
+            bindingParam.setRegistrys(Arrays.asList(registrys));
+        }
     }
 }
