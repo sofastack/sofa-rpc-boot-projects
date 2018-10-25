@@ -7,14 +7,14 @@
     <parent>
         <groupId>com.alipay.sofa</groupId>
         <artifactId>sofa-rpc-boot-projects</artifactId>
-        <version>5.4.7-SNAPSHOT</version>
+        <version>5.4.7</version>
     </parent>
 
     <properties>
         <dubbo_version>2.4.10</dubbo_version>
         <cxf.version>3.0.14</cxf.version>
         <sofaboot.version>2.4.9</sofaboot.version>
-        <rpc.starter.version>5.4.7-SNAPSHOT</rpc.starter.version>
+        <rpc.starter.version>5.4.7</rpc.starter.version>
     </properties>
 
     <artifactId>rpc-sofa-boot-samples</artifactId>
