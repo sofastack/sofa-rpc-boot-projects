@@ -35,7 +35,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootApplication
 @SpringBootTest(classes = RpcShutdownTest.class)
 @RunWith(SpringRunner.class)
-@ImportResource("classpath:spring/readiness.xml")
+@ImportResource("classpath:spring/shutdown.xml")
 public class RpcShutdownTest extends ActivelyDestroyTest implements ApplicationContextAware {
     private static ApplicationContext applicationContext;
 
