@@ -27,6 +27,20 @@
             <groupId>com.alipay.sofa</groupId>
             <artifactId>rpc-sofa-boot-core</artifactId>
             <version>${rpc.starter.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>hibernate-validator</artifactId>
+                    <groupId>org.hibernate</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>javax.el-api</artifactId>
+                    <groupId>javax.el</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>javax.el</artifactId>
+                    <groupId>org.glassfish.web</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
@@ -38,6 +52,16 @@
         <dependency>
             <groupId>com.alipay.sofa</groupId>
             <artifactId>infra-sofa-boot-starter</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.tomcat.embed</groupId>
+            <artifactId>tomcat-embed-el</artifactId>
         </dependency>
 
         <dependency>
