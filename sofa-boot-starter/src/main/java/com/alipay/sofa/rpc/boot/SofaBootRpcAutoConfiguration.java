@@ -16,7 +16,7 @@
  */
 package com.alipay.sofa.rpc.boot;
 
-import com.alipay.sofa.healthcheck.startup.SofaBootMiddlewareAfterReadinessCheckCallback;
+import com.alipay.sofa.healthcheck.startup.ReadinessCheckCallback;
 import com.alipay.sofa.rpc.boot.config.FaultToleranceConfigurator;
 import com.alipay.sofa.rpc.boot.config.LocalFileConfigurator;
 import com.alipay.sofa.rpc.boot.config.MeshConfigurator;
@@ -120,7 +120,7 @@ public class SofaBootRpcAutoConfiguration {
     }
 
     @Bean
-    @ConditionalOnMissingClass({ "com.alipay.sofa.healthcheck.startup.SofaBootMiddlewareAfterReadinessCheckCallback" })
+    @ConditionalOnMissingClass({ "com.alipay.sofa.healthcheck.startup.ReadinessCheckCallback" })
     public ApplicationContextRefreshedListener applicationContextRefreshedListener() {
         return new ApplicationContextRefreshedListener();
     }
@@ -137,7 +137,7 @@ public class SofaBootRpcAutoConfiguration {
     }
 
     @Configuration
-    @ConditionalOnClass({ SofaBootMiddlewareAfterReadinessCheckCallback.class })
+    @ConditionalOnClass({ ReadinessCheckCallback.class })
     public static class SofaModuleHealthCheckConfiguration {
         @Bean
         public RpcAfterHealthCheckCallback rpcAfterHealthCheckCallback() {

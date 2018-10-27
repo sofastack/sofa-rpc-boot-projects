@@ -16,10 +16,8 @@
  */
 package com.alipay.sofa.rpc.boot.config;
 
-import com.alipay.sofa.rpc.common.RpcOptions;
 import com.alipay.sofa.rpc.common.SofaOptions;
 import com.google.common.base.CaseFormat;
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.core.env.Environment;
