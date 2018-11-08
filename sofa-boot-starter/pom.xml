@@ -63,7 +63,7 @@
                 <directory>src/main/resources</directory>
             </resource>
             <resource>
-                <directory>${user.dir}/..</directory>
+                <directory>${user.dir}</directory>
                 <includes>
                     <include>LICENSE</include>
                 </includes>
