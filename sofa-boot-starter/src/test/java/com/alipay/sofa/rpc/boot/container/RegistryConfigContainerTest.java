@@ -55,7 +55,7 @@ public class RegistryConfigContainerTest {
 
     @Test
     public void testGetLocalRegistryConfig() {
-        RegistryConfig registryConfigLocal = localFileConfigurator.buildFromAddress("local:/home/admin/local");
+        RegistryConfig registryConfigLocal = localFileConfigurator.buildFromAddress("local:///home/admin/local");
         Assert.assertEquals("local", registryConfigLocal.getProtocol());
         Assert.assertEquals("/home/admin/local", registryConfigLocal.getFile());
     }

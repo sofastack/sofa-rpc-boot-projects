@@ -19,23 +19,13 @@ package com.alipay.sofa.rpc.boot.config;
 import org.junit.Assert;
 import org.junit.Test;
 
-/**
- * @author liangen
- * @version $Id: LocalFileConfigTest.java, v 0.1 2018年04月17日 下午2:51 liangen Exp $
- */
-public class LocalFileConfigTest {
+public class LocalFileConfiguratorTest {
 
     @Test
-    public void test() {
+    public void parseConfig() {
+
         LocalFileConfigurator localFileConfigurator = new LocalFileConfigurator();
-        String configA = "local";
-
-        String file = localFileConfigurator.parseConfig(configA);
-        Assert.assertNull(file);
-
-        String config = "local:///home/admin/registry";
-
-        file = localFileConfigurator.parseConfig(config);
-        Assert.assertEquals("/home/admin/registry", file);
+        String result = localFileConfigurator.parseConfig("local://xxx");
+        Assert.assertEquals("xxx", result);
     }
 }

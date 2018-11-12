@@ -28,7 +28,7 @@ import com.alipay.sofa.rpc.config.RegistryConfig;
  */
 public class LocalFileConfigurator implements RegistryConfigureProcessor {
 
-    private static String COLON = ":";
+    private static String COLON = "://";
 
     public LocalFileConfigurator() {
     }

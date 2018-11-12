@@ -112,7 +112,7 @@ public class RegistryConfigContainer {
         if (StringUtils.isBlank(registryAddress)) {
             registryProtocol = SofaBootRpcConfigConstants.REGISTRY_PROTOCOL_LOCAL;
         } else {
-            final int endIndex = registryAddress.indexOf(":");
+            final int endIndex = registryAddress.indexOf("://");
             if (endIndex != -1) {
                 registryProtocol = registryAddress.substring(0, endIndex);
             } else {
