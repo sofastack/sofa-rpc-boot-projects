@@ -2,15 +2,18 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:sofa="http://sofastack.io/schema/sofaboot"
+       xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-            http://sofastack.io/schema/sofaboot   http://sofastack.io/schema/sofaboot.xsd">
+            http://sofastack.io/schema/sofaboot http://sofastack.io/schema/sofaboot.xsd
+            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
     <!-- invoke sync-->
     <bean id="helloSyncServiceImpl" class="com.alipay.sofa.rpc.boot.invoke.HelloSyncServiceImpl"/>
     <sofa:service ref="helloSyncServiceImpl" interface="com.alipay.sofa.rpc.boot.invoke.HelloSyncService">
         <sofa:binding.bolt/>
     </sofa:service>
-    <sofa:reference jvm-first="false" id="helloSyncService" interface="com.alipay.sofa.rpc.boot.invoke.HelloSyncService">
+    <sofa:reference jvm-first="false" id="helloSyncService"
+                    interface="com.alipay.sofa.rpc.boot.invoke.HelloSyncService">
         <sofa:binding.bolt/>
     </sofa:reference>
 
@@ -19,7 +22,8 @@
     <sofa:service ref="helloFutureServiceImpl" interface="com.alipay.sofa.rpc.boot.invoke.HelloFutureService">
         <sofa:binding.bolt/>
     </sofa:service>
-    <sofa:reference jvm-first="false" id="helloFutureService" interface="com.alipay.sofa.rpc.boot.invoke.HelloFutureService">
+    <sofa:reference jvm-first="false" id="helloFutureService"
+                    interface="com.alipay.sofa.rpc.boot.invoke.HelloFutureService">
         <sofa:binding.bolt>
             <sofa:global-attrs type="future"/>
         </sofa:binding.bolt>
@@ -50,15 +54,16 @@
         <sofa:binding.bolt/>
     </sofa:reference>
 
-     <!--Global Filter Test-->
+    <!--Global Filter Test-->
     <sofa:rpc-global-filter ref="testGlobalFilter"/>
     <bean id="testGlobalFilter" class="com.alipay.sofa.rpc.boot.globalfilter.TestGlobalFilter"/>
 
-    <bean id="globalFilterServiceImpl" class="com.alipay.sofa.rpc.boot.globalfilter.GlobalFilterServiceImpl" />
+    <bean id="globalFilterServiceImpl" class="com.alipay.sofa.rpc.boot.globalfilter.GlobalFilterServiceImpl"/>
     <sofa:service ref="globalFilterServiceImpl" interface="com.alipay.sofa.rpc.boot.globalfilter.GlobalFilterService">
         <sofa:binding.bolt/>
     </sofa:service>
-    <sofa:reference jvm-first="false" id="globalFilterService" interface="com.alipay.sofa.rpc.boot.globalfilter.GlobalFilterService">
+    <sofa:reference jvm-first="false" id="globalFilterService"
+                    interface="com.alipay.sofa.rpc.boot.globalfilter.GlobalFilterService">
         <sofa:binding.bolt/>
     </sofa:reference>
 
@@ -131,13 +136,14 @@
             <sofa:global-attrs retries="2"/>
         </sofa:binding.bolt>
     </sofa:reference>
-    <sofa:reference jvm-first="false" id="retriesServiceDubbo" interface="com.alipay.sofa.rpc.boot.retry.RetriesService">
+    <sofa:reference jvm-first="false" id="retriesServiceDubbo"
+                    interface="com.alipay.sofa.rpc.boot.retry.RetriesService">
         <sofa:binding.dubbo>
             <sofa:global-attrs retries="2"/>
         </sofa:binding.dubbo>
     </sofa:reference>
 
-     <!-- lazy -->
+    <!-- lazy -->
     <bean id="lazyServiceImpl" class="com.alipay.sofa.rpc.boot.lazy.LazyServiceImpl"/>
     <sofa:service ref="lazyServiceImpl" interface="com.alipay.sofa.rpc.boot.lazy.LazyService">
         <sofa:binding.bolt/>
@@ -155,4 +161,7 @@
             <sofa:global-attrs lazy="true"/>
         </sofa:binding.dubbo>
     </sofa:reference>
+
+    <!-- Annotation TestCase -->
+    <context:component-scan base-package="com.alipay.sofa.rpc.boot.annotation"/>
 </beans>

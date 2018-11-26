@@ -5,12 +5,12 @@
     <parent>
         <groupId>com.alipay.sofa</groupId>
         <artifactId>sofaboot-dependencies</artifactId>
-        <version>2.5.1</version>
+        <version>3.1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>rpc-sofa-boot-starter</artifactId>
-    <version>5.4.7</version>
+    <version>6.0.1-SNAPSHOT</version>
 
     <url>https://github.com/alipay/sofa-rpc</url>
 
@@ -18,7 +18,7 @@
         <java.version>1.6</java.version>
         <project.build.encoding>UTF-8</project.build.encoding>
         <skipTests>false</skipTests>
-        <rpc.starter.version>5.4.7</rpc.starter.version>
+        <rpc.starter.version>6.0.1-SNAPSHOT</rpc.starter.version>
     </properties>
 
     <dependencies>
@@ -27,6 +27,20 @@
             <groupId>com.alipay.sofa</groupId>
             <artifactId>rpc-sofa-boot-core</artifactId>
             <version>${rpc.starter.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>hibernate-validator</artifactId>
+                    <groupId>org.hibernate</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>javax.el-api</artifactId>
+                    <groupId>javax.el</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>javax.el</artifactId>
+                    <groupId>org.glassfish.web</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
@@ -38,6 +52,16 @@
         <dependency>
             <groupId>com.alipay.sofa</groupId>
             <artifactId>infra-sofa-boot-starter</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.tomcat.embed</groupId>
+            <artifactId>tomcat-embed-el</artifactId>
         </dependency>
 
         <dependency>

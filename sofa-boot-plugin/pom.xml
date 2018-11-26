@@ -5,12 +5,12 @@
     <parent>
         <groupId>com.alipay.sofa</groupId>
         <artifactId>sofaboot-dependencies</artifactId>
-        <version>2.5.1</version>
+        <version>3.1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>rpc-sofa-boot-plugin</artifactId>
-    <version>5.4.7</version>
+    <version>6.0.1-SNAPSHOT</version>
 
     <properties>
         <ark.plugin.name>rpc-sofa-boot-plugin</ark.plugin.name>
@@ -144,7 +144,7 @@
                         <configuration>
                             <priority>2000</priority>
                             <pluginName>${ark.plugin.name}</pluginName>
-                            <classifier> </classifier>
+                            <classifier></classifier>
 
                             <exported>
                                 <packages>

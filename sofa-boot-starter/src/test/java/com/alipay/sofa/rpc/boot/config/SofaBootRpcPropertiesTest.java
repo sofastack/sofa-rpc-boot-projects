@@ -17,19 +17,18 @@
 package com.alipay.sofa.rpc.boot.config;
 
 import com.alipay.sofa.rpc.boot.container.ConsumerConfigContainer;
-import com.alipay.sofa.rpc.common.RpcOptions;
 import com.alipay.sofa.rpc.config.ConsumerConfig;
 import com.alipay.sofa.rpc.test.bean.SampleFacade;
 import com.alipay.sofa.runtime.api.annotation.SofaReference;
 import com.alipay.sofa.runtime.api.annotation.SofaReferenceBinding;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.lang.reflect.Field;
@@ -85,6 +84,7 @@ public class SofaBootRpcPropertiesTest {
     }
 
     @Test
+    @Ignore("do not support in spring boot 2.0")
     public void testUnderscoreConfig() {
         Assert.assertEquals("600", sofaBootRpcProperties.getBoltThreadPoolMaxSize());
     }

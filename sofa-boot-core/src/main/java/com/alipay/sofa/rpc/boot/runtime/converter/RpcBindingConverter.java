@@ -371,6 +371,9 @@ public abstract class RpcBindingConverter implements BindingConverter<RpcBinding
         if (sofaServiceBindingAnnotation.warmUpWeight() != 0) {
             bindingParam.setWarmUpWeight(sofaServiceBindingAnnotation.warmUpWeight());
         }
+        if (StringUtils.hasText(sofaServiceBindingAnnotation.serializeType())) {
+            bindingParam.setSerialization(sofaServiceBindingAnnotation.serializeType());
+        }
 
         ApplicationContext applicationContext = bindingConverterContext.getApplicationContext();
         List<Filter> filters = new ArrayList<Filter>(RpcFilterContainer.getInstance().getFilters(
@@ -445,6 +448,12 @@ public abstract class RpcBindingConverter implements BindingConverter<RpcBinding
         }
         if (sofaReferenceBindingAnnotation.timeout() != 0) {
             bindingParam.setTimeout(sofaReferenceBindingAnnotation.timeout());
+        }
+        if (StringUtils.hasText(sofaReferenceBindingAnnotation.serializeType())) {
+            bindingParam.setSerialization(sofaReferenceBindingAnnotation.serializeType());
+        }
+        if (StringUtils.hasText(sofaReferenceBindingAnnotation.loadBalancer())) {
+            bindingParam.setLoadBalancer(sofaReferenceBindingAnnotation.loadBalancer());
         }
         bindingParam.setType(sofaReferenceBindingAnnotation.invokeType());
 
