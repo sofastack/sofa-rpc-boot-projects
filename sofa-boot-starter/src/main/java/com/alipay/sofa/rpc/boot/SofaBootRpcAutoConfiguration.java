@@ -17,6 +17,7 @@
 package com.alipay.sofa.rpc.boot;
 
 import com.alipay.sofa.healthcheck.startup.SofaBootMiddlewareAfterReadinessCheckCallback;
+import com.alipay.sofa.rpc.boot.config.ConsulConfigurator;
 import com.alipay.sofa.rpc.boot.config.FaultToleranceConfigurator;
 import com.alipay.sofa.rpc.boot.config.LocalFileConfigurator;
 import com.alipay.sofa.rpc.boot.config.MeshConfigurator;
@@ -90,6 +91,11 @@ public class SofaBootRpcAutoConfiguration {
     }
 
     @Bean
+    public ConsulConfigurator consulConfigurator() {
+        return new ConsulConfigurator();
+    }
+
+    @Bean
     public LocalFileConfigurator localFileConfigurator() {
         return new LocalFileConfigurator();
     }
@@ -105,6 +111,8 @@ public class SofaBootRpcAutoConfiguration {
         map.put(SofaBootRpcConfigConstants.REGISTRY_PROTOCOL_LOCAL, localFileConfigurator());
         map.put(SofaBootRpcConfigConstants.REGISTRY_PROTOCOL_ZOOKEEPER, zookeeperConfigurator());
         map.put(SofaBootRpcConfigConstants.REGISTRY_PROTOCOL_MESH, meshConfigurator());
+        map.put(SofaBootRpcConfigConstants.REGISTRY_PROTOCOL_CONSUL, consulConfigurator());
+
         return map;
     }
 

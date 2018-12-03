@@ -60,6 +60,9 @@ public class SofaBootRpcConfigConstants {
     public static final String  REGISTRY_PROTOCOL_ZOOKEEPER        = "zookeeper";
     public static final String  REGISTRY_PROTOCOL_MESH             = "mesh";
 
+    //@since 5.5.0
+    public static final String  REGISTRY_PROTOCOL_CONSUL           = "consul";
+
     /* server */
     public static final String  RPC_PROTOCOL_BOLT                  = "bolt";
     public static final String  RPC_PROTOCOL_REST                  = "rest";
