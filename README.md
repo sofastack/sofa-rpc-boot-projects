@@ -25,7 +25,8 @@
 * 支持多种注册中心的选择
 
 ## 构建
-编译需要 JDK 7 及以上、Maven 3.2.5 及以上。
+
+编译需要 JDK 8 及以上、Maven 3.2.5 及以上。
 
 ## 文档
 * [快速开始](http://www.sofastack.tech/sofa-rpc/docs/Getting-Started-With-SOFA-Boot)
