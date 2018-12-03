@@ -95,11 +95,6 @@ public class SofaBootRpcAutoConfiguration {
     }
 
     @Bean
-    public ConsulConfigurator consulConfigurator() {
-        return new ConsulConfigurator();
-    }
-
-    @Bean
     public LocalFileConfigurator localFileConfigurator() {
         return new LocalFileConfigurator();
     }
