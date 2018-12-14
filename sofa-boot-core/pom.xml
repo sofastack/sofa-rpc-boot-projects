@@ -10,7 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>rpc-sofa-boot-core</artifactId>
-    <version>5.4.7</version>
+    <version>5.4.8</version>
 
     <url>https://github.com/alipay/sofa-rpc</url>
 
@@ -23,7 +23,7 @@
         <dubbo_version>2.4.10</dubbo_version>
         <cxf.version>3.0.14</cxf.version>
         <skipTests>false</skipTests>
-        <rpc.all.version>5.4.7</rpc.all.version>
+        <rpc.all.version>5.4.8</rpc.all.version>
     </properties>
 
     <dependencies>
@@ -220,7 +220,7 @@
                 <directory>src/main/resources</directory>
             </resource>
             <resource>
-                <directory>${user.dir}/..</directory>
+                <directory>${user.dir}/</directory>
                 <includes>
                     <include>LICENSE</include>
                 </includes>
