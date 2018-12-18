@@ -44,14 +44,12 @@ public class SofaBootRpcConfigConstants {
 
     /* registry default configuration */
     public static final String  REGISTRY_FILE_PATH_DEFAULT         = System.getProperty("user.home")
-                                                                       +
-                                                                       System
-                                                                           .getProperty("file.separator") +
-                                                                       "localFileRegistry"
-                                                                       +
-                                                                       System
-                                                                           .getProperty("file.separator") +
-                                                                       "localRegistry.reg";
+                                                                       + System.getProperty(
+                                                                           "file.separator")
+                                                                       + "localFileRegistry"
+                                                                       + System.getProperty(
+                                                                           "file.separator")
+                                                                       + "localRegistry.reg";
 
     /* possible config value start ********************************************************/
 
@@ -62,6 +60,8 @@ public class SofaBootRpcConfigConstants {
 
     //@since 5.5.0
     public static final String  REGISTRY_PROTOCOL_CONSUL           = "consul";
+
+    public static final String  REGISTRY_PROTOCOL_NACOS            = "nacos";
 
     /* server */
     public static final String  RPC_PROTOCOL_BOLT                  = "bolt";

@@ -16,31 +16,33 @@
  */
 package com.alipay.sofa.rpc.boot.config;
 
+import java.util.Map;
+
 import com.alipay.sofa.rpc.boot.common.RegistryParseUtil;
 import com.alipay.sofa.rpc.config.RegistryConfig;
 
 /**
- * mesh注册中心配置
- * 配置格式：com.alipay.sofa.rpc.registries.mesh=mesh://127.0.0.1:12220
- *
- * @author liangen
- * @version $Id: LocalFileConfigurator.java, v 0.1 2018年04月17日 下午2:44 liangen Exp $
+ * Nacos 配置
+ * <p>
+ *     配置格式: com.alipay.sofa.rpc.registry.address=nacos://xxx:8848?k1=v1
+ * </p>
+ * 
+ * @author jervyshi
+ * @version $Id: NacosConfigurator.java, v 0.1 2018-12-03 15:43 jervyshi Exp $$
  */
-public class MeshConfigurator implements RegistryConfigureProcessor {
+public class NacosConfigurator implements RegistryConfigureProcessor {
 
-    public static final String HTTP = "http://";
-
-    public MeshConfigurator() {
+    public NacosConfigurator() {
     }
 
     @Override
     public RegistryConfig buildFromAddress(String address) {
-        String meshAddress = RegistryParseUtil.parseAddress(address,
-            SofaBootRpcConfigConstants.REGISTRY_PROTOCOL_MESH);
+        String nacosAddress = RegistryParseUtil.parseAddress(address,
+            SofaBootRpcConfigConstants.REGISTRY_PROTOCOL_NACOS);
+        Map<String, String> map = RegistryParseUtil.parseParam(address,
+            SofaBootRpcConfigConstants.REGISTRY_PROTOCOL_NACOS);
 
-        meshAddress = HTTP + meshAddress;
-        return new RegistryConfig().setAddress(meshAddress)
-            .setProtocol(SofaBootRpcConfigConstants.REGISTRY_PROTOCOL_MESH);
+        return new RegistryConfig().setAddress(nacosAddress).setParameters(map)
+            .setProtocol(SofaBootRpcConfigConstants.REGISTRY_PROTOCOL_NACOS);
     }
-
 }

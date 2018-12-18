@@ -16,26 +16,26 @@
  */
 package com.alipay.sofa.rpc.boot.config;
 
-import org.junit.Assert;
+import static org.junit.Assert.*;
+
 import org.junit.Test;
 
-import java.util.Map;
+import com.alipay.sofa.rpc.config.RegistryConfig;
 
 /**
- * @author <a href="mailto:lw111072@antfin.com">LiWei</a>
+ *
+ * @author zhuoyu.sjw
+ * @version $Id: MeshConfiguratorTest.java, v 0.1 2018-12-03 17:39 zhuoyu.sjw Exp $$
  */
-public class ZookeeperConfiguratorTest {
+public class MeshConfiguratorTest {
 
     @Test
-    public void test() {
-        ZookeeperConfigurator zookeeperConfigurator = new ZookeeperConfigurator();
-        String config = "zookeeper://127.0.0.1:2181?aaa=111&rrr=666&file=/host/zk";
-        String address = zookeeperConfigurator.parseAddress(config);
+    public void buildFromAddress() {
+        String address = "mesh://127.0.0.1:12220";
 
-        Map<String, String> map = zookeeperConfigurator.parseParam(config);
-        Assert.assertEquals("111", map.get("aaa"));
-        Assert.assertEquals("666", map.get("rrr"));
-        Assert.assertEquals("127.0.0.1:2181", address);
-        Assert.assertEquals("/host/zk", map.get("file"));
+        MeshConfigurator meshConfigurator = new MeshConfigurator();
+        RegistryConfig registryConfig = meshConfigurator.buildFromAddress(address);
+        assertEquals("mesh", registryConfig.getProtocol());
+        assertEquals("http://127.0.0.1:12220", registryConfig.getAddress());
     }
 }
