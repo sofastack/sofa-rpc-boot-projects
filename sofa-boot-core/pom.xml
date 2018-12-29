@@ -34,6 +34,7 @@
         <jacoco-maven-plugin.version>0.7.9</jacoco-maven-plugin.version>
         <javax.el-api.version>2.2.5</javax.el-api.version>
         <javax.el.version>2.2.6</javax.el.version>
+        <nacos.version>0.6.0</nacos.version>
     </properties>
 
     <dependencies>
@@ -183,6 +184,18 @@
             <artifactId>cxf-core</artifactId>
             <version>${cxf.version}</version>
             <scope>provided</scope>
+        </dependency>
+
+        <!--nacos-->
+        <dependency>
+            <groupId>com.alibaba.nacos</groupId>
+            <artifactId>nacos-api</artifactId>
+            <version>${nacos.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba.nacos</groupId>
+            <artifactId>nacos-client</artifactId>
+            <version>${nacos.version}</version>
         </dependency>
 
         <dependency>
