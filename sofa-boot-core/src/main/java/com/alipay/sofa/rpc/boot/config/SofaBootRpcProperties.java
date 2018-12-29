@@ -16,10 +16,8 @@
  */
 package com.alipay.sofa.rpc.boot.config;
 
-import com.alipay.sofa.rpc.common.RpcOptions;
 import com.alipay.sofa.rpc.common.SofaOptions;
 import com.google.common.base.CaseFormat;
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.core.env.Environment;
@@ -117,6 +115,8 @@ public class SofaBootRpcProperties {
     private String              enableMesh;
 
     private String              consumerRepeatedReferenceLimit;
+
+    private String              hystrixEnable;
 
     public String getAftRegulationEffective() {
         return StringUtils.isEmpty(aftRegulationEffective) ? getDotString(new Object() {
@@ -542,6 +542,15 @@ public class SofaBootRpcProperties {
 
     public void setConsumerRepeatedReferenceLimit(String consumerRepeatedReferenceLimit) {
         this.consumerRepeatedReferenceLimit = consumerRepeatedReferenceLimit;
+    }
+
+    public String getHystrixEnable() {
+        return StringUtils.isEmpty(hystrixEnable) ? getDotString(new Object() {
+        }.getClass().getEnclosingMethod().getName()) : hystrixEnable;
+    }
+
+    public void setHystrixEnable(String hystrixEnable) {
+        this.hystrixEnable = hystrixEnable;
     }
 
     private String getDotString(String enclosingMethodName) {

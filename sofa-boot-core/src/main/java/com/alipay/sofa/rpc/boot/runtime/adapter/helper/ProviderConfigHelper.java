@@ -131,8 +131,8 @@ public class ProviderConfigHelper {
             providerConfig.setSerialization(serialization);
         }
 
-        if (param.getParamters() != null) {
-            providerConfig.setParameters(param.getParamters());
+        if (param.getParameters() != null) {
+            providerConfig.setParameters(param.getParameters());
         }
 
         if (param.getRegistrys() != null && param.getRegistrys().size() > 0) {

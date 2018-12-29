@@ -75,9 +75,9 @@ public abstract class RpcBindingParam implements BindingParam {
 
     protected String                     serialization;
 
-    protected Map<String, String>        paramters = new ConcurrentHashMap<String, String>();
+    protected Map<String, String>        parameters = new ConcurrentHashMap<String, String>();
 
-    protected List<String>               registrys = new ArrayList<String>();
+    protected List<String>               registrys  = new ArrayList<String>();
 
     /**
      * Getter method for property <tt>timeout</tt>.
@@ -429,12 +429,12 @@ public abstract class RpcBindingParam implements BindingParam {
         this.serialization = serialization;
     }
 
-    public Map<String, String> getParamters() {
-        return paramters;
+    public Map<String, String> getParameters() {
+        return parameters;
     }
 
-    public void setParamters(Map<String, String> paramters) {
-        this.paramters = paramters;
+    public void setParameters(Map<String, String> parameters) {
+        this.parameters = parameters;
     }
 
     public List<String> getRegistrys() {
@@ -494,7 +494,7 @@ public abstract class RpcBindingParam implements BindingParam {
             return false;
         if (serialization != null ? !serialization.equals(that.serialization) : that.serialization != null)
             return false;
-        if (paramters != null ? !paramters.equals(that.paramters) : that.paramters != null)
+        if (parameters != null ? !parameters.equals(that.parameters) : that.parameters != null)
             return false;
         return registrys != null ? registrys.equals(that.registrys) : that.registrys == null;
     }
@@ -521,7 +521,7 @@ public abstract class RpcBindingParam implements BindingParam {
         result = 31 * result + (methodInfos != null ? methodInfos.hashCode() : 0);
         result = 31 * result + (targetUrl != null ? targetUrl.hashCode() : 0);
         result = 31 * result + (serialization != null ? serialization.hashCode() : 0);
-        result = 31 * result + (paramters != null ? paramters.hashCode() : 0);
+        result = 31 * result + (parameters != null ? parameters.hashCode() : 0);
         result = 31 * result + (registrys != null ? registrys.hashCode() : 0);
         return result;
     }
