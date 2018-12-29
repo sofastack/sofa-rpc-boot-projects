@@ -19,6 +19,13 @@
         <project.build.encoding>UTF-8</project.build.encoding>
         <skipTests>false</skipTests>
         <rpc.starter.version>6.0.1</rpc.starter.version>
+        <maven-compiler-plugin.version>3.3</maven-compiler-plugin.version>
+        <maven-source-plugin.version>3.0.1</maven-source-plugin.version>
+        <license-maven-plugin.version>3.0</license-maven-plugin.version>
+        <maven-java-formatter-plugin.version>0.4</maven-java-formatter-plugin.version>
+        <maven-surefire-plugin.version>2.16</maven-surefire-plugin.version>
+        <sofa-version-maven-plugin.version>1.0.1</sofa-version-maven-plugin.version>
+        <jacoco-maven-plugin.version>0.7.9</jacoco-maven-plugin.version>
     </properties>
 
     <dependencies>
@@ -110,7 +117,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.3</version>
+                <version>${maven-compiler-plugin.version}</version>
                 <configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
@@ -121,7 +128,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
-                <version>3.0.1</version>
+                <version>${maven-source-plugin.version}</version>
                 <executions>
                     <execution>
                         <id>attach-sources</id>
@@ -136,7 +143,7 @@
             <plugin>
                 <groupId>com.mycila</groupId>
                 <artifactId>license-maven-plugin</artifactId>
-                <version>3.0</version>
+                <version>${license-maven-plugin.version}</version>
                 <executions>
                     <!-- https://github.com/mycila/license-maven-plugin#maven-license-plugin -->
                     <execution>
@@ -163,7 +170,7 @@
             <plugin>
                 <groupId>com.googlecode.maven-java-formatter-plugin</groupId>
                 <artifactId>maven-java-formatter-plugin</artifactId>
-                <version>0.4</version>
+                <version>${maven-java-formatter-plugin.version}</version>
                 <executions>
                     <execution>
                         <goals>
@@ -179,7 +186,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.16</version>
+                <version>${maven-surefire-plugin.version}</version>
                 <configuration>
                     <skipTests>${skipTests}</skipTests>
                     <includes>
@@ -193,7 +200,7 @@
             <plugin>
                 <groupId>com.alipay.sofa</groupId>
                 <artifactId>sofa-version-maven-plugin</artifactId>
-                <version>1.0.1</version>
+                <version>${sofa-version-maven-plugin.version}</version>
                 <configuration>
                     <dotGitDirectory>../.git</dotGitDirectory>
                     <defaultPropertiesFileEntries>
@@ -213,7 +220,7 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.7.9</version>
+                <version>${jacoco-maven-plugin.version}</version>
                 <configuration>
                     <skip>false</skip>
                 </configuration>

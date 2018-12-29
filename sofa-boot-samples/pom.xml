@@ -15,6 +15,10 @@
         <cxf.version>3.0.14</cxf.version>
         <sofaboot.version>3.1.2</sofaboot.version>
         <rpc.starter.version>6.0.1</rpc.starter.version>
+        <curator-test.version>2.9.1</curator-test.version>
+        <junit.version>4.12</junit.version>
+        <spring-boot-starter-test.version>1.4.2.RELEASE</spring-boot-starter-test.version>
+        <zkclient.version>0.10</zkclient.version>
     </properties>
 
     <artifactId>rpc-sofa-boot-samples</artifactId>
@@ -38,18 +42,18 @@
         <dependency>
             <groupId>org.apache.curator</groupId>
             <artifactId>curator-test</artifactId>
-            <version>2.9.1</version>
+            <version>${curator-test.version}</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.12</version>
+            <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
-            <version>1.4.2.RELEASE</version>
+            <version>${spring-boot-starter-test.version}</version>
             <scope>test</scope>
         </dependency>
 
@@ -70,7 +74,7 @@
                     <artifactId>zookeeper</artifactId>
                 </exclusion>
             </exclusions>
-            <version>0.10</version>
+            <version>${zkclient.version}</version>
         </dependency>
 
     </dependencies>
@@ -98,7 +102,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.16</version>
+                <version>${maven-surefire-plugin.version}</version>
                 <configuration>
                     <skipTests>${skipTests}</skipTests>
                     <includes>
