@@ -14,17 +14,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.alipay.sofa.rpc.boot.annotation;
 
-import com.alipay.sofa.runtime.api.annotation.SofaService;
-import com.alipay.sofa.runtime.api.annotation.SofaServiceBinding;
-import org.springframework.stereotype.Component;
+package com.alipay.sofa.rpc.boot.swagger;
 
-@Component
-@SofaService(bindings = { @SofaServiceBinding(bindingType = "bolt", serializeType = "protobuf") }, uniqueId = "pb")
-public class AnnotationServicePbImpl implements AnnotationService {
-    @Override
-    public String hello() {
-        return null;
-    }
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+
+/**
+ * A swagger service to provide the swagger open API.
+ *
+ * @author khotyn
+ */
+@Path("swagger")
+public interface SwaggerService {
+    @GET
+    @Path("openapi")
+    @Produces("application/json")
+    String openapi();
 }

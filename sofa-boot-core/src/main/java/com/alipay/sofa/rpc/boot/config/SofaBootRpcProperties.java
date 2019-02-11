@@ -75,6 +75,7 @@ public class SofaBootRpcProperties {
     private String              restMaxRequestSize;
     private String              restTelnet;
     private String              restDaemon;
+    private boolean             restSwagger;
     /* rest end */
 
     /* dubbo  start*/
@@ -570,5 +571,13 @@ public class SofaBootRpcProperties {
 
     public void setEnvironment(Environment environment) {
         this.environment = environment;
+    }
+
+    public boolean isRestSwagger() {
+        return restSwagger;
+    }
+
+    public void setRestSwagger(boolean restSwagger) {
+        this.restSwagger = restSwagger;
     }
 }

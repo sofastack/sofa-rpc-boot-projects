@@ -31,15 +31,28 @@ import com.alipay.sofa.rpc.boot.invoke.HelloCallbackService;
 import com.alipay.sofa.rpc.boot.invoke.HelloFutureService;
 import com.alipay.sofa.rpc.boot.invoke.HelloSyncService;
 import com.alipay.sofa.rpc.boot.lazy.LazyService;
+import com.alipay.sofa.rpc.boot.rest.AddService;
 import com.alipay.sofa.rpc.boot.rest.RestService;
 import com.alipay.sofa.rpc.boot.retry.RetriesService;
 import com.alipay.sofa.rpc.boot.retry.RetriesServiceImpl;
+import com.alipay.sofa.rpc.boot.runtime.param.RestBindingParam;
 import com.alipay.sofa.rpc.boot.threadpool.ThreadPoolService;
 import com.alipay.sofa.rpc.config.ConsumerConfig;
 import com.alipay.sofa.rpc.core.exception.SofaRpcException;
+import com.alipay.sofa.runtime.api.annotation.SofaClientFactory;
 import com.alipay.sofa.runtime.api.annotation.SofaReference;
 import com.alipay.sofa.runtime.api.annotation.SofaReferenceBinding;
+import com.alipay.sofa.runtime.api.client.ClientFactory;
+import com.alipay.sofa.runtime.api.client.ServiceClient;
+import com.alipay.sofa.runtime.api.client.param.BindingParam;
+import com.alipay.sofa.runtime.api.client.param.ServiceParam;
 import com.alipay.sofa.runtime.spi.binding.Binding;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.util.EntityUtils;
 import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
@@ -51,11 +64,14 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.ImportResource;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.io.IOException;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ConcurrentMap;
 
 @SpringBootApplication
-@SpringBootTest
+@SpringBootTest(properties = "com.alipay.sofa.rpc.rest-swagger=true")
 @RunWith(SpringRunner.class)
 @ImportResource("classpath*:spring/test_all.xml")
 public class SofaBootRpcAllTest {
@@ -109,11 +125,14 @@ public class SofaBootRpcAllTest {
     private AnnotationService    annotationService;
 
     @SofaReference(binding = @SofaReferenceBinding(bindingType = "bolt", serializeType = "protobuf"),
-            jvmFirst = false)
+            jvmFirst = false, uniqueId = "pb")
     private AnnotationService    annotationServicePb;
 
     @SofaReference(binding = @SofaReferenceBinding(bindingType = "bolt", loadBalancer = "roundRobin"), uniqueId = "loadbalancer")
     private AnnotationService    annotationLoadBalancerService;
+
+    @SofaClientFactory
+    private ClientFactory        clientFactory;
 
     @Test
     public void testInvoke() throws InterruptedException {
@@ -223,5 +242,34 @@ public class SofaBootRpcAllTest {
         }
 
         Assert.assertTrue("Found roundrobin reference", found);
+    }
+
+    @Test
+    public void testRestSwagger() throws IOException {
+        HttpClient httpClient = HttpClientBuilder.create().build();
+        HttpUriRequest request = new HttpGet("http://localhost:8341/swagger/openapi");
+        HttpResponse response = httpClient.execute(request);
+        Assert.assertEquals(200, response.getStatusLine().getStatusCode());
+        Assert.assertTrue(EntityUtils.toString(response.getEntity()).contains("/webapi/restService"));
+    }
+
+    @Test
+    public void testRestSwaggerAddService() throws IOException {
+        List<BindingParam> bindingParams = new ArrayList<>();
+        bindingParams.add(new RestBindingParam());
+
+        ServiceParam serviceParam = new ServiceParam();
+        serviceParam.setInterfaceType(AddService.class);
+        serviceParam.setInstance((AddService) () -> "Hello");
+        serviceParam.setBindingParams(bindingParams);
+
+        ServiceClient serviceClient = clientFactory.getClient(ServiceClient.class);
+        serviceClient.service(serviceParam);
+
+        HttpClient httpClient = HttpClientBuilder.create().build();
+        HttpUriRequest request = new HttpGet("http://localhost:8341/swagger/openapi");
+        HttpResponse response = httpClient.execute(request);
+        Assert.assertEquals(200, response.getStatusLine().getStatusCode());
+        Assert.assertTrue(EntityUtils.toString(response.getEntity()).contains("/webapi/add_service"));
     }
 }

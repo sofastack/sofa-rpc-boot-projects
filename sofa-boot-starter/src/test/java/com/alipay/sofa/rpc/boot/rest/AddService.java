@@ -14,17 +14,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.alipay.sofa.rpc.boot.annotation;
 
-import com.alipay.sofa.runtime.api.annotation.SofaService;
-import com.alipay.sofa.runtime.api.annotation.SofaServiceBinding;
-import org.springframework.stereotype.Component;
+package com.alipay.sofa.rpc.boot.rest;
 
-@Component
-@SofaService(bindings = { @SofaServiceBinding(bindingType = "bolt", serializeType = "protobuf") }, uniqueId = "pb")
-public class AnnotationServicePbImpl implements AnnotationService {
-    @Override
-    public String hello() {
-        return null;
-    }
+import javax.ws.rs.*;
+
+@Path("/webapi")
+@Consumes("application/json;charset=UTF-8")
+@Produces("application/json;charset=UTF-8")
+public interface AddService {
+
+    @GET
+    @Path("/add_service")
+    String sayRest();
 }

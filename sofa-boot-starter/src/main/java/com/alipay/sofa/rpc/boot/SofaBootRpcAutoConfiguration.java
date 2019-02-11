@@ -34,10 +34,13 @@ import com.alipay.sofa.rpc.boot.context.SofaBootRpcStartListener;
 import com.alipay.sofa.rpc.boot.health.RpcAfterHealthCheckCallback;
 import com.alipay.sofa.rpc.boot.runtime.adapter.helper.ConsumerConfigHelper;
 import com.alipay.sofa.rpc.boot.runtime.adapter.helper.ProviderConfigHelper;
+import com.alipay.sofa.rpc.boot.swagger.SwaggerServiceApplicationListener;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingClass;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
@@ -139,6 +142,12 @@ public class SofaBootRpcAutoConfiguration {
             ) {
         return new SofaBootRpcStartListener(providerConfigContainer, faultToleranceConfigurator, serverConfigContainer,
             registryConfigContainer);
+    }
+
+    @Bean
+    @ConditionalOnProperty(name = "com.alipay.sofa.rpc.rest-swagger", havingValue = "true")
+    public ApplicationListener swaggerServiceApplicationListener() {
+        return new SwaggerServiceApplicationListener();
     }
 
     @Configuration

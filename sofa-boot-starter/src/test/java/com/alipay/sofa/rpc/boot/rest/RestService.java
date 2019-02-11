@@ -23,7 +23,6 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
 /**
- *
  * @author liangen
  * @version $Id: RestService.java, v 0.1 2018年04月15日 下午5:37 liangen Exp $
  */
