@@ -43,6 +43,12 @@
             <artifactId>healthcheck-sofa-boot-starter</artifactId>
             <optional>true</optional>
         </dependency>
+        <!-- fix https://github.com/alipay/sofa-rpc-boot-projects/issues/125 -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jcl-over-slf4j</artifactId>
+            <version>1.7.25</version>
+        </dependency>
 
         <dependency>
             <groupId>org.apache.curator</groupId>
@@ -115,12 +121,6 @@
             <groupId>org.jboss.resteasy</groupId>
             <artifactId>resteasy-multipart-provider</artifactId>
             <version>${resteasy.version}</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>commons-logging</artifactId>
-                    <groupId>commons-logging</groupId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
             <groupId>javax.el</groupId>
