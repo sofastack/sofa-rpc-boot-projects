@@ -21,7 +21,7 @@ import com.alipay.sofa.runtime.api.annotation.SofaServiceBinding;
 import org.springframework.stereotype.Component;
 
 @Component
-@SofaService(bindings = { @SofaServiceBinding(bindingType = "bolt") })
+@SofaService(bindings = { @SofaServiceBinding(bindingType = "bolt") }, uniqueId = "bolt")
 public class AnnotationServiceImpl implements AnnotationService {
     @Override
     public String hello() {
