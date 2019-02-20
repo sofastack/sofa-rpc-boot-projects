@@ -16,11 +16,11 @@
  */
 package com.alipay.sofa.rpc.boot.config;
 
-import java.util.Map;
-
 import com.alipay.sofa.rpc.boot.common.RegistryParseUtil;
 import com.alipay.sofa.rpc.common.utils.StringUtils;
 import com.alipay.sofa.rpc.config.RegistryConfig;
+
+import java.util.Map;
 
 /**
  * zookeeper 配置
@@ -48,6 +48,7 @@ public class ZookeeperConfigurator implements RegistryConfigureProcessor {
         }
 
         return new RegistryConfig().setAddress(zkAddress).setFile(file)
-            .setProtocol(SofaBootRpcConfigConstants.REGISTRY_PROTOCOL_ZOOKEEPER);
+            .setProtocol(SofaBootRpcConfigConstants.REGISTRY_PROTOCOL_ZOOKEEPER)
+            .setParameters(map);
     }
 }
