@@ -69,6 +69,11 @@ public class SofaBootRpcProperties {
     private String              restPort;
     private String              restIoThreadSize;
     private String              restContextPath;
+
+    /**
+     * cors settings
+     */
+    private String              restAllowedOrigins;
     // has no use
     private String              restThreadPoolCoreSize;
     private String              restThreadPoolMaxSize;
@@ -551,6 +556,15 @@ public class SofaBootRpcProperties {
 
     public void setHystrixEnable(String hystrixEnable) {
         this.hystrixEnable = hystrixEnable;
+    }
+
+    public String getRestAllowedOrigins() {
+        return StringUtils.isEmpty(restAllowedOrigins) ? getDotString(new Object() {
+        }.getClass().getEnclosingMethod().getName()) : restAllowedOrigins;
+    }
+
+    public void setRestAllowedOrigins(String restAllowedOrigins) {
+        this.restAllowedOrigins = restAllowedOrigins;
     }
 
     private String getDotString(String enclosingMethodName) {

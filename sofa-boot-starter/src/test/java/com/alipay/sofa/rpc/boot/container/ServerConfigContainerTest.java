@@ -19,6 +19,7 @@ package com.alipay.sofa.rpc.boot.container;
 import com.alipay.sofa.rpc.boot.common.SofaBootRpcRuntimeException;
 import com.alipay.sofa.rpc.boot.config.SofaBootRpcConfigConstants;
 import com.alipay.sofa.rpc.boot.config.SofaBootRpcProperties;
+import com.alipay.sofa.rpc.common.RpcConstants;
 import com.alipay.sofa.rpc.config.ServerConfig;
 import com.alipay.sofa.rpc.test.base.ActivelyDestroyTest;
 import org.junit.Assert;
@@ -102,7 +103,7 @@ public class ServerConfigContainerTest extends ActivelyDestroyTest {
         sofaBootRpcProperties.setRestMaxRequestSize("1000");
         sofaBootRpcProperties.setRestTelnet("true");
         sofaBootRpcProperties.setRestDaemon("true");
-
+        sofaBootRpcProperties.setRestAllowedOrigins("a.com");
         ServerConfig serverConfig = serverConfigContainer
             .createRestServerConfig();
 
@@ -114,6 +115,8 @@ public class ServerConfigContainerTest extends ActivelyDestroyTest {
         Assert.assertEquals(1000, serverConfig.getPayload());
         Assert.assertTrue(serverConfig.isTelnet());
         Assert.assertTrue(serverConfig.isDaemon());
+        Assert.assertEquals("a.com", serverConfig.getParameters().get(RpcConstants.ALLOWED_ORIGINS));
+
     }
 
     @Test
