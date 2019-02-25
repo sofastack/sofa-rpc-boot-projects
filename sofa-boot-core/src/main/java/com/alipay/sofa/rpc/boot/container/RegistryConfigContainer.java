@@ -126,9 +126,9 @@ public class RegistryConfigContainer {
             registryConfigs.put(registryAlias, registryConfig);
             //不再处理以.分隔的.
             final Environment environment = sofaBootRpcProperties.getEnvironment();
-            if (environment.containsProperty(SofaOptions.CONFIG_RPC_REGISTER_CONFREG_IGNORE)) {
+            if (environment.containsProperty(SofaOptions.CONFIG_RPC_REGISTER_REGISTRY_IGNORE)) {
                 if (Boolean.TRUE.toString().equalsIgnoreCase(
-                    environment.getProperty(SofaOptions.CONFIG_RPC_REGISTER_CONFREG_IGNORE))) {
+                    environment.getProperty(SofaOptions.CONFIG_RPC_REGISTER_REGISTRY_IGNORE))) {
                     registryConfig.setRegister(false);
                 }
             }

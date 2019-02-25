@@ -23,7 +23,7 @@
         <dubbo_version>2.4.10</dubbo_version>
         <cxf.version>3.0.14</cxf.version>
         <skipTests>false</skipTests>
-        <rpc.all.version>5.4.7</rpc.all.version>
+        <rpc.all.version>5.5.1</rpc.all.version>
     </properties>
 
     <dependencies>
