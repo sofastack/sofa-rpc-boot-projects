@@ -36,85 +36,226 @@ public class SofaBootRpcProperties {
     @Autowired
     private Environment         environment;
 
-    /* fault-tolerance start */
+    /**
+     * whether regulation effective (是否开启单机故障剔除功能)
+     */
     private String              aftRegulationEffective;
+    /**
+     * whether regulation effective (是否开启降级)
+     */
     private String              aftDegradeEffective;
+    /**
+     * aft time window of caculation (时间窗口)
+     */
     private String              aftTimeWindow;
+    /**
+     * aft least invoke times in window (最小调用次数)
+     */
     private String              aftLeastWindowCount;
+    /**
+     * aft least exception rate multiple than average exception rate (最小异常率)
+     */
     private String              aftLeastWindowExceptionRateMultiple;
+
+    /**
+     * aft weight was degraded  by this rate (降级速率)
+     */
     private String              aftWeightDegradeRate;
+    /**
+     * aft weight was recovered  by this rate (恢复速率)
+     */
     private String              aftWeightRecoverRate;
+    /**
+     * the least weight that aft could degrade one provider (降级最小权重)
+     */
     private String              aftDegradeLeastWeight;
+
+    /**
+     * the max ip numbers that aft could degrade (最大降级 ip)
+     */
     private String              aftDegradeMaxIpCount;
     /* fault-tolerance end */
 
     /* Bolt start*/
+
+    /**
+     * the port of bolt (bolt 端口)
+     */
     private String              boltPort;
+
+    /**
+     * the core thread pool size of bolt （bolt 核心线程数）
+     */
     private String              boltThreadPoolCoreSize;
+
+    /**
+     * the max thread pool size of bolt （bolt 最大线程数）
+     */
     private String              boltThreadPoolMaxSize;
+
+    /**
+     * the queue size of bolt server（bolt 线程池队列）
+     */
     private String              boltThreadPoolQueueSize;
+
+    /**
+     * the max accept size of bolt (bolt 服务端允许客户端建立的连接数)
+     */
     private String              boltAcceptsSize;
     /* Bolt end*/
 
     /* H2c start*/
+    /**
+     * the port of http2 (http2 端口)
+     */
     private String              h2cPort;
+
+    /**
+     * the core thread pool size of http2 （http2 核心线程数）
+     */
     private String              h2cThreadPoolCoreSize;
+
+    /**
+     * the max thread pool size of http2 （http2 最大线程数）
+     */
     private String              h2cThreadPoolMaxSize;
+
+    /**
+     * the queue size of http2 server（http2 线程池队列）
+     */
     private String              h2cThreadPoolQueueSize;
+
+    /**
+     * the max accept size of http2 (http2 服务端允许客户端建立的连接数)
+     */
     private String              h2cAcceptsSize;
     /* Bolt end*/
 
     /* rest start*/
+    /**
+     * rest host name (rest 绑定的 hostname)
+     */
     private String              restHostname;
+    /**
+     * the port of rest (rest 端口)
+     */
     private String              restPort;
+    /**
+     * the io thread size of rest io (rest io 线程数)
+     */
     private String              restIoThreadSize;
+
+    /**
+     * rest context path (rest context path)
+     */
     private String              restContextPath;
     // has no use
+    /**
+     * the core thread pool size of rest （rest 核心线程数）
+     */
     private String              restThreadPoolCoreSize;
+    /**
+     * the max thread pool size of rest （rest 最大线程数）
+     */
     private String              restThreadPoolMaxSize;
+
+    /**
+     * the max request size of per request (rest 最大请求大小)
+     */
     private String              restMaxRequestSize;
+
+    /**
+     * whether allow rest telnet (是否允许 rest telnet)
+     */
     private String              restTelnet;
+    /**
+     * whether rest server is daemon (是否hold住端口，true的话随主线程退出而退出)
+     */
     private String              restDaemon;
     private boolean             restSwagger;
     /* rest end */
 
     /* dubbo  start*/
+
+    /**
+     * the port of dubbo (dubbo 端口)
+     */
     private String              dubboPort;
+
+    /**
+     * the io thread size of dubbo io (dubbo io 线程数)
+     */
     private String              dubboIoThreadSize;
     //has no use
+    /**
+     * the core thread pool size of dubbo （dubbo 核心线程数）
+     */
     private String              dubboThreadPoolCoreSize;
+
+    /**
+     * the max thread pool size of dubbo （dubbo 最大线程数）
+     */
     private String              dubboThreadPoolMaxSize;
     //has no use
+    /**
+     * the queue size of dubbo server（dubbo 线程池队列）
+     */
     private String              dubboThreadPoolQueueSize;
+    /**
+     * the max accept size of dubbo (dubbo 服务端允许客户端建立的连接数)
+     */
     private String              dubboAcceptsSize;
     /* dubbo  end*/
 
     /* registry */
+    /**
+     * registry address of rpc server （注册中心的地址）
+     */
     private String              registryAddress;
 
-    //publish to registry
+    /**
+     * virtual host for service publish（服务发布虚拟host）
+     */
     private String              virtualHost;
 
-    //publish to registry
+    /**
+     * virtual port for service publish（服务发布虚拟端口）
+     */
     private String              virtualPort;
 
-    //publish to registry virtual host range
+    /**
+     * ip range which used in multi network interfaces （多网卡 ip 范围）
+     */
     private String              enabledIpRange;
 
+    /**
+     * this bind network interface in multi network interfaces （绑定网卡来选择ip）
+     */
     private String              bindNetworkInterface;
 
-    // bound server
+    /**
+     * bound host (绑定host)
+     */
     private String              boundHost;
 
-    // disable lookout
+    /**
+     * disable lookout （是否关闭lookout ）
+     */
     private String              lookoutCollectDisable;
 
-    //custom registry
+    /**
+     * multi registries （多注册中心）
+     */
     private Map<String, String> registries = new HashMap<String, String>();
 
-    //mesh switch,can be protocol,like bolt,mesh,all,now we only support bolt
+    /**
+     * enable mesh，can be protocol,like bolt,mesh,all,now we only support bolt （是否开启mesh支持，目前只支持bolt）
+     */
     private String              enableMesh;
 
+    /**
+     * the reference limit numbers of the same interface could be referred (允许客户端对同一个服务生成的引用代理数量，默认为3)
+     */
     private String              consumerRepeatedReferenceLimit;
 
     private String              defaultTracer;
