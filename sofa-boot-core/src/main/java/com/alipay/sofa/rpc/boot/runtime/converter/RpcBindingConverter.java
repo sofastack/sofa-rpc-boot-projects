@@ -28,6 +28,7 @@ import com.alipay.sofa.rpc.config.UserThreadPoolManager;
 import com.alipay.sofa.rpc.filter.ExcludeFilter;
 import com.alipay.sofa.rpc.filter.Filter;
 import com.alipay.sofa.rpc.server.UserThreadPool;
+import com.alipay.sofa.runtime.api.annotation.SofaParameter;
 import com.alipay.sofa.runtime.api.annotation.SofaReference;
 import com.alipay.sofa.runtime.api.annotation.SofaReferenceBinding;
 import com.alipay.sofa.runtime.api.annotation.SofaService;
@@ -43,7 +44,9 @@ import org.w3c.dom.Node;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 解析 XML配置或者 {@link RpcBindingParam} 为 {@link RpcBinding}
@@ -90,11 +93,14 @@ public abstract class RpcBindingConverter implements BindingConverter<RpcBinding
             .getChildElementByTagName(element, RpcBindingXmlConstants.TAG_GLOBAL_ATTRS);
         Element routeElement = DomUtils.getChildElementByTagName(element, RpcBindingXmlConstants.TAG_ROUTE);
         List<Element> methodElements = DomUtils.getChildElementsByTagName(element, RpcBindingXmlConstants.TAG_METHOD);
+        List<Element> parameterElements = DomUtils.getChildElementsByTagName(element,
+            RpcBindingXmlConstants.TAG_PARAMETER);
 
         parseGlobalAttrs(globalAttrsElement, param, bindingConverterContext);
         parseFilter(globalAttrsElement, param, bindingConverterContext);
         parseMethod(methodElements, param);
         parseRoute(routeElement, param);
+        parseParameter(parameterElements, param);
 
         return convert(param, bindingConverterContext);
 
@@ -164,7 +170,22 @@ public abstract class RpcBindingConverter implements BindingConverter<RpcBinding
         }
 
         param.setMethodInfos(boltBindingMethodInfos);
+    }
 
+    private void parseParameter(List<Element> parameterElements, RpcBindingParam param) {
+        if (CollectionUtils.isEmpty(parameterElements)) {
+            return;
+        }
+        Map<String, String> parameters = new LinkedHashMap<String, String>(parameterElements.size());
+        for (Element element : parameterElements) {
+            if (element.getNodeType() == Node.ELEMENT_NODE &&
+                element.getLocalName().equals(RpcBindingXmlConstants.TAG_PARAMETER)) {
+                String key = element.getAttribute(RpcBindingXmlConstants.TAG_PARAMETER_KEY);
+                String value = element.getAttribute(RpcBindingXmlConstants.TAG_PARAMETER_VALUE);
+                parameters.put(key, value);
+            }
+        }
+        param.setParameters(parameters);
     }
 
     private void parseGlobalAttrs(Element element, RpcBindingParam param,
@@ -414,6 +435,11 @@ public abstract class RpcBindingConverter implements BindingConverter<RpcBinding
             String[] registrys = registryAlias.split(",");
             bindingParam.setRegistrys(Arrays.asList(registrys));
         }
+
+        SofaParameter[] parameters = sofaServiceBindingAnnotation.parameters();
+        if (parameters.length > 0) {
+            bindingParam.setParameters(parseSofaParameters(parameters));
+        }
     }
 
     /**
@@ -491,5 +517,18 @@ public abstract class RpcBindingConverter implements BindingConverter<RpcBinding
             String[] registrys = registryAlias.split(",");
             bindingParam.setRegistrys(Arrays.asList(registrys));
         }
+
+        SofaParameter[] parameters = sofaReferenceBindingAnnotation.parameters();
+        if (parameters.length > 0) {
+            bindingParam.setParameters(parseSofaParameters(parameters));
+        }
+    }
+
+    private Map<String, String> parseSofaParameters(SofaParameter[] parameterAnnos) {
+        Map<String, String> parameters = new LinkedHashMap<String, String>();
+        for (SofaParameter parameter : parameterAnnos) {
+            parameters.put(parameter.key(), parameter.value());
+        }
+        return parameters;
     }
 }

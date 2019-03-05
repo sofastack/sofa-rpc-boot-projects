@@ -175,12 +175,13 @@ public class ConsumerConfigHelper {
             consumerConfig.setSerialization(serialization);
         }
 
-        if (param.getParameters() != null) {
-            consumerConfig.setParameters(param.getParameters());
-        }
-
         if (Boolean.TRUE.toString().equals(sofaBootRpcProperties.getHystrixEnable())) {
             consumerConfig.setParameter(HystrixConstants.SOFA_HYSTRIX_ENABLED, Boolean.TRUE.toString());
+        }
+
+        // after sofaBootRpcProperties#getHystrixEnable for override global config
+        if (param.getParameters() != null) {
+            consumerConfig.setParameters(param.getParameters());
         }
 
         return consumerConfig.setProtocol(protocol);
