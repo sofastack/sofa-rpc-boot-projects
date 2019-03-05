@@ -30,6 +30,7 @@ public class RpcBindingXmlConstants {
     public static final String TAG_FILTER            = "filter";
     public static final String TAG_ROUTE             = "route";
     public static final String TAG_METHOD            = "method";
+    public static final String TAG_PARAMETER         = "parameter";
 
     public static final String TAG_TIMEOUT           = "timeout";
     public static final String TAG_ADDRESS_WAIT_TIME = "address-wait-time";
@@ -49,6 +50,8 @@ public class RpcBindingXmlConstants {
     public static final String TAG_LOAD_BALANCER     = "loadBalancer";
     public static final String TAG_LAZY              = "lazy";
     public static final String TAG_CHECK             = "check";
+    public static final String TAG_PARAMETER_KEY     = "key";
+    public static final String TAG_PARAMETER_VALUE   = "value";
 
     public static final String TAG_NAME              = "name";
 
