@@ -5,12 +5,12 @@
     <parent>
         <groupId>com.alipay.sofa</groupId>
         <artifactId>sofaboot-dependencies</artifactId>
-        <version>3.1.1</version>
+        <version>3.1.2</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>rpc-sofa-boot-core</artifactId>
-    <version>6.0.1-SNAPSHOT</version>
+    <version>6.0.1</version>
 
     <url>https://github.com/alipay/sofa-rpc</url>
 
