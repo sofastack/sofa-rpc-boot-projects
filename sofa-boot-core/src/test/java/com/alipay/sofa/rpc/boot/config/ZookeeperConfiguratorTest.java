@@ -16,31 +16,27 @@
  */
 package com.alipay.sofa.rpc.boot.config;
 
-import com.alipay.sofa.rpc.boot.common.RegistryParseUtil;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
+import org.junit.Test;
+
 import com.alipay.sofa.rpc.config.RegistryConfig;
 
 /**
- * mesh注册中心配置
- * 配置格式：com.alipay.sofa.rpc.registries.mesh=mesh://127.0.0.1:12220
- *
- * @author liangen
- * @version $Id: LocalFileConfigurator.java, v 0.1 2018年04月17日 下午2:44 liangen Exp $
+ * @author <a href="mailto:lw111072@antfin.com">LiWei</a>
  */
-public class MeshConfigurator implements RegistryConfigureProcessor {
+public class ZookeeperConfiguratorTest {
 
-    public static final String HTTP = "http://";
+    @Test
+    public void test() {
+        String address = "zookeeper://127.0.0.1:2181?aaa=111&rrr=666&file=/host/zk";
 
-    public MeshConfigurator() {
+        ZookeeperConfigurator zookeeperConfigurator = new ZookeeperConfigurator();
+        RegistryConfig registryConfig = zookeeperConfigurator.buildFromAddress(address);
+        assertNotNull(registryConfig);
+        assertEquals("zookeeper", registryConfig.getProtocol());
+        assertEquals("127.0.0.1:2181", registryConfig.getAddress());
+        assertEquals("/host/zk", registryConfig.getFile());
     }
-
-    @Override
-    public RegistryConfig buildFromAddress(String address) {
-        String meshAddress = RegistryParseUtil.parseAddress(address,
-            SofaBootRpcConfigConstants.REGISTRY_PROTOCOL_MESH);
-
-        meshAddress = HTTP + meshAddress;
-        return new RegistryConfig().setAddress(meshAddress)
-            .setProtocol(SofaBootRpcConfigConstants.REGISTRY_PROTOCOL_MESH);
-    }
-
 }

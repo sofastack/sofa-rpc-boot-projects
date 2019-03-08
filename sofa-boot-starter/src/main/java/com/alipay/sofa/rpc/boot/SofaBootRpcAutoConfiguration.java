@@ -17,9 +17,11 @@
 package com.alipay.sofa.rpc.boot;
 
 import com.alipay.sofa.healthcheck.startup.ReadinessCheckCallback;
+import com.alipay.sofa.rpc.boot.config.ConsulConfigurator;
 import com.alipay.sofa.rpc.boot.config.FaultToleranceConfigurator;
 import com.alipay.sofa.rpc.boot.config.LocalFileConfigurator;
 import com.alipay.sofa.rpc.boot.config.MeshConfigurator;
+import com.alipay.sofa.rpc.boot.config.NacosConfigurator;
 import com.alipay.sofa.rpc.boot.config.RegistryConfigureProcessor;
 import com.alipay.sofa.rpc.boot.config.SofaBootRpcConfigConstants;
 import com.alipay.sofa.rpc.boot.config.SofaBootRpcProperties;
@@ -93,6 +95,11 @@ public class SofaBootRpcAutoConfiguration {
     }
 
     @Bean
+    public ConsulConfigurator consulConfigurator() {
+        return new ConsulConfigurator();
+    }
+
+    @Bean
     public LocalFileConfigurator localFileConfigurator() {
         return new LocalFileConfigurator();
     }
@@ -102,12 +109,19 @@ public class SofaBootRpcAutoConfiguration {
         return new MeshConfigurator();
     }
 
+    @Bean
+    public RegistryConfigureProcessor nacosConfigurator() {
+        return new NacosConfigurator();
+    }
+
     @Bean(name = "registryConfigMap")
     public Map<String, RegistryConfigureProcessor> configureProcessorMap() {
         Map<String, RegistryConfigureProcessor> map = new HashMap<String, RegistryConfigureProcessor>();
         map.put(SofaBootRpcConfigConstants.REGISTRY_PROTOCOL_LOCAL, localFileConfigurator());
         map.put(SofaBootRpcConfigConstants.REGISTRY_PROTOCOL_ZOOKEEPER, zookeeperConfigurator());
         map.put(SofaBootRpcConfigConstants.REGISTRY_PROTOCOL_MESH, meshConfigurator());
+        map.put(SofaBootRpcConfigConstants.REGISTRY_PROTOCOL_CONSUL, consulConfigurator());
+        map.put(SofaBootRpcConfigConstants.REGISTRY_PROTOCOL_NACOS, nacosConfigurator());
         return map;
     }
 

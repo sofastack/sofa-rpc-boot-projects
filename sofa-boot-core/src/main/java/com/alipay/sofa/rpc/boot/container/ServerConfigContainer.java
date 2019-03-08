@@ -22,11 +22,13 @@ import com.alipay.sofa.rpc.boot.common.SofaBootRpcRuntimeException;
 import com.alipay.sofa.rpc.boot.config.SofaBootRpcConfigConstants;
 import com.alipay.sofa.rpc.boot.config.SofaBootRpcProperties;
 import com.alipay.sofa.rpc.boot.log.SofaBootRpcLoggerFactory;
+import com.alipay.sofa.rpc.common.RpcConstants;
 import com.alipay.sofa.rpc.config.ServerConfig;
 import com.alipay.sofa.rpc.server.bolt.BoltServer;
 import org.slf4j.Logger;
 import org.springframework.util.StringUtils;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -298,6 +300,7 @@ public class ServerConfigContainer {
         String telnetStr = sofaBootRpcProperties.getRestTelnet();
         String daemonStr = sofaBootRpcProperties.getRestDaemon();
 
+        String allowedOrigins = sofaBootRpcProperties.getRestAllowedOrigins();
         int port;
         int ioThreadCount;
         int restThreadPoolMaxSize;
@@ -345,13 +348,20 @@ public class ServerConfigContainer {
             daemon = Boolean.parseBoolean(daemonStr);
         }
 
+        Map<String, String> parameters = new HashMap<String, String>();
+
+        if (StringUtils.hasText(allowedOrigins)) {
+            parameters.put(RpcConstants.ALLOWED_ORIGINS, allowedOrigins);
+        }
+
         ServerConfig serverConfig = new ServerConfig()
             .setPort(port)
             .setIoThreads(ioThreadCount)
             .setMaxThreads(restThreadPoolMaxSize)
             .setPayload(maxRequestSize)
             .setTelnet(telnet)
-            .setDaemon(daemon);
+            .setDaemon(daemon)
+            .setParameters(parameters);
 
         if (!StringUtils.isEmpty(contextPath)) {
             serverConfig.setContextPath(contextPath);

@@ -16,10 +16,10 @@
  */
 package com.alipay.sofa.rpc.boot.config;
 
+import com.alipay.sofa.rpc.boot.common.RegistryParseUtil;
 import com.alipay.sofa.rpc.common.utils.StringUtils;
 import com.alipay.sofa.rpc.config.RegistryConfig;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -34,75 +34,12 @@ public class ZookeeperConfigurator implements RegistryConfigureProcessor {
     public ZookeeperConfigurator() {
     }
 
-    /**
-     * 解析配置 value
-     *
-     * @param config 配置 value
-     */
-    String parseAddress(String config) {
-        String address = null;
-
-        if (StringUtils.isNotEmpty(config) && config.startsWith(SofaBootRpcConfigConstants.REGISTRY_PROTOCOL_ZOOKEEPER)) {
-            final String zkProtol = SofaBootRpcConfigConstants.REGISTRY_PROTOCOL_ZOOKEEPER + "://";
-            String value = config.substring(zkProtol.length());
-            if (!value.contains("?")) {
-                address = value;
-            } else {
-                int index = value.lastIndexOf('?');
-                address = value.substring(0, index);
-            }
-        }
-
-        return address;
-    }
-
-    /**
-     * 传递原始 url
-     *
-     * @param address
-     * @return
-     */
-    public Map<String, String> parseParam(String address) {
-
-        String host = parseAddress(address);
-
-        //for config ?
-        String paramString = address.substring(address.indexOf(host) + host.length());
-
-        if (StringUtils.isNotEmpty(paramString) && paramString.startsWith("?")) {
-            paramString = paramString.substring(1);
-        }
-
-        Map<String, String> map = new HashMap<String, String>();
-        if (paramString.contains("&")) {
-            String[] paramSplit = paramString.split("&");
-            for (String param : paramSplit) {
-                Map<String, String> tempMap = parseKeyValue(param);
-                map.putAll(tempMap);
-            }
-        } else {
-            Map<String, String> tempMap = parseKeyValue(paramString);
-            map.putAll(tempMap);
-        }
-
-        return map;
-    }
-
-    private Map<String, String> parseKeyValue(String kv) {
-        Map<String, String> map = new HashMap<String, String>();
-        if (StringUtils.isNotEmpty(kv)) {
-            String[] kvSplit = kv.split("=");
-            String key = kvSplit[0];
-            String value = kvSplit[1];
-            map.put(key, value);
-        }
-        return map;
-    }
-
     @Override
     public RegistryConfig buildFromAddress(String address) {
-        String zkAddress = parseAddress(address);
-        Map<String, String> map = parseParam(address);
+        String zkAddress = RegistryParseUtil.parseAddress(address,
+            SofaBootRpcConfigConstants.REGISTRY_PROTOCOL_ZOOKEEPER);
+        Map<String, String> map = RegistryParseUtil.parseParam(address,
+            SofaBootRpcConfigConstants.REGISTRY_PROTOCOL_ZOOKEEPER);
 
         String file = map.get("file");
 
@@ -110,10 +47,8 @@ public class ZookeeperConfigurator implements RegistryConfigureProcessor {
             file = SofaBootRpcConfigConstants.REGISTRY_FILE_PATH_DEFAULT;
         }
 
-        return new RegistryConfig()
-            .setAddress(zkAddress)
-            .setFile(file)
-            .setProtocol(SofaBootRpcConfigConstants.REGISTRY_PROTOCOL_ZOOKEEPER);
-
+        return new RegistryConfig().setAddress(zkAddress).setFile(file)
+            .setProtocol(SofaBootRpcConfigConstants.REGISTRY_PROTOCOL_ZOOKEEPER)
+            .setParameters(map);
     }
 }

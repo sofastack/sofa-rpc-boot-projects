@@ -40,7 +40,8 @@ import java.util.Map;
                               SofaBootRpcProperties.PREFIX + ".bolt.port=5000",
                               "com_alipay_sofa_rpc_bolt_thread_pool_max_size=600",
                               SofaBootRpcProperties.PREFIX + ".registries.zk1=zookeeper://xxxx",
-                              SofaBootRpcProperties.PREFIX + ".consumer.repeated.reference.limit=10"
+                              SofaBootRpcProperties.PREFIX + ".consumer.repeated.reference.limit=10",
+                              SofaBootRpcProperties.PREFIX + ".rest.allowed.origins=a.com"
 })
 public class SofaBootRpcPropertiesTest {
     @Autowired
@@ -95,6 +96,12 @@ public class SofaBootRpcPropertiesTest {
 
         Assert.assertTrue(map != null);
         Assert.assertEquals("zookeeper://xxxx", map.get("zk1"));
+    }
+
+    @Test
+    public void testAllowedOriginis() {
+        String result = sofaBootRpcProperties.getRestAllowedOrigins();
+        Assert.assertEquals("a.com", result);
     }
 
 }

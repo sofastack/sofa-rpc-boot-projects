@@ -29,6 +29,7 @@ import com.alipay.sofa.rpc.config.MethodConfig;
 import com.alipay.sofa.rpc.config.RegistryConfig;
 import com.alipay.sofa.rpc.core.invoke.SofaResponseCallback;
 import com.alipay.sofa.rpc.filter.Filter;
+import com.alipay.sofa.rpc.hystrix.HystrixConstants;
 import com.alipay.sofa.runtime.spi.binding.Contract;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
@@ -174,8 +175,12 @@ public class ConsumerConfigHelper {
             consumerConfig.setSerialization(serialization);
         }
 
-        if (param.getParamters() != null) {
-            consumerConfig.setParameters(param.getParamters());
+        if (param.getParameters() != null) {
+            consumerConfig.setParameters(param.getParameters());
+        }
+
+        if (Boolean.TRUE.toString().equals(sofaBootRpcProperties.getHystrixEnable())) {
+            consumerConfig.setParameter(HystrixConstants.SOFA_HYSTRIX_ENABLED, Boolean.TRUE.toString());
         }
 
         return consumerConfig.setProtocol(protocol);

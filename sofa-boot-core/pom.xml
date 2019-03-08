@@ -24,6 +24,7 @@
         <cxf.version>3.0.14</cxf.version>
         <skipTests>false</skipTests>
         <rpc.all.version>5.5.1</rpc.all.version>
+        <nacos.version>0.6.0</nacos.version>
     </properties>
 
     <dependencies>
@@ -173,6 +174,18 @@
             <artifactId>cxf-core</artifactId>
             <version>${cxf.version}</version>
             <scope>provided</scope>
+        </dependency>
+
+        <!--nacos-->
+        <dependency>
+            <groupId>com.alibaba.nacos</groupId>
+            <artifactId>nacos-api</artifactId>
+            <version>${nacos.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba.nacos</groupId>
+            <artifactId>nacos-client</artifactId>
+            <version>${nacos.version}</version>
         </dependency>
 
         <dependency>

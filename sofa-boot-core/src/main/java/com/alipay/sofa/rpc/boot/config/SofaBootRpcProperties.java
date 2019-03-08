@@ -149,6 +149,11 @@ public class SofaBootRpcProperties {
      * rest context path (rest context path)
      */
     private String              restContextPath;
+
+    /**
+     * cors settings
+     */
+    private String              restAllowedOrigins;
     // has no use
     /**
      * the core thread pool size of rest （rest 核心线程数）
@@ -257,6 +262,8 @@ public class SofaBootRpcProperties {
      * the reference limit numbers of the same interface could be referred (允许客户端对同一个服务生成的引用代理数量，默认为3)
      */
     private String              consumerRepeatedReferenceLimit;
+
+    private String              hystrixEnable;
 
     private String              defaultTracer;
 
@@ -692,6 +699,24 @@ public class SofaBootRpcProperties {
 
     public void setDefaultTracer(String defaultTracer) {
         this.defaultTracer = defaultTracer;
+    }
+
+    public String getHystrixEnable() {
+        return StringUtils.isEmpty(hystrixEnable) ? getDotString(new Object() {
+        }.getClass().getEnclosingMethod().getName()) : hystrixEnable;
+    }
+
+    public void setHystrixEnable(String hystrixEnable) {
+        this.hystrixEnable = hystrixEnable;
+    }
+
+    public String getRestAllowedOrigins() {
+        return StringUtils.isEmpty(restAllowedOrigins) ? getDotString(new Object() {
+        }.getClass().getEnclosingMethod().getName()) : restAllowedOrigins;
+    }
+
+    public void setRestAllowedOrigins(String restAllowedOrigins) {
+        this.restAllowedOrigins = restAllowedOrigins;
     }
 
     private String getDotString(String enclosingMethodName) {
