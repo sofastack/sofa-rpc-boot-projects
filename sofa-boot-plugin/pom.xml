@@ -19,6 +19,7 @@
         <maven-source-plugin.version>3.0.1</maven-source-plugin.version>
         <maven-java-formatter-plugin.version>0.4</maven-java-formatter-plugin.version>
         <license-maven-plugin.version>3.0</license-maven-plugin.version>
+        <sofa.ark.version>0.5.2</sofa.ark.version>
     </properties>
 
     <dependencies>
@@ -32,12 +33,6 @@
                     <artifactId>sofa-rpc-all</artifactId>
                 </exclusion>
             </exclusions>
-        </dependency>
-
-        <dependency>
-            <groupId>com.alipay.sofa</groupId>
-            <artifactId>healthcheck-sofa-boot-starter</artifactId>
-            <optional>true</optional>
         </dependency>
 
         <dependency>
@@ -138,6 +133,7 @@
             <plugin>
                 <groupId>com.alipay.sofa</groupId>
                 <artifactId>sofa-ark-plugin-maven-plugin</artifactId>
+                <version>${sofa.ark.version}</version>
                 <executions>
                     <execution>
                         <id>default-cli</id>
@@ -196,14 +192,6 @@
                                 <excludeGroupId>org.springframework.boot</excludeGroupId>
                                 <excludeGroupId>org.apache.tomcat.embed</excludeGroupId>
                             </excludeGroupIds>
-
-                            <excludes>
-                                <exclude>com.alipay.sofa:healthcheck-sofa-boot-starter</exclude>
-                            </excludes>
-
-                            <shades>
-                                <shade>com.alipay.sofa:rpc-sofa-boot-starter</shade>
-                            </shades>
                         </configuration>
                     </execution>
 
