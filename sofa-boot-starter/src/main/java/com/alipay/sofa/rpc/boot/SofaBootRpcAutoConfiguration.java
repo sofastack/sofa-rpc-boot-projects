@@ -25,6 +25,7 @@ import com.alipay.sofa.rpc.boot.config.NacosConfigurator;
 import com.alipay.sofa.rpc.boot.config.RegistryConfigureProcessor;
 import com.alipay.sofa.rpc.boot.config.SofaBootRpcConfigConstants;
 import com.alipay.sofa.rpc.boot.config.SofaBootRpcProperties;
+import com.alipay.sofa.rpc.boot.config.SofaRegistryConfigurator;
 import com.alipay.sofa.rpc.boot.config.ZookeeperConfigurator;
 import com.alipay.sofa.rpc.boot.container.ConsumerConfigContainer;
 import com.alipay.sofa.rpc.boot.container.ProviderConfigContainer;
@@ -109,6 +110,11 @@ public class SofaBootRpcAutoConfiguration {
         return new NacosConfigurator();
     }
 
+    @Bean
+    public RegistryConfigureProcessor sofaRegistryConfigurator() {
+        return new SofaRegistryConfigurator();
+    }
+
     @Bean(name = "registryConfigMap")
     public Map<String, RegistryConfigureProcessor> configureProcessorMap() {
         Map<String, RegistryConfigureProcessor> map = new HashMap<String, RegistryConfigureProcessor>();
@@ -117,6 +123,8 @@ public class SofaBootRpcAutoConfiguration {
         map.put(SofaBootRpcConfigConstants.REGISTRY_PROTOCOL_MESH, meshConfigurator());
         map.put(SofaBootRpcConfigConstants.REGISTRY_PROTOCOL_CONSUL, consulConfigurator());
         map.put(SofaBootRpcConfigConstants.REGISTRY_PROTOCOL_NACOS, nacosConfigurator());
+        map.put(SofaBootRpcConfigConstants.REGISTRY_PROTOCOL_SOFA, sofaRegistryConfigurator());
+
         return map;
     }
 
