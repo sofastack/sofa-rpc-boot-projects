@@ -62,6 +62,8 @@ public class SofaBootRpcConfigConstants {
     public static final String  REGISTRY_PROTOCOL_CONSUL           = "consul";
 
     public static final String  REGISTRY_PROTOCOL_NACOS            = "nacos";
+    //@since 5.5.2
+    public static final String  REGISTRY_PROTOCOL_SOFA             = "sofa";
 
     /* server */
     public static final String  RPC_PROTOCOL_BOLT                  = "bolt";
