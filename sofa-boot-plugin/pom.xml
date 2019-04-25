@@ -14,7 +14,7 @@
 
     <properties>
         <ark.plugin.name>rpc-sofa-boot-plugin</ark.plugin.name>
-        <rpc.all.version>5.5.1</rpc.all.version>
+        <rpc.all.version>5.5.1.fix</rpc.all.version>
     </properties>
 
     <dependencies>
@@ -134,6 +134,7 @@
             <plugin>
                 <groupId>com.alipay.sofa</groupId>
                 <artifactId>sofa-ark-plugin-maven-plugin</artifactId>
+                <version>0.6.0</version>
                 <executions>
                     <execution>
                         <id>default-cli</id>
@@ -196,10 +197,6 @@
                             <excludes>
                                 <exclude>com.alipay.sofa:healthcheck-sofa-boot-starter</exclude>
                             </excludes>
-
-                            <shades>
-                                <shade>com.alipay.sofa:rpc-sofa-boot-starter</shade>
-                            </shades>
                         </configuration>
                     </execution>
 

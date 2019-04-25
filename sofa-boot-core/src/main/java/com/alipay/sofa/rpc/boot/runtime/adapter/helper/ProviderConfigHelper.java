@@ -121,6 +121,9 @@ public class ProviderConfigHelper {
             UserThreadPoolManager.registerUserThread(ConfigUniqueNameGenerator.getUniqueName(providerConfig),
                 threadPool);
         }
+        if (contract.getInterfaceType() != null) {
+            providerConfig.setProxyClass(contract.getInterfaceType());
+        }
 
         providerConfig.setServer(serverConfig);
 
