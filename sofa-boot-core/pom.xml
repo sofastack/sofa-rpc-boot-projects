@@ -35,7 +35,7 @@
         <jacoco-maven-plugin.version>0.7.9</jacoco-maven-plugin.version>
         <javax.el-api.version>2.2.5</javax.el-api.version>
         <javax.el.version>2.2.6</javax.el.version>
-        <nacos.version>0.6.0</nacos.version>
+        <nacos.version>1.0.0</nacos.version>
     </properties>
 
     <dependencies>
