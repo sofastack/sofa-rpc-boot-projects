@@ -28,6 +28,7 @@ import com.alipay.sofa.rpc.config.UserThreadPoolManager;
 import com.alipay.sofa.rpc.filter.ExcludeFilter;
 import com.alipay.sofa.rpc.filter.Filter;
 import com.alipay.sofa.rpc.server.UserThreadPool;
+import com.alipay.sofa.runtime.api.annotation.SofaMethod;
 import com.alipay.sofa.runtime.api.annotation.SofaParameter;
 import com.alipay.sofa.runtime.api.annotation.SofaReference;
 import com.alipay.sofa.runtime.api.annotation.SofaReferenceBinding;
@@ -437,6 +438,11 @@ public abstract class RpcBindingConverter implements BindingConverter<RpcBinding
         if (parameters.length > 0) {
             bindingParam.setParameters(parseSofaParameters(parameters));
         }
+
+        SofaMethod[] sofaMethods = sofaServiceBindingAnnotation.methodInfos();
+        if (sofaMethods.length > 0) {
+            bindingParam.setMethodInfos(parseSofaMethods(sofaMethods));
+        }
     }
 
     /**
@@ -462,7 +468,6 @@ public abstract class RpcBindingConverter implements BindingConverter<RpcBinding
     protected void convertReferenceAnnotation(RpcBindingParam bindingParam,
                                               SofaReferenceBinding sofaReferenceBindingAnnotation,
                                               BindingConverterContext bindingConverterContext) {
-        //TODO need a magic number
         if (sofaReferenceBindingAnnotation.addressWaitTime() != 0) {
             bindingParam.setAddressWaitTime(sofaReferenceBindingAnnotation.addressWaitTime());
         }
@@ -513,6 +518,29 @@ public abstract class RpcBindingConverter implements BindingConverter<RpcBinding
         if (parameters.length > 0) {
             bindingParam.setParameters(parseSofaParameters(parameters));
         }
+
+        SofaMethod[] sofaMethods = sofaReferenceBindingAnnotation.methodInfos();
+        if (sofaMethods.length > 0) {
+            bindingParam.setMethodInfos(parseSofaMethods(sofaMethods));
+        }
+    }
+
+    protected List<RpcBindingMethodInfo> parseSofaMethods(SofaMethod[] sofaMethods) {
+
+        List<RpcBindingMethodInfo> rpcBindingMethodInfos = new ArrayList<RpcBindingMethodInfo>();
+        for (SofaMethod sofaMethod : sofaMethods) {
+            RpcBindingMethodInfo rpcBindingMethodInfo = new RpcBindingMethodInfo();
+            rpcBindingMethodInfo.setName(sofaMethod.name());
+            rpcBindingMethodInfo.setType(sofaMethod.invokeType());
+            rpcBindingMethodInfo.setTimeout(sofaMethod.timeout());
+            rpcBindingMethodInfo.setRetries(sofaMethod.retries());
+            rpcBindingMethodInfo.setCallbackClass(sofaMethod.callbackClass());
+            rpcBindingMethodInfo.setCallbackRef(sofaMethod.callbackRef());
+
+            rpcBindingMethodInfos.add(rpcBindingMethodInfo);
+        }
+
+        return rpcBindingMethodInfos;
     }
 
     private Map<String, String> parseSofaParameters(SofaParameter[] parameterAnnos) {
