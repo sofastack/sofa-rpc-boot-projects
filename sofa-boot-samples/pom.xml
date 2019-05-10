@@ -32,12 +32,12 @@
         <dependency>
             <groupId>com.alipay.sofa</groupId>
             <artifactId>test-sofa-boot-starter</artifactId>
-            <version>${sofaboot.version}</version>
+            <version>2.6.2</version>
         </dependency>
         <dependency>
             <groupId>com.alipay.sofa</groupId>
             <artifactId>healthcheck-sofa-boot-starter</artifactId>
-            <version>${sofaboot.version}</version>
+            <version>2.6.2</version>
         </dependency>
         <dependency>
             <groupId>org.apache.curator</groupId>
