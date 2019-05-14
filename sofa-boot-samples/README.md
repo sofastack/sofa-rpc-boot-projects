@@ -1,7 +1,7 @@
 # 如何在 SOFABoot 环境中使用 SOFARPC
 
 ## 简介
-该用例工程演示如何在 SOFABoot 环境中使用 SOFARPC，阅读该文档之前，建议先了解 [SOFARPC](https://github.com/alipay/sofa-rpc) 和 [SOFABoot](https://github.com/alipay/sofa-boot)
+该用例工程演示如何在 SOFABoot 环境中使用 SOFARPC，阅读该文档之前，建议先了解 [SOFARPC](https://github.com/sofastack/sofa-rpc) 和 [SOFABoot](https://github.com/sofastack/sofa-boot)
 
 ## 在本地启动Zookeeper
 在运行本示例工程之前，需要先在本地启动一个 Zookeeper 服务端。本工程已经提供了一个 Zookeeper 的启动类，运行该类的主函数即可:

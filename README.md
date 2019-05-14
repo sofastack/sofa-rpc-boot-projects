@@ -3,12 +3,12 @@
 [![Build Status](https://travis-ci.org/alipay/sofa-rpc-boot-projects.svg?branch=master)](https://travis-ci.org/alipay/sofa-rpc-boot-projects)
 [![Coverage Status](https://codecov.io/gh/alipay/sofa-rpc-boot-projects/branch/master/graph/badge.svg)](https://codecov.io/gh/alipay/sofa-rpc-boot-projects)
 ![License](https://img.shields.io/badge/license-Apache--2.0-green.svg)
-[![Release](https://img.shields.io/github/release/alipay/sofa-rpc-boot-projects.svg)](https://github.com/alipay/sofa-rpc-boot-projects/releases)
+[![Release](https://img.shields.io/github/release/alipay/sofa-rpc-boot-projects.svg)](https://github.com/sofastack/sofa-rpc-boot-projects/releases)
 
 ## 概述
 
 ### rpc-sofa-boot-starter
-[SOFABoot](https://github.com/alipay/sofa-boot) 是一个完全兼容 SpringBoot 的开发框架，`rpc-sofa-boot-starter` 的作用就是将 [SOFARPC](https://github.com/alipay/sofa-rpc) 功能集成到 SOFABoot 中。`rpc-sofa-boot-starter` 提供了统一方便的编程界面、配置方式，同时提供了 SOFABoot 的健康检查，类隔离，日志空间隔离等基础能力。
+[SOFABoot](https://github.com/sofastack/sofa-boot) 是一个完全兼容 SpringBoot 的开发框架，`rpc-sofa-boot-starter` 的作用就是将 [SOFARPC](https://github.com/sofastack/sofa-rpc) 功能集成到 SOFABoot 中。`rpc-sofa-boot-starter` 提供了统一方便的编程界面、配置方式，同时提供了 SOFABoot 的健康检查，类隔离，日志空间隔离等基础能力。
 
 
 ### rpc-sofa-boot-samples
@@ -37,5 +37,5 @@
 [如何参与代码贡献](http://www.sofastack.tech/sofa-rpc/docs/Contributing)
 
 ## 开源许可
-基于 [Apache License 2.0](https://github.com/alipay/sofa-rpc-boot-projects/blob/master/LICENSE) 协议。
+基于 [Apache License 2.0](https://github.com/sofastack/sofa-rpc-boot-projects/blob/master/LICENSE) 协议。
 
