@@ -17,6 +17,7 @@
 package com.alipay.sofa.rpc.test.registry;
 
 import com.alipay.sofa.rpc.boot.registry.MultiRegistryService;
+import com.alipay.sofa.rpc.core.exception.SofaRouteException;
 import com.alipay.sofa.rpc.core.exception.SofaRpcException;
 import com.alipay.sofa.rpc.test.base.ActivelyDestroyTest;
 import org.junit.Ignore;
@@ -53,7 +54,7 @@ public class MultiRegistryTest extends ActivelyDestroyTest {
             System.out.println("multi registry:" + result);
         } catch (Exception e) {
             e.printStackTrace();
-            assertEquals(SofaRpcException.class, e.getClass());
+            assertEquals(SofaRouteException.class, e.getClass());
         }
     }
 
