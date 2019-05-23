@@ -43,4 +43,9 @@ public class MeshConfigurator implements RegistryConfigureProcessor {
             .setProtocol(SofaBootRpcConfigConstants.REGISTRY_PROTOCOL_MESH);
     }
 
+    @Override
+    public String registryType() {
+        return SofaBootRpcConfigConstants.REGISTRY_PROTOCOL_MESH;
+    }
+
 }

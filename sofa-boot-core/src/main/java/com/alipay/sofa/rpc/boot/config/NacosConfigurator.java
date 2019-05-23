@@ -45,4 +45,9 @@ public class NacosConfigurator implements RegistryConfigureProcessor {
         return new RegistryConfig().setAddress(nacosAddress).setParameters(map)
             .setProtocol(SofaBootRpcConfigConstants.REGISTRY_PROTOCOL_NACOS);
     }
+
+    @Override
+    public String registryType() {
+        return SofaBootRpcConfigConstants.REGISTRY_PROTOCOL_NACOS;
+    }
 }

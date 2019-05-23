@@ -109,4 +109,9 @@ public class ConsulConfigurator implements RegistryConfigureProcessor {
             .setParameters(map);
 
     }
+
+    @Override
+    public String registryType() {
+        return SofaBootRpcConfigConstants.REGISTRY_PROTOCOL_CONSUL;
+    }
 }

@@ -49,6 +49,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -116,15 +117,11 @@ public class SofaBootRpcAutoConfiguration {
     }
 
     @Bean(name = "registryConfigMap")
-    public Map<String, RegistryConfigureProcessor> configureProcessorMap() {
+    public Map<String, RegistryConfigureProcessor> configureProcessorMap(List<RegistryConfigureProcessor> processorList) {
         Map<String, RegistryConfigureProcessor> map = new HashMap<String, RegistryConfigureProcessor>();
-        map.put(SofaBootRpcConfigConstants.REGISTRY_PROTOCOL_LOCAL, localFileConfigurator());
-        map.put(SofaBootRpcConfigConstants.REGISTRY_PROTOCOL_ZOOKEEPER, zookeeperConfigurator());
-        map.put(SofaBootRpcConfigConstants.REGISTRY_PROTOCOL_MESH, meshConfigurator());
-        map.put(SofaBootRpcConfigConstants.REGISTRY_PROTOCOL_CONSUL, consulConfigurator());
-        map.put(SofaBootRpcConfigConstants.REGISTRY_PROTOCOL_NACOS, nacosConfigurator());
-        map.put(SofaBootRpcConfigConstants.REGISTRY_PROTOCOL_SOFA, sofaRegistryConfigurator());
-
+        for (RegistryConfigureProcessor processor : processorList) {
+            map.put(processor.registryType(), processor);
+        }
         return map;
     }
 
@@ -139,7 +136,8 @@ public class SofaBootRpcAutoConfiguration {
     }
 
     //    @Bean
-    //    public ApplicationEnvironmentPreparedListener applicationEnvironmentPreparedListener(SofaBootRpcProperties sofaBootRpcProperties) {
+    //    public ApplicationEnvironmentPreparedListener applicationEnvironmentPreparedListener(SofaBootRpcProperties
+    //    sofaBootRpcProperties) {
     //        return new ApplicationEnvironmentPreparedListener(sofaBootRpcProperties);
     //    }
 

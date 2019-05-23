@@ -15,6 +15,7 @@
     <properties>
         <ark.plugin.name>rpc-sofa-boot-plugin</ark.plugin.name>
         <rpc.all.version>5.5.3</rpc.all.version>
+        <skipTests>false</skipTests>
         <maven-javadoc-plugin.version>2.10.4</maven-javadoc-plugin.version>
         <maven-source-plugin.version>3.0.1</maven-source-plugin.version>
         <maven-java-formatter-plugin.version>0.4</maven-java-formatter-plugin.version>
@@ -37,14 +38,12 @@
                 </exclusion>
             </exclusions>
         </dependency>
-
         <dependency>
             <groupId>com.alipay.sofa</groupId>
             <artifactId>sofa-ark-spi</artifactId>
             <version>${sofa.ark.version}</version>
             <scope>provided</scope>
         </dependency>
-
         <dependency>
             <groupId>com.alipay.sofa</groupId>
             <artifactId>sofa-rpc-all</artifactId>
@@ -200,7 +199,6 @@
 
                 </executions>
             </plugin>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>

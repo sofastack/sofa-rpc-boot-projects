@@ -59,4 +59,9 @@ public class LocalFileConfigurator implements RegistryConfigureProcessor {
             .setProtocol(SofaBootRpcConfigConstants.REGISTRY_PROTOCOL_LOCAL);
     }
 
+    @Override
+    public String registryType() {
+        return SofaBootRpcConfigConstants.REGISTRY_PROTOCOL_LOCAL;
+    }
+
 }

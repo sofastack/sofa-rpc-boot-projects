@@ -44,4 +44,9 @@ public class SofaRegistryConfigurator implements RegistryConfigureProcessor {
             .setProtocol(SofaBootRpcConfigConstants.REGISTRY_PROTOCOL_SOFA)
             .setParameters(map);
     }
+
+    @Override
+    public String registryType() {
+        return SofaBootRpcConfigConstants.REGISTRY_PROTOCOL_SOFA;
+    }
 }

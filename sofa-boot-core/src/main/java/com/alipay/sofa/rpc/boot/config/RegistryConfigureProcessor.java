@@ -26,4 +26,6 @@ public interface RegistryConfigureProcessor {
 
     public RegistryConfig buildFromAddress(String address);
 
+    public String registryType();
+
 }

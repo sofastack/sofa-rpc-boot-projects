@@ -51,4 +51,9 @@ public class ZookeeperConfigurator implements RegistryConfigureProcessor {
             .setProtocol(SofaBootRpcConfigConstants.REGISTRY_PROTOCOL_ZOOKEEPER)
             .setParameters(map);
     }
+
+    @Override
+    public String registryType() {
+        return SofaBootRpcConfigConstants.REGISTRY_PROTOCOL_ZOOKEEPER;
+    }
 }
