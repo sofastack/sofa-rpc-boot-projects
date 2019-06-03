@@ -5,16 +5,16 @@
     <parent>
         <groupId>com.alipay.sofa</groupId>
         <artifactId>sofaboot-dependencies</artifactId>
-        <version>3.1.4-SNAPSHOT</version>
+        <version>3.1.4</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>rpc-sofa-boot-plugin</artifactId>
-    <version>6.0.2-SNAPSHOT</version>
+    <version>6.0.2</version>
 
     <properties>
         <ark.plugin.name>rpc-sofa-boot-plugin</ark.plugin.name>
-        <rpc.all.version>5.5.3</rpc.all.version>
+        <rpc.all.version>5.5.4</rpc.all.version>
         <skipTests>false</skipTests>
         <maven-javadoc-plugin.version>2.10.4</maven-javadoc-plugin.version>
         <maven-source-plugin.version>3.0.1</maven-source-plugin.version>
