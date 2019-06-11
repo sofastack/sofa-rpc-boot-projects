@@ -10,11 +10,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>rpc-sofa-boot-plugin</artifactId>
-    <version>6.0.2</version>
+    <version>6.0.3-SNAPSHOT</version>
 
     <properties>
         <ark.plugin.name>rpc-sofa-boot-plugin</ark.plugin.name>
-        <rpc.all.version>5.5.4</rpc.all.version>
+        <rpc.all.version>5.5.5-SNAPSHOT</rpc.all.version>
         <skipTests>false</skipTests>
         <maven-javadoc-plugin.version>2.10.4</maven-javadoc-plugin.version>
         <maven-source-plugin.version>3.0.1</maven-source-plugin.version>

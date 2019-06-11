@@ -93,6 +93,9 @@ public class ProviderConfigHelper {
         if (StringUtils.hasText(interfaceId)) {
             providerConfig.setInterfaceId(interfaceId);
         }
+        if (contract.getInterfaceType() != null) {
+            providerConfig.setProxyClass(contract.getInterfaceType());
+        }
         if (ref != null) {
             providerConfig.setRef(ref);
         }
