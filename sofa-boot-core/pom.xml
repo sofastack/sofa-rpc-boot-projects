@@ -10,7 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>rpc-sofa-boot-core</artifactId>
-    <version>6.0.3-SNAPSHOT</version>
+    <version>6.0.3</version>
 
     <url>https://github.com/sofastack/sofa-rpc</url>
 
@@ -23,7 +23,7 @@
         <dubbo_version>2.4.10</dubbo_version>
         <cxf.version>3.0.14</cxf.version>
         <skipTests>false</skipTests>
-        <rpc.all.version>5.5.5-SNAPSHOT</rpc.all.version>
+        <rpc.all.version>5.5.5</rpc.all.version>
         <zkclient.version>0.10</zkclient.version>
         <maven-compiler-plugin.version>3.3</maven-compiler-plugin.version>
         <maven-source-plugin.version>3.0.1</maven-source-plugin.version>
