@@ -24,6 +24,7 @@ import com.alipay.sofa.rpc.boot.config.SofaBootRpcProperties;
 import com.alipay.sofa.rpc.boot.log.SofaBootRpcLoggerFactory;
 import com.alipay.sofa.rpc.common.RpcConstants;
 import com.alipay.sofa.rpc.config.ServerConfig;
+import com.alipay.sofa.rpc.server.Server;
 import com.alipay.sofa.rpc.server.bolt.BoltServer;
 import org.slf4j.Logger;
 import org.springframework.util.StringUtils;
@@ -420,34 +421,30 @@ public class ServerConfigContainer {
      * 释放所有 ServerConfig 对应的资源，并移除所有的 ServerConfig。
      */
     public void closeAllServer() {
-        if (boltServerConfig != null) {
-            boltServerConfig.destroy();
-            boltServerConfig = null;
-        }
-
-        if (restServerConfig != null) {
-            restServerConfig.destroy();
-            restServerConfig = null;
-        }
-
-        if (dubboServerConfig != null) {
-            dubboServerConfig.destroy();
-            dubboServerConfig = null;
-        }
-
-        if (h2cServerConfig != null) {
-            h2cServerConfig.destroy();
-            h2cServerConfig = null;
-        }
+        destroyServerConfig(boltServerConfig);
+        destroyServerConfig(restServerConfig);
+        destroyServerConfig(dubboServerConfig);
+        destroyServerConfig(h2cServerConfig);
 
         for (Map.Entry<String, ServerConfig> entry : customServerConfigs.entrySet()) {
             final ServerConfig serverConfig = entry.getValue();
-            if (serverConfig != null) {
+            destroyServerConfig(serverConfig);
+        }
+
+        boltServerConfig = null;
+        restServerConfig = null;
+        dubboServerConfig = null;
+        h2cServerConfig = null;
+        customServerConfigs.clear();
+    }
+
+    private void destroyServerConfig(ServerConfig serverConfig) {
+        if (serverConfig != null) {
+            Server server = serverConfig.getServer();
+            if (server != null && server.hasNoEntry()) {
                 serverConfig.destroy();
             }
         }
-
-        customServerConfigs.clear();
     }
 
     /**
