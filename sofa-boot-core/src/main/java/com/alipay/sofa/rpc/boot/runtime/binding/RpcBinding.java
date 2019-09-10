@@ -85,6 +85,7 @@ public abstract class RpcBinding extends AbstractBinding {
 
     /**
      * 健康检查
+     *
      * @return 健康检查结果
      */
     @Override
@@ -237,11 +238,8 @@ public abstract class RpcBinding extends AbstractBinding {
         if (rpcBindingParam != null ? !rpcBindingParam.equals(that.rpcBindingParam) : that.rpcBindingParam != null) {
             return false;
         }
-        if (applicationContext != null ? !applicationContext.equals(that.applicationContext)
-            : that.applicationContext != null) {
-            return false;
-        }
-        return consumerConfig != null ? consumerConfig.equals(that.consumerConfig) : that.consumerConfig == null;
+
+        return true;
     }
 
     @Override
@@ -249,9 +247,7 @@ public abstract class RpcBinding extends AbstractBinding {
         int result = appName != null ? appName.hashCode() : 0;
         result = 31 * result + (beanId != null ? beanId.hashCode() : 0);
         result = 31 * result + (rpcBindingParam != null ? rpcBindingParam.hashCode() : 0);
-        result = 31 * result + (applicationContext != null ? applicationContext.hashCode() : 0);
         result = 31 * result + (inBinding ? 1 : 0);
-        result = 31 * result + (consumerConfig != null ? consumerConfig.hashCode() : 0);
         return result;
     }
 }
