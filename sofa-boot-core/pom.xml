@@ -10,7 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>rpc-sofa-boot-core</artifactId>
-    <version>6.0.4-SNAPSHOT</version>
+    <version>6.0.4</version>
 
     <url>https://github.com/sofastack/sofa-rpc</url>
 

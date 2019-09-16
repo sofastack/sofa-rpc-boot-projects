@@ -21,7 +21,6 @@ echo "Change version in root pom.xml ===>"
 sed "/<project /,/<name/ s/<version>[^\$].*<\/version>/<version>$1<\/version>/" $shellDir/../pom.xml
 
 echo "Change rpc version in sofa-boot-core(if not same, please modify it) ===>"
-sed "s/<rpc.all.version>.*<\/rpc.all.version>/<rpc.all.version>$1<\/rpc.all.version>/" $shellDir/../sofa-boot-core/pom.xml
 
 echo "Change version in sofa-boot-core ===>"
 sed "/\/parent/,/<properties/ s/<version>[^\$].*<\/version>/<version>$1<\/version>/" $shellDir/../sofa-boot-core/pom.xml
@@ -40,5 +39,3 @@ sed "s/<rpc.starter.version>.*<\/rpc.starter.version>/<rpc.starter.version>$1<\/
 echo "Change rpc version in sofa-boot-plugin ===>"
 sed "s/<rpc.starter.version>.*<\/rpc.starter.version>/<rpc.starter.version>$1<\/rpc.starter.version>/" $shellDir/../sofa-boot-plugin/pom.xml
 sed "/\/parent/,/<properties/ s/<version>[^\$].*<\/version>/<version>$1<\/version>/" $shellDir/../sofa-boot-plugin/pom.xml
-sed "s/<rpc.all.version>.*<\/rpc.all.version>/<rpc.all.version>$1<\/rpc.all.version>/" $shellDir/../sofa-boot-plugin/pom.xml
-
