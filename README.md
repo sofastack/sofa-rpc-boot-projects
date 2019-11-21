@@ -1,9 +1,11 @@
+> The code has been migrated to [rpc-sofa-boot-starter](https://github.com/sofastack/sofa-boot/tree/master/sofa-boot-project/sofa-boot-starters/rpc-sofa-boot-starter) since SOFABoot v3.2.0, this project will be archived and stop maintenance.
+
 # SOFARPC Boot Projects
 
-[![Build Status](https://travis-ci.org/alipay/sofa-rpc-boot-projects.svg?branch=master)](https://travis-ci.org/alipay/sofa-rpc-boot-projects)
-[![Coverage Status](https://codecov.io/gh/alipay/sofa-rpc-boot-projects/branch/master/graph/badge.svg)](https://codecov.io/gh/alipay/sofa-rpc-boot-projects)
+[![Build Status](https://travis-ci.com/sofastack/sofa-rpc-boot-projects.svg?branch=master)](https://travis-ci.org/alipay/sofa-rpc-boot-projects)
+[![Coverage Status](https://codecov.io/gh/sofastack/sofa-rpc-boot-projects/branch/master/graph/badge.svg)](https://codecov.io/gh/sofastack/sofa-rpc-boot-projects)
 ![License](https://img.shields.io/badge/license-Apache--2.0-green.svg)
-[![Release](https://img.shields.io/github/release/alipay/sofa-rpc-boot-projects.svg)](https://github.com/sofastack/sofa-rpc-boot-projects/releases)
+[![Release](https://img.shields.io/github/release/sofastack/sofa-rpc-boot-projects.svg)](https://github.com/sofastack/sofa-rpc-boot-projects/releases)
 
 ## 概述
 
